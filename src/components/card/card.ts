@@ -31,7 +31,7 @@ export class Card {
   }
 
   // Метод только возвращает отрисованную карточку, никуда ее пока не добавляет
-  public draw(): HTMLElement {
+  public draw(/* addToCart, changePage */): HTMLElement {
     const cardTemplate = document.querySelector(
       '#card-template',
     ) as HTMLTemplateElement;
@@ -49,7 +49,7 @@ export class Card {
     const cardImg = cardClone.querySelector('.card__img') as HTMLElement;
     cardImg.style.backgroundImage = `url(${this.thumbnail})`;
 
-    // cardImg.addEventListener('click', () => { changePage(e) })              //листнер перехода на др страницу
+    // cardImg.addEventListener('click', (e) => { changePage(e) })              //листнер перехода на др страницу
 
     const cardCategory = cardClone.querySelector(
       '.card__category',
@@ -75,9 +75,9 @@ export class Card {
 
     // может можно в эти листнеры передать сразу this.data?
 
-    // const addBtn = new Button('', () => { addToCart(e) });                 //листнер добавленя в корзину
+    // const addBtn = new Button('', (e) => { addToCart(e) });                 //листнер добавленя в корзину
     // addBtn.classList.add('add-to-cart');                                   //особые стили для кнопки добавления в корзину
-    // const detailsBtn = new Button('Details', () => { changePage(e) });     //листнер перехода на др страницу
+    // const detailsBtn = new Button('Details', (e) => { changePage(e) });     //листнер перехода на др страницу
 
     // const cardBtns = cardClone.querySelector('.card__buttons') as HTMLElement;
     // cardBtns.append(addBtn, detailsBtn);                                   //добавляем кнопки к шаблону
