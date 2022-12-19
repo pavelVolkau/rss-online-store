@@ -1,5 +1,3 @@
-@import '../utils/mixins';
-
 .card {
   @include flex-column();
   position: relative;
@@ -65,7 +63,7 @@
     transition: 0.3s;
   }
 
-  .card__buttons .button:hover{
+  .card__buttons .button:hover {
     transform: scale(1.1);
   }
 
@@ -85,7 +83,7 @@
     background-color: $lightgray;
   }
 
-  .details{
+  .details {
     background-color: $lightgray;
   }
 }
@@ -108,7 +106,7 @@
     color: $white;
     font-size: 0.7rem;
     transform: translate(-100%, 0);
-    transition: .5s;
+    transition: 0.5s;
   }
 
   &:hover {
