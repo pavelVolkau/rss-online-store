@@ -1,7 +1,9 @@
+// 1rem = 10px
+
 .card {
   @include flex-column();
   position: relative;
-  min-height: 200px;
+  min-height: 20rem;
   overflow-x: hidden;
 
   .card__title {
@@ -13,7 +15,7 @@
 
   .card__bottom {
     @include flex-column();
-    font-size: 0.8rem;
+    font-size: 1.3rem;
     padding: 3% 3% 3% 0;
   }
 
@@ -24,7 +26,7 @@
   }
 
   .card__rating-stock {
-    font-size: 0.7rem;
+    font-size: 1.2rem;
   }
 
   .card__price {
@@ -37,9 +39,9 @@
 
   .card__rating::before {
     content: '⭐';
-    font-size: 0.5rem;
+    font-size: 0.8rem;
     position: relative;
-    top: -0.1rem;
+    top: -0.2rem;
   }
 
   .card__stock {
@@ -51,40 +53,7 @@
     justify-content: flex-start;
     width: 100%;
     gap: 5%;
-    margin-top: 10px;
-  }
-
-  .card__buttons .button {
-    height: 20px;
-    border: none;
-    outline: none;
-    font-size: 0.8rem;
-    cursor: pointer;
-    transition: 0.3s;
-  }
-
-  .card__buttons .button:hover {
-    transform: scale(1.1);
-  }
-
-  .add-to-cart {
-    width: 40px;
-    padding: 0;
-    background-image: url('../src/icons/cart-add.svg');
-    background-size: 15px 15px;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-color: $black;
-    border-radius: 2px;
-  }
-
-  .add-to-cart.added {
-    background-image: url('../src/icons/cart-remove.svg');
-    background-color: $lightgray;
-  }
-
-  .details {
-    background-color: $lightgray;
+    margin-top: 1rem;
   }
 }
 
@@ -104,7 +73,7 @@
     margin-top: 0;
     background-color: $black-transparent-07;
     color: $white;
-    font-size: 0.7rem;
+    font-size: 1.2rem;
     transform: translate(-100%, 0);
     transition: 0.5s;
   }
