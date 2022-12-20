@@ -1,2 +1,11 @@
-@import './abstracts/base.scss';
-@import './abstracts/utils.scss';
+@import './abstracts/base';
+@import './abstracts/utils';
+
+* {
+  box-sizing: border-box;
+  font-family: $font-usual;
+}
+
+body {
+  margin: 0;
+}
