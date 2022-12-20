@@ -1,3 +1,6 @@
+import 'normalize.css';
+import './components/components';
+
 // import { Data } from './common/types/data';
 // import { DataLoader } from './components/data-loader/dataLoader';
 
