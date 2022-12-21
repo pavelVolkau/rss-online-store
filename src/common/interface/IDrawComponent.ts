@@ -1,3 +1,3 @@
-export interface IDrawComponent {
+export default interface IDrawComponent {
   draw(): HTMLElement;
 }

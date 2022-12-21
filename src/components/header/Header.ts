@@ -1,17 +1,17 @@
 import './header.scss';
-import { IDrawComponent } from '../../common/interface/IDrawComponent';
+import IDrawComponent from '../../common/interface/IDrawComponent';
+import getDOMElement from '../../common/helpers/getDOMElement';
+import Logo from '../logo/Logo';
+import CartHeader from '../cart-header/CartHeader';
 
 export default class Header implements IDrawComponent {
   public draw() {
-    const headerTemplate = document.querySelector(
-      '#header-template',
-    ) as HTMLTemplateElement;
-    const headerClone = headerTemplate.content.cloneNode(true) as HTMLElement;
-    //const cart = headerClone.querySelector('.header__cart') as HTMLElement;
+    const header = getDOMElement('header', 'header');
+    const logo = new Logo();
+    const cartHeader = new CartHeader(0, 0); // add local storage
 
-    //после создания корзины добавить ее вызов
-    //cart.addEventListener('click', () => {});
+    header.append(logo.draw(), cartHeader.draw());
 
-    return headerClone;
+    return header;
   }
 }

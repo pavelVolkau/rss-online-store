@@ -1,0 +1,13 @@
+@import '../../common/styles/main.scss';
+
+.logo {
+  margin: 0;
+  font-weight: normal;
+
+  &__link {
+    text-decoration: none;
+    color: $white;
+    font-family: $font-logo;
+    font-size: $fs-xxl;
+  }
+}

@@ -1,47 +1,11 @@
 @import '../../common/styles/main.scss';
 
 .header {
-  &__inner {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 10vh;
-    width: 100%;
-    padding: 2% 5%;
-    background-color: $black;
-    color: $white;
-  }
-
-  &__logo-link {
-    text-decoration: none;
-    color: $white;
-    font-family: $font-logo;
-    font-size: 2.5rem;
-  }
-
-  &__cart {
-    @include flex-column();
-    align-items: center;
-    justify-content: space-between;
-  }
-  &____total-goods-container {
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    width: 40px;
-    height: 40px;
-    padding-bottom: 3px;
-    background-image: url('../../common/assets/icons/shopping-bag.svg');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-  }
-  &____total-goods {
-    color: $black;
-    margin: 0;
-    font-weight: 500;
-  }
-  &____total-price-container {
-    font-size: 0.9rem;
-  }
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 2% 5%;
+  background-color: $black;
+  color: $white;
 }
