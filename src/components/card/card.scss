@@ -5,7 +5,7 @@
 .card {
   @include flex-column();
   position: relative;
-  min-height: 20rem;
+  min-height: 200px;
   overflow-x: hidden;
 
   .card__title {
@@ -17,7 +17,7 @@
 
   .card__bottom {
     @include flex-column();
-    font-size: 1.3rem;
+    font-size: 0.8rem;
     padding: 3% 3% 3% 0;
   }
 
@@ -28,7 +28,7 @@
   }
 
   .card__rating-stock {
-    font-size: 1.2rem;
+    font-size: 0.7rem;
   }
 
   .card__price {
@@ -41,9 +41,9 @@
 
   .card__rating::before {
     content: '⭐';
-    font-size: 0.8rem;
+    font-size: 0.5rem;
     position: relative;
-    top: -0.2rem;
+    top: -0.1rem;
   }
 
   .card__stock {
@@ -55,7 +55,7 @@
     justify-content: flex-start;
     width: 100%;
     gap: 5%;
-    margin-top: 1rem;
+    margin-top: 10px;
   }
 }
 
@@ -75,7 +75,7 @@
     margin-top: 0;
     background-color: $black-transparent-07;
     color: $white;
-    font-size: 1.2rem;
+    font-size: 0.7rem;
     transform: translate(-100%, 0);
     transition: 0.5s;
   }
