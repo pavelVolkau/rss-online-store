@@ -1,3 +1,9 @@
+import 'normalize.css';
+import App from './common/app/App';
+
+const app = new App();
+app.start();
+
 // import { Data } from './common/types/data';
 // import { DataLoader } from './components/data-loader/dataLoader';
 
