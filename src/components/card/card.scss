@@ -1,7 +1,5 @@
 @import '../../common/styles/main.scss';
 
-// 1rem = 10px
-
 .card {
   @include flex-column();
   position: relative;
@@ -17,7 +15,7 @@
 
   .card__bottom {
     @include flex-column();
-    font-size: 0.8rem;
+    font-size: $fs-small;
     padding: 3% 3% 3% 0;
   }
 
@@ -28,7 +26,7 @@
   }
 
   .card__rating-stock {
-    font-size: 0.7rem;
+    font-size: $fs-small;
   }
 
   .card__price {
@@ -41,7 +39,7 @@
 
   .card__rating::before {
     content: '⭐';
-    font-size: 0.5rem;
+    font-size: $fs-xs;
     position: relative;
     top: -0.1rem;
   }
@@ -75,7 +73,7 @@
     margin-top: 0;
     background-color: $black-transparent-07;
     color: $white;
-    font-size: 0.7rem;
+    font-size: $fs-small;
     transform: translate(-100%, 0);
     transition: 0.5s;
   }
