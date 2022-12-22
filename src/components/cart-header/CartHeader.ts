@@ -1,30 +1,53 @@
+import { TAGS } from '../../common/helpers/constants';
 import './cart-header.scss';
 import IDrawComponent from '../../common/interface/IDrawComponent';
 import getDOMElement from '../../common/helpers/getDOMElement';
+
+const CONSTANTS = {
+  cart: {
+    class: 'cart',
+  },
+  cartGoodsContainer: {
+    class: 'cart__total-goods-container',
+  },
+  cartGoods: {
+    class: 'cart__total-goods',
+  },
+  cartPriceContainer: {
+    class: 'cart__total-price-container',
+    text: 'Cart total : ',
+  },
+  cartPrice: {
+    class: 'cart__total-price',
+  },
+  symbol: {
+    $: '$',
+  },
+};
 
 export default class CartHeader implements IDrawComponent {
   constructor(public goodsCount: number, public priceSum: number) {}
 
   public draw() {
-    const cart = getDOMElement('div', 'cart');
+    const cart = getDOMElement(TAGS.div, CONSTANTS.cart.class);
     const cartGoodsContainer = getDOMElement(
-      'div',
-      'cart__total-goods-container',
+      TAGS.div,
+      CONSTANTS.cartGoodsContainer.class,
     );
     const cartGoods = getDOMElement(
-      'p',
-      'cart__total-goods',
+      TAGS.div,
+      CONSTANTS.cartGoods.class,
       this.goodsCount.toString(),
     );
     const cartPriceContainer = getDOMElement(
-      'div',
-      'cart__total-price-container',
-      'Cart total : ',
+      TAGS.div,
+      CONSTANTS.cartPriceContainer.class,
+      CONSTANTS.cartPriceContainer.text,
     );
     const cartPrice = getDOMElement(
-      'span',
-      'cart__total-price',
-      `$${this.priceSum.toString()}`,
+      TAGS.span,
+      CONSTANTS.cartPrice.class,
+      `${CONSTANTS.symbol.$}${this.priceSum.toString()}`,
     );
 
     //после создания корзины добавить ее вызов

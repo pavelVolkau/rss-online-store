@@ -1,7 +1,10 @@
+// Если нужно пропустить аргумент, на его место необходимо вписать undefined!
+
 export default function getDOMElement(
   tagName: string,
   classList: string | string[],
   text?: string,
+  id?: string,
   atributes?: {
     [key: string]: string;
   },
@@ -16,6 +19,10 @@ export default function getDOMElement(
 
   if (text) {
     element.innerText = text;
+  }
+
+  if (id) {
+    element.id = id;
   }
 
   if (atributes) {
