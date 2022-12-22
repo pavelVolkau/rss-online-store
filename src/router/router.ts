@@ -1,15 +1,15 @@
-import { appConstants } from './constants';
+import { ROUTES } from '../common/helpers/constants';
 
 // TODO: импортировать шаблоны страниц
 
 export const routes = {
-  Main: `${appConstants.routes.index}`, // путь к главной странице
-  Details: `${appConstants.routes.details}`,
-  Cart: `${appConstants.routes.cart}`,
+  Main: `${ROUTES.index}`, // путь к главной странице
+  Details: `${ROUTES.details}`,
+  Cart: `${ROUTES.cart}`,
 };
 
 //принимает путь и заменяет контент в html в диве app-root
-export function render(path: string) {
+export function render(path: string): void {
   let result = '<h1>404 Not found</h1>'; //этот тег покажется если страницы с таким путем не существует
   if (routes.Main.match(path)) {
     //сравниваем совпадает ли переданный путь с путем к главной страницы
@@ -29,13 +29,13 @@ export function render(path: string) {
 }
 
 //функция для перехода на переданную страницу, все переходы по ссылкам должны происходить через эту функцию, иначе не будет писаться история в браузер
-export function goTo(path: string) {
+export function goTo(path: string): void {
   window.history.pushState({ path }, path, path); //добавляет путь в историю браузера, чтобы можно было потом переключать страницы стрелками в браузере
   render(path);
 }
 
 //функция инициализации роутинга
-export function initRouter() {
+export function initRouter(): void {
   // событие, кот вызывается при переходе по истории браузера
   //тут мы получается когда нажимаем на кнопки в браузере должна рендериться страница с url на который мы переходим
   window.addEventListener('popstate', () => {

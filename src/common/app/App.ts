@@ -1,12 +1,14 @@
 import './app-root.scss';
 import Footer from '../../components/footer/Footer';
 import Header from '../../components/header/Header';
+import { initRouter } from '../../router/router';
 
 export default class App {
   private header = new Header().draw() as HTMLElement;
   private footer = new Footer().draw() as HTMLElement;
 
   start(): void {
+    initRouter();
     const appRoot = document.querySelector('.app-root') as HTMLElement;
 
     appRoot.append(this.header, this.footer);

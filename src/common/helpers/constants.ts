@@ -40,3 +40,9 @@ export const INPUT_TYPE = {
   text: 'text',
   url: 'url',
 };
+
+export const ROUTES = {
+  index: '/', //route для главной страницы
+  details: '/details', //route для страницы деталей
+  cart: '/cart', //route для корзины
+};
