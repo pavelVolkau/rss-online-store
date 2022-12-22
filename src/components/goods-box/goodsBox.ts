@@ -1,22 +1,22 @@
 import './goodsBox.scss';
-import { Card } from '../card/card';
 import { Data } from '../../common/types/data';
+import { Card } from '../card/Card';
+import getDOMElement from '../../common/helpers/getDOMElement';
+import { TAGS } from '../../common/helpers/constants';
+import IDrawComponent from '../../common/interface/IDrawComponent';
 
-export class GoodsBox {
+export class GoodsBox implements IDrawComponent {
   private initCardsArr: Data[];
 
   constructor(data: Data[]) {
     this.initCardsArr = data;
   }
 
-  public drawBox(/* addToCart, changePage */): HTMLElement {
-    const box = document.createElement('div') as HTMLElement;
-    box.classList.add('goods__box');
+  public draw(/* addToCart, changePage */): HTMLElement {
+    const box: HTMLElement = getDOMElement(TAGS.div, 'goods__box');
 
     this.initCardsArr.forEach((element) => {
-      const card: Card = new Card(element);
-      const newElement: HTMLElement = card.draw(/* addToCart, changePage */);
-      box.appendChild(newElement);
+      box.appendChild(new Card(element).draw(/* addToCart, changePage */));
     });
 
     return box;
