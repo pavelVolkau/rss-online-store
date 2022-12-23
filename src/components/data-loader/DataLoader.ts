@@ -18,7 +18,7 @@ export class DataLoader {
     return res;
   }
 
-  // Пример вызова см. в index.ts
+  // Пример вызова см. в app.ts
   public getData(callback: CallbackDataFn): void {
     fetch(this.link)
       .then(this.errorHandler)
