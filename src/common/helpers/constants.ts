@@ -46,3 +46,5 @@ export const ROUTES = {
   details: '/details', //route для страницы деталей
   cart: '/cart', //route для корзины
 };
+
+export const LINK = 'https://dummyjson.com/products?limit=100';

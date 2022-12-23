@@ -1,5 +1,6 @@
 import './card.scss';
 import { Data } from '../../common/types/data';
+import { goTo } from '../../router/router';
 
 export class Card {
   private readonly data: Data;
@@ -7,7 +8,7 @@ export class Card {
   private readonly category: Data['category'];
   // private readonly description: Data['description'];
   private readonly discountPercentage: Data['discountPercentage'];
-  // private readonly id: Data['id'];
+  private readonly id: Data['id'];
   // private readonly images: Data['images'];
   private readonly price: Data['price'];
   private readonly rating: Data['rating'];
@@ -21,7 +22,7 @@ export class Card {
     this.category = this.data.category;
     // this.description = this.data.description;
     this.discountPercentage = this.data.discountPercentage;
-    // this.id = this.data.id;
+    this.id = this.data.id;
     // this.images = this.data.images;
     this.price = this.data.price;
     this.rating = this.data.rating;
@@ -48,8 +49,12 @@ export class Card {
 
     const cardImg = cardClone.querySelector('.card__img') as HTMLElement;
     cardImg.style.backgroundImage = `url(${this.thumbnail})`;
+    // cardImg.setAttribute('href', `#${this.id}`);
 
-    // cardImg.addEventListener('click', (e) => { changePage(e) })              //листнер перехода на др страницу
+    cardImg.addEventListener('click', (e) => {
+      e.stopPropagation();
+      goTo(`/details#${this.id}`);
+    }); //листнер перехода на др страницу
 
     const cardCategory = cardClone.querySelector(
       '.card__category',
