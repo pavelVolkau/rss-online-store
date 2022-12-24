@@ -1,0 +1,10 @@
+@import './abstracts/base';
+
+* {
+  box-sizing: border-box;
+  font-family: $font-usual;
+}
+
+body {
+  margin: 0;
+}
