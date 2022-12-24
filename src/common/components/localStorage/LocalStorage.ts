@@ -1,9 +1,6 @@
 import { Data } from '../../types/data';
-import { toData, toJSON } from './helpers';
-
-const CONSTANTS = {
-  localStorageKey: 'selectedGoods',
-};
+import { toData, toJSON } from '../../helpers/jsonChange';
+import CONSTANTS from './constants';
 
 export default class LocalStorage {
   static getLocalStorageData(): Data[] | void {

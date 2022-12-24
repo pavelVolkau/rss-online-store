@@ -1,4 +1,4 @@
-import { Data } from '../../types/data';
+import { Data } from '../types/data';
 
 export function toJSON(data: Data[]): string {
   return JSON.stringify(data);

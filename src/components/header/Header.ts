@@ -1,15 +1,10 @@
 import { TAGS } from '../../common/helpers/constants';
+import CONSTANTS from './constants';
 import './header.scss';
 import IDrawComponent from '../../common/interface/IDrawComponent';
 import getDOMElement from '../../common/helpers/getDOMElement';
 import Logo from '../logo/Logo';
 import CartHeader from '../cart-header/CartHeader';
-
-const CONSTANTS = {
-  header: {
-    class: 'header',
-  },
-};
 
 export default class Header implements IDrawComponent {
   public draw() {

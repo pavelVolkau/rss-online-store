@@ -1,30 +1,9 @@
 import { TAGS } from '../../common/helpers/constants';
+import CONSTANTS from './constants';
 import './cart-header.scss';
 import IDrawComponent from '../../common/interface/IDrawComponent';
 import getDOMElement from '../../common/helpers/getDOMElement';
 import store, { RootState } from '../../common/redux/store';
-
-const CONSTANTS = {
-  cart: {
-    class: 'cart',
-  },
-  cartGoodsContainer: {
-    class: 'cart__total-goods-container',
-  },
-  cartGoods: {
-    class: 'cart__total-goods',
-  },
-  cartPriceContainer: {
-    class: 'cart__total-price-container',
-    text: 'Cart total : ',
-  },
-  cartPrice: {
-    class: 'cart__total-price',
-  },
-  symbol: {
-    $: '$',
-  },
-};
 
 export default class CartHeader implements IDrawComponent {
   constructor(public goodsCount: number, public priceSum: number) {}
@@ -48,7 +27,7 @@ export default class CartHeader implements IDrawComponent {
 
       cartGoods.innerText = state.goodsCount.count.toString();
       cartPrice.innerText = `${
-        CONSTANTS.symbol.$
+        CONSTANTS.symbol.dollar
       }${state.priceSum.price.toString()}`;
     });
 
