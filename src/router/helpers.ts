@@ -7,7 +7,7 @@ const QueryParams = {
   stock: 'stock',
   sort: 'sort',
   search: 'search',
-  size: 'size',
+  inline: 'inline',
 };
 
 export function createLink(location: HTMLLinkElement | Location) {
@@ -44,6 +44,49 @@ export function elemInQuery(query: string, element: Data): boolean {
     search = elemContainsQuerySearch(query, QueryParams.search, element);
   }
   return category && brand && price && stock && search;
+}
+
+export function sortArr(query: string, arrayToSort: Data[]): Data[] {
+  let sortedArr: Data[] = arrayToSort;
+  if (queryHasParam(query, QueryParams.sort)) {
+    let sortString = '';
+    query.split('&').forEach((el: string) => {
+      if (el.split('=')[0] === QueryParams.sort) {
+        sortString = el.split('=')[1];
+      }
+    });
+    switch (sortString) {
+      case 'price-ASC':
+        sortedArr = arrayToSort.sort((a: Data, b: Data) => a.price - b.price);
+        break;
+      case 'price-DESC':
+        sortedArr = arrayToSort.sort((a: Data, b: Data) => b.price - a.price);
+        break;
+      case 'rating-ASC':
+        sortedArr = arrayToSort.sort((a: Data, b: Data) => a.rating - b.rating);
+        break;
+      case 'rating-DESC':
+        sortedArr = arrayToSort.sort((a: Data, b: Data) => b.rating - a.rating);
+        break;
+    }
+  }
+  return sortedArr;
+}
+
+export function isInline(query: string): boolean {
+  let result = false;
+  if (queryHasParam(query, QueryParams.inline)) {
+    query.split('&').forEach((el: string) => {
+      if (el.split('=')[0] === QueryParams.inline) {
+        if (el.split('=')[1] === 'true') {
+          result = true;
+        } else if (el.split('=')[1] === 'false') {
+          result = false;
+        }
+      }
+    });
+  }
+  return result;
 }
 
 function queryHasParam(query: string, param: string): boolean {

@@ -32,10 +32,16 @@ export class Card {
   }
 
   // Метод только возвращает отрисованную карточку, никуда ее пока не добавляет
-  public draw(/* addToCart, changePage */): HTMLElement {
-    const cardTemplate = document.querySelector(
+  public draw(view?: boolean): HTMLElement {
+    let cardTemplate = document.querySelector(
       '#card-template',
     ) as HTMLTemplateElement;
+    if (view) {
+      cardTemplate = document.querySelector(
+        '#card-template-inline',
+      ) as HTMLTemplateElement;
+    }
+
     const cardClone = cardTemplate.content.cloneNode(true) as HTMLElement;
 
     // Чтобы название вмещалось в одну строку удаляем лишние символы, если они есть, и добавляем многоточие
@@ -49,7 +55,6 @@ export class Card {
 
     const cardImg = cardClone.querySelector('.card__img') as HTMLElement;
     cardImg.style.backgroundImage = `url(${this.thumbnail})`;
-    // cardImg.setAttribute('href', `#${this.id}`);
 
     cardImg.addEventListener('click', (e) => {
       e.stopPropagation();

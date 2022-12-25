@@ -3,7 +3,7 @@ import { Data } from '../common/types/data';
 import { Card } from '../components/card/Card';
 import { DataLoader } from '../components/data-loader/DataLoader';
 import { GoodsBox } from '../components/goods-box/GoodsBox';
-import { createLink, elemInQuery } from './helpers';
+import { createLink, elemInQuery, isInline, sortArr } from './helpers';
 
 const loader = new DataLoader(LINK);
 // TODO: импортировать шаблоны страниц
@@ -28,10 +28,12 @@ export function render(path: string): void {
     } else {
       const queries = path.split('?')[1]; //отрезаем знак вопроса
       loader.getData((data: Data[]) => {
-        const newData = data.filter((elem) => {
+        let newData = data.filter((elem) => {
           return elemInQuery(queries, elem);
         });
-        appRoot.replaceChildren(new GoodsBox(newData).draw());
+        newData = sortArr(queries, newData);
+        const view = isInline(queries);
+        appRoot.replaceChildren(new GoodsBox(newData).draw(view));
       });
     }
   } else if (routes.Details.match(path.split('#')[0])) {
