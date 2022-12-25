@@ -1,0 +1,59 @@
+@import '../../common/styles/main.scss';
+
+.footer {
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0.5em 3em;
+  background-color: $black;
+  color: $white;
+  font-size: $fs-normal;
+
+  &__git-links-container {
+    display: flex;
+    gap: 1em;
+  }
+
+  &__git-link {
+    position: relative;
+    padding-top: 1.5em;
+    color: $white;
+    text-decoration: none;
+    font-size: $fs-normal;
+    &:hover {
+      color: $gray;
+    }
+    &::before {
+      content: url('../../common/assets/icons/github.svg');
+      position: absolute;
+      width: 1.5em;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 0;
+    }
+  }
+
+  &__rsschool-logo-container {
+    width: 5rem;
+    height: 2rem;
+    padding: 0.1em;
+    border-radius: 0.5em;
+    background-color: $white;
+  }
+
+  &__rsschool-logo {
+    display: block;
+    background-image: url('../../common/assets/icons/rsschool-logo.svg');
+    background-position: center;
+    background-size: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100%;
+  }
+
+  &__date {
+    font-size: $fs-large;
+  }
+}
