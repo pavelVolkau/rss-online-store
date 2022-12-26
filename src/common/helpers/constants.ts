@@ -42,9 +42,9 @@ export const INPUT_TYPE = {
 };
 
 export const ROUTES = {
-  index: '/', //route для главной страницы
-  details: '/details', //route для страницы деталей
-  cart: '/cart', //route для корзины
+  main: '/', //route для главной страницы
+  details: '/#details', //route для страницы деталей
+  cart: '/#cart', //route для корзины
 };
 
 export const LINK = 'https://dummyjson.com/products?limit=100';

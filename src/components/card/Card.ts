@@ -2,6 +2,7 @@ import './card.scss';
 import { Data } from '../../common/types/data';
 import { goTo } from '../../router/router';
 import IDrawComponent from '../../common/interface/IDrawComponent';
+import { ROUTES } from '../../common/helpers/constants';
 
 export class Card implements IDrawComponent {
   private readonly data: Data;
@@ -65,7 +66,7 @@ export class Card implements IDrawComponent {
 
     cardImg.addEventListener('click', (e) => {
       e.stopPropagation();
-      goTo(`/details#${this.id}`);
+      goTo(`${ROUTES.details}/${this.id}`);
     }); //листнер перехода на др страницу
 
     const cardCategory = cardClone.querySelector(

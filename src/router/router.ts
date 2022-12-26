@@ -8,17 +8,11 @@ import { createLink, elemInQuery, isInline, sortArr } from './helpers';
 const loader = new DataLoader(LINK);
 // TODO: импортировать шаблоны страниц
 
-export const routes = {
-  Main: `${ROUTES.index}`, // путь к главной странице
-  Details: `${ROUTES.details}`,
-  Cart: `${ROUTES.cart}`,
-};
-
 //принимает путь и заменяет контент в html в диве app-root
 export function render(path: string): void {
   const appRoot = document.querySelector('.app-root') as HTMLElement;
   // appRoot.innerHTML = '';
-  if (routes.Main.match(path.split('?')[0])) {
+  if (ROUTES.main.match(path.split('?')[0])) {
     //сравниваем совпадает ли переданный путь с путем к главной страницы
     // TODO: result = шаблон главной страницы
     if (path.split('?').length === 1) {
@@ -36,21 +30,24 @@ export function render(path: string): void {
         appRoot.replaceChildren(new GoodsBox(newData, view).draw());
       });
     }
-  } else if (routes.Details.match(path.split('#')[0])) {
+  } else if (ROUTES.details.match(`/${path.split('/')[1]}`)) {
     //TODO: Подумать как это можно привести к норм виду
     // TODO: result = шаблон страницы деталей
-    if (Number(path.split('#')[1]) > 0 && Number(path.split('#')[1]) < 101) {
-      loader.getData((data: Data[]) => {
+
+    loader.getData((data: Data[]) => {
+      const idArr: number[] = data.map((el) => el.id);
+      const cardIdFromPath = Number(path.split(ROUTES.details)[1].slice(1));
+      if (idArr.includes(cardIdFromPath)) {
         data.forEach((el: Data) => {
-          if (el.id === Number(path.split('#')[1])) {
+          if (el.id === cardIdFromPath) {
             appRoot.replaceChildren(new Card(el).draw());
           }
         });
-      });
-    } else {
-      appRoot.replaceChildren('<h1>Not found</h1>');
-    }
-  } else if (routes.Cart.match(path)) {
+      } else {
+        appRoot.replaceChildren('<h1>Not found</h1>');
+      }
+    });
+  } else if (ROUTES.cart.match(`/${path.split('/')[1]}`)) {
     // TODO: result = шаблон страницы с корзиной
     appRoot.replaceChildren('<h1>Cart </h1>');
   } else {
