@@ -1,8 +1,9 @@
 import './card.scss';
 import { Data } from '../../common/types/data';
 import { goTo } from '../../router/router';
+import IDrawComponent from '../../common/interface/IDrawComponent';
 
-export class Card {
+export class Card implements IDrawComponent {
   private readonly data: Data;
   private readonly brand: Data['brand'];
   private readonly category: Data['category'];
@@ -16,7 +17,9 @@ export class Card {
   private readonly thumbnail: Data['thumbnail'];
   private readonly title: Data['title'];
 
-  constructor(data: Data) {
+  private readonly view: boolean | undefined;
+
+  constructor(data: Data, view?: boolean) {
     this.data = data;
     this.brand = this.data.brand;
     this.category = this.data.category;
@@ -29,14 +32,18 @@ export class Card {
     this.stock = this.data.stock;
     this.thumbnail = this.data.thumbnail;
     this.title = this.data.title;
+
+    if (view) {
+      this.view = view;
+    }
   }
 
   // Метод только возвращает отрисованную карточку, никуда ее пока не добавляет
-  public draw(view?: boolean): HTMLElement {
+  public draw(): HTMLElement {
     let cardTemplate = document.querySelector(
       '#card-template',
     ) as HTMLTemplateElement;
-    if (view) {
+    if (this.view) {
       cardTemplate = document.querySelector(
         '#card-template-inline',
       ) as HTMLTemplateElement;

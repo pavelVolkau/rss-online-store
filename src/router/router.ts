@@ -33,7 +33,7 @@ export function render(path: string): void {
         });
         newData = sortArr(queries, newData);
         const view = isInline(queries);
-        appRoot.replaceChildren(new GoodsBox(newData).draw(view));
+        appRoot.replaceChildren(new GoodsBox(newData, view).draw());
       });
     }
   } else if (routes.Details.match(path.split('#')[0])) {
@@ -72,12 +72,12 @@ export function initRouter(): void {
     render(createLink(window.location));
   });
   //ищем все ссылки, которые ведут не в корень сайта, чтобы поставить им функцию goTo вместо дефолтного перехода
-  document.querySelectorAll('[href^="/"]').forEach((el) => {
-    el.addEventListener('click', (e) => {
-      e.preventDefault();
-      const target = e.target as HTMLLinkElement;
-      goTo(createLink(target));
-    });
-  });
+  // document.querySelectorAll('[href^="/"]').forEach((el) => {
+  //   el.addEventListener('click', (e) => {
+  //     e.preventDefault();
+  //     const target = e.target as HTMLLinkElement;
+  //     goTo(createLink(target));
+  //   });
+  // });
   render(createLink(window.location)); //этот рендер нужен для того, чтобы если нажать обновить страницу она обновилась правильно
 }
