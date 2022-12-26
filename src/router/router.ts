@@ -3,7 +3,7 @@ import { Data } from '../common/types/data';
 import { Card } from '../components/card/Card';
 import { DataLoader } from '../components/data-loader/DataLoader';
 import { GoodsBox } from '../components/goods-box/GoodsBox';
-import { createLink, elemInQuery, isInline, sortArr } from './helpers';
+import { applyQueries, createLink, isInline } from './helpers';
 
 const loader = new DataLoader(LINK);
 // TODO: импортировать шаблоны страниц
@@ -11,7 +11,6 @@ const loader = new DataLoader(LINK);
 //принимает путь и заменяет контент в html в диве app-root
 export function render(path: string): void {
   const appRoot = document.querySelector('.app-root') as HTMLElement;
-  // appRoot.innerHTML = '';
   if (ROUTES.main.match(path.split('?')[0])) {
     //сравниваем совпадает ли переданный путь с путем к главной страницы
     // TODO: result = шаблон главной страницы
@@ -22,16 +21,12 @@ export function render(path: string): void {
     } else {
       const queries = path.split('?')[1]; //отрезаем знак вопроса
       loader.getData((data: Data[]) => {
-        let newData = data.filter((elem) => {
-          return elemInQuery(queries, elem);
-        });
-        newData = sortArr(queries, newData);
+        const newDataArr = applyQueries(queries, data);
         const view = isInline(queries);
-        appRoot.replaceChildren(new GoodsBox(newData, view).draw());
+        appRoot.replaceChildren(new GoodsBox(newDataArr, view).draw());
       });
     }
   } else if (ROUTES.details.match(`/${path.split('/')[1]}`)) {
-    //TODO: Подумать как это можно привести к норм виду
     // TODO: result = шаблон страницы деталей
 
     loader.getData((data: Data[]) => {
