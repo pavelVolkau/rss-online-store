@@ -1,4 +1,9 @@
-import { LINK, ROUTES } from '../common/helpers/constants';
+import {
+  APP_ROOT,
+  LINK,
+  SEPARATORS,
+  ROUTES,
+} from '../common/helpers/constants';
 import { Data } from '../common/types/data';
 import { Card } from '../components/card/Card';
 import { DataLoader } from '../components/data-loader/DataLoader';
@@ -10,44 +15,62 @@ const loader = new DataLoader(LINK);
 
 //принимает путь и заменяет контент в html в диве app-root
 export function render(path: string): void {
-  const appRoot = document.querySelector('.app-root') as HTMLElement;
-  if (ROUTES.main.match(path.split('?')[0])) {
+  const pathWithQuery = path.split(SEPARATORS.searchQuery);
+  const pathName = pathWithQuery[0];
+  const query = pathWithQuery[1];
+
+  if (ROUTES.main.match(pathName)) {
     //сравниваем совпадает ли переданный путь с путем к главной страницы
     // TODO: result = шаблон главной страницы
-    if (path.split('?').length === 1) {
+    if (pathWithQuery.length === 1) {
       loader.getData((data: Data[]) => {
-        appRoot.replaceChildren(new GoodsBox(data).draw());
+        APP_ROOT.replaceChildren(new GoodsBox(data).draw());
       });
-    } else {
-      const queries = path.split('?')[1]; //отрезаем знак вопроса
-      loader.getData((data: Data[]) => {
-        const newDataArr = applyQueries(queries, data);
-        const view = isInline(queries);
-        appRoot.replaceChildren(new GoodsBox(newDataArr, view).draw());
-      });
+
+      return;
     }
-  } else if (ROUTES.details.match(`/${path.split('/')[1]}`)) {
+    loader.getData((data: Data[]) => {
+      const newDataArr = applyQueries(query, data);
+      const view = isInline(query);
+      APP_ROOT.replaceChildren(new GoodsBox(newDataArr, view).draw());
+    });
+
+    return;
+  }
+
+  const pagePathNameWithQuery = path.split(SEPARATORS.path);
+  const pagePathName = SEPARATORS.path + pagePathNameWithQuery[1];
+  const pageQuery = pagePathNameWithQuery[2];
+
+  if (ROUTES.details.match(pagePathName)) {
     // TODO: result = шаблон страницы деталей
 
     loader.getData((data: Data[]) => {
       const idArr: number[] = data.map((el) => el.id);
-      const cardIdFromPath = Number(path.split(ROUTES.details)[1].slice(1));
-      if (idArr.includes(cardIdFromPath)) {
-        data.forEach((el: Data) => {
-          if (el.id === cardIdFromPath) {
-            appRoot.replaceChildren(new Card(el).draw());
-          }
-        });
-      } else {
-        appRoot.replaceChildren('<h1>Not found</h1>');
+      const cardIdFromPath = Number(pageQuery);
+      const currentCardIndex = idArr.indexOf(cardIdFromPath);
+
+      if (currentCardIndex !== -1) {
+        APP_ROOT.replaceChildren(new Card(data[currentCardIndex]).draw());
+
+        return;
       }
+
+      APP_ROOT.replaceChildren('<h1>Not found</h1>');
+
+      return;
     });
-  } else if (ROUTES.cart.match(`/${path.split('/')[1]}`)) {
-    // TODO: result = шаблон страницы с корзиной
-    appRoot.replaceChildren('<h1>Cart </h1>');
-  } else {
-    appRoot.replaceChildren('<h1>Not found</h1>');
   }
+
+  if (ROUTES.cart.match(pagePathName)) {
+    // TODO: result = шаблон страницы с корзиной
+    APP_ROOT.replaceChildren('<h1>Cart </h1>');
+
+    return;
+  }
+  APP_ROOT.replaceChildren('<h1>Not found</h1>');
+
+  return;
 }
 
 //функция для перехода на переданную страницу, все переходы по ссылкам должны происходить через эту функцию, иначе не будет писаться история в браузер
@@ -63,13 +86,6 @@ export function initRouter(): void {
   window.addEventListener('popstate', () => {
     render(createLink(window.location));
   });
-  //ищем все ссылки, которые ведут не в корень сайта, чтобы поставить им функцию goTo вместо дефолтного перехода
-  // document.querySelectorAll('[href^="/"]').forEach((el) => {
-  //   el.addEventListener('click', (e) => {
-  //     e.preventDefault();
-  //     const target = e.target as HTMLLinkElement;
-  //     goTo(createLink(target));
-  //   });
-  // });
+
   render(createLink(window.location)); //этот рендер нужен для того, чтобы если нажать обновить страницу она обновилась правильно
 }

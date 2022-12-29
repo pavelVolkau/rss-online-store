@@ -2,7 +2,13 @@ import './card.scss';
 import { Data } from '../../common/types/data';
 import { goTo } from '../../router/router';
 import IDrawComponent from '../../common/interface/IDrawComponent';
-import { ROUTES } from '../../common/helpers/constants';
+import { ROUTES, SEPARATORS } from '../../common/helpers/constants';
+import {
+  CARD_CLASSES,
+  CARD_TEMPLATE_DEFAULT,
+  CARD_TEMPLATE_INLINE,
+  TITLE_LENGTH,
+} from './helpers';
 
 export class Card implements IDrawComponent {
   private readonly data: Data;
@@ -41,54 +47,61 @@ export class Card implements IDrawComponent {
 
   // Метод только возвращает отрисованную карточку, никуда ее пока не добавляет
   public draw(): HTMLElement {
-    let cardTemplate = document.querySelector(
-      '#card-template',
-    ) as HTMLTemplateElement;
-    if (this.view) {
-      cardTemplate = document.querySelector(
-        '#card-template-inline',
-      ) as HTMLTemplateElement;
-    }
+    let cardClone = CARD_TEMPLATE_DEFAULT.content.cloneNode(
+      true,
+    ) as HTMLElement;
 
-    const cardClone = cardTemplate.content.cloneNode(true) as HTMLElement;
+    if (this.view) {
+      cardClone = CARD_TEMPLATE_INLINE.content.cloneNode(true) as HTMLElement;
+    }
 
     // Чтобы название вмещалось в одну строку удаляем лишние символы, если они есть, и добавляем многоточие
     let title: string = this.title;
-    if (title.length > 20) {
-      title = `${title.slice(0, 20)}...`;
+    if (title.length > TITLE_LENGTH) {
+      title = `${title.slice(0, TITLE_LENGTH)}...`;
     }
 
-    const cardTitle = cardClone.querySelector('.card__title') as HTMLElement;
+    const cardTitle = cardClone.querySelector(
+      CARD_CLASSES.title,
+    ) as HTMLElement;
     cardTitle.innerText = title;
 
-    const cardImg = cardClone.querySelector('.card__img') as HTMLElement;
+    const cardImg = cardClone.querySelector(CARD_CLASSES.img) as HTMLElement;
     cardImg.style.backgroundImage = `url(${this.thumbnail})`;
 
     cardImg.addEventListener('click', (e) => {
       e.stopPropagation();
-      goTo(`${ROUTES.details}/${this.id}`);
+      goTo(`${ROUTES.details + SEPARATORS.path}${this.id}`);
     }); //листнер перехода на др страницу
 
     const cardCategory = cardClone.querySelector(
-      '.card__category',
+      CARD_CLASSES.category,
     ) as HTMLElement;
     cardCategory.innerText = `Category: ${this.category}`;
 
-    const cardBrand = cardClone.querySelector('.card__brand') as HTMLElement;
+    const cardBrand = cardClone.querySelector(
+      CARD_CLASSES.brand,
+    ) as HTMLElement;
     cardBrand.innerText = `Brand: ${this.brand}`;
 
-    const cardPrice = cardClone.querySelector('.card__price') as HTMLElement;
+    const cardPrice = cardClone.querySelector(
+      CARD_CLASSES.price,
+    ) as HTMLElement;
     cardPrice.innerText = `$${this.price}`;
 
     const cardDiscount = cardClone.querySelector(
-      '.card__discount',
+      CARD_CLASSES.discount,
     ) as HTMLElement;
     cardDiscount.innerText = `-${this.discountPercentage}%`;
 
-    const cardRating = cardClone.querySelector('.card__rating') as HTMLElement;
+    const cardRating = cardClone.querySelector(
+      CARD_CLASSES.rating,
+    ) as HTMLElement;
     cardRating.innerText = `${this.rating}`;
 
-    const cardStock = cardClone.querySelector('.card__stock') as HTMLElement;
+    const cardStock = cardClone.querySelector(
+      CARD_CLASSES.stock,
+    ) as HTMLElement;
     cardStock.innerText = `left: ${this.stock}`;
 
     // может можно в эти листнеры передать сразу this.data?

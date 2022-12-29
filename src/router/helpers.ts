@@ -1,14 +1,11 @@
+import {
+  INLINE_OPTIONS,
+  QUERY_PARAMS,
+  SORT_OPTIONS,
+  SEPARATORS,
+} from '../common/helpers/constants';
+import { getQueryParamSubcategories } from '../common/helpers/getQueryParamSubcategories';
 import { Data } from '../common/types/data';
-
-const QueryParams = {
-  category: 'category',
-  brand: 'brand',
-  price: 'price',
-  stock: 'stock',
-  sort: 'sort',
-  search: 'search',
-  inline: 'inline',
-};
 
 export function createLink(location: HTMLLinkElement | Location) {
   return new URL(location.href).pathname.concat(
@@ -19,164 +16,144 @@ export function createLink(location: HTMLLinkElement | Location) {
 
 export function applyQueries(queries: string, data: Data[]): Data[] {
   let newData = data.filter((elem) => {
-    return elemInQuery(queries, elem);
+    return isElemInQuery(queries, elem);
   });
+
   newData = sortArr(queries, newData);
+
   return newData;
 }
 
 export function isInline(query: string): boolean {
   let result = false;
-  if (queryHasParam(query, QueryParams.inline)) {
-    query.split('&').forEach((el: string) => {
-      if (el.split('=')[0] === QueryParams.inline) {
-        if (el.split('=')[1] === 'true') {
-          result = true;
-        } else if (el.split('=')[1] === 'false') {
-          result = false;
-        }
-      }
-    });
-  }
+
+  const inline = String(getQueryParamSubcategories(query, QUERY_PARAMS.inline));
+  inline === INLINE_OPTIONS.true ? (result = true) : (result = false);
+
   return result;
 }
 
-function elemInQuery(query: string, element: Data): boolean {
-  let category = true;
-  let brand = true;
-  let price = true;
-  let stock = true;
-  let search = true;
-  // если параметр есть в квери, то мы проверяем содержит ли его элемент, если нет, то остается true, чтобы он пропускался
-  if (queryHasParam(query, QueryParams.category)) {
-    category = elemContainsQueryCategoryBrand(
-      query,
-      QueryParams.category,
-      element,
-    );
-  }
-  if (queryHasParam(query, QueryParams.brand)) {
-    brand = elemContainsQueryCategoryBrand(query, QueryParams.brand, element);
-  }
-  if (queryHasParam(query, QueryParams.price)) {
-    price = elemContainsQueryPriceStock(query, QueryParams.price, element);
-  }
-  if (queryHasParam(query, QueryParams.stock)) {
-    stock = elemContainsQueryPriceStock(query, QueryParams.stock, element);
-  }
-  if (queryHasParam(query, QueryParams.search)) {
-    search = elemContainsQuerySearch(query, QueryParams.search, element);
-  }
+function isElemInQuery(query: string, element: Data): boolean {
+  const category = doesElemContainQueryCategoryBrand(
+    query,
+    QUERY_PARAMS.category,
+    element,
+  );
+  const brand = doesElemContainQueryCategoryBrand(
+    query,
+    QUERY_PARAMS.brand,
+    element,
+  );
+  const price = doesElemContainQueryPriceStock(
+    query,
+    QUERY_PARAMS.price,
+    element,
+  );
+  const stock = doesElemContainQueryPriceStock(
+    query,
+    QUERY_PARAMS.stock,
+    element,
+  );
+  const search = doesElemContainQuerySearch(
+    query,
+    QUERY_PARAMS.search,
+    element,
+  );
+
   return category && brand && price && stock && search;
 }
 
 function sortArr(query: string, arrayToSort: Data[]): Data[] {
   let sortedArr: Data[] = arrayToSort;
-  if (queryHasParam(query, QueryParams.sort)) {
-    let sortString = '';
-    query.split('&').forEach((el: string) => {
-      if (el.split('=')[0] === QueryParams.sort) {
-        sortString = el.split('=')[1];
-      }
-    });
-    switch (sortString) {
-      case 'price-ASC':
-        sortedArr = arrayToSort.sort((a: Data, b: Data) => a.price - b.price);
-        break;
-      case 'price-DESC':
-        sortedArr = arrayToSort.sort((a: Data, b: Data) => b.price - a.price);
-        break;
-      case 'rating-ASC':
-        sortedArr = arrayToSort.sort((a: Data, b: Data) => a.rating - b.rating);
-        break;
-      case 'rating-DESC':
-        sortedArr = arrayToSort.sort((a: Data, b: Data) => b.rating - a.rating);
-        break;
-    }
+  const sortString = String(
+    getQueryParamSubcategories(query, QUERY_PARAMS.sort),
+  ); //возвращает массив строк или []
+
+  switch (sortString) {
+    case SORT_OPTIONS.priceASC:
+      sortedArr = arrayToSort.sort((a: Data, b: Data) => a.price - b.price);
+      break;
+
+    case SORT_OPTIONS.priceDESC:
+      sortedArr = arrayToSort.sort((a: Data, b: Data) => b.price - a.price);
+      break;
+
+    case SORT_OPTIONS.ratingASC:
+      sortedArr = arrayToSort.sort((a: Data, b: Data) => a.rating - b.rating);
+      break;
+
+    case SORT_OPTIONS.ratingDESC:
+      sortedArr = arrayToSort.sort((a: Data, b: Data) => b.rating - a.rating);
+      break;
   }
+
   return sortedArr;
 }
 
-function queryHasParam(query: string, param: string): boolean {
-  const queryArr = query.split('&');
-  let result = false;
-  queryArr.forEach((el: string) => {
-    if (el.split('=')[0] === param) {
-      result = true;
-    }
-  });
-  return result;
-}
-
 //для текстовых параметров category, brand
-function elemContainsQueryCategoryBrand(
+function doesElemContainQueryCategoryBrand(
   query: string,
   param: string,
   element: Data,
 ): boolean {
-  const queryArr = query.split('&'); // вид ссылки будет такой category=laptops%fragrances&brand=Samsung&price=600%1400...
-  let result = false;
-  queryArr.forEach((el: string) => {
-    if (el.split('=')[0] === param) {
-      el.split('=')[1]
-        .split('%') //Этим значком будем делить разные фильтры внутри категории,н.п. category=laptops%fragrances%...
-        .forEach((val: string) => {
-          if (val === String(element[param as keyof Data]).toLowerCase()) {
-            result = true;
-          }
-        });
-    }
-  });
-  return result;
+  // вид ссылки будет такой category=laptops%fragrances&brand=Samsung&price=600%1400...
+  const subcategories = getQueryParamSubcategories(query, param);
+  const elementParam = element[param as keyof Data];
+
+  if (subcategories.length === 0) {
+    return true;
+  }
+
+  return subcategories.includes(String(elementParam).toLowerCase())
+    ? true
+    : false;
 }
 
 //для числовых параметров price, stock
-function elemContainsQueryPriceStock(
+function doesElemContainQueryPriceStock(
   query: string,
   param: string,
   element: Data,
 ): boolean {
-  const queryArr = query.split('&'); // вид ссылки будет такой category=laptops%fragrances&brand=Samsung&price=600%1400...
-  let result = false;
-  queryArr.forEach((el: string) => {
-    if (el.split('=')[0] === param) {
-      const min = Number(el.split('=')[1].split('%')[0]);
-      const max = Number(el.split('=')[1].split('%')[1]);
-      if (
-        element[param as keyof Data] >= min &&
-        element[param as keyof Data] <= max
-      ) {
-        result = true;
-      }
-    }
-  });
-  return result;
+  // вид ссылки будет такой category=laptops%fragrances&brand=Samsung&price=600%1400...
+  const range = getQueryParamSubcategories(query, param);
+  const min = Number(range[0]);
+  const max = Number(range[1]);
+  const elemValue = element[param as keyof Data];
+
+  if (range.length === 0) {
+    return true;
+  }
+
+  return elemValue > min && elemValue < max ? true : false;
 }
 
 //для поиска search
-function elemContainsQuerySearch(
+function doesElemContainQuerySearch(
   query: string,
   param: string,
   element: Data,
 ): boolean {
-  const queryArr = query.split('&'); // вид ссылки будет такой category=laptops%fragrances&brand=Samsung&price=600%1400...
-  let result = false;
-  queryArr.forEach((el: string) => {
-    if (el.split('=')[0] === param) {
-      const searchString = el.split('=')[1].split('%').join(' ').toLowerCase();
-      if (
-        element.brand.toLowerCase().includes(searchString) ||
-        element.category.toLowerCase().includes(searchString) ||
-        element.description.toLowerCase().includes(searchString) ||
-        String(element.discountPercentage).includes(searchString) ||
-        String(element.price).includes(searchString) ||
-        String(element.rating).includes(searchString) ||
-        String(element.stock).includes(searchString) ||
-        element.title.toLowerCase().includes(searchString)
-      ) {
-        result = true;
-      }
-    }
-  });
-  return result;
+  const searchArr = getQueryParamSubcategories(query, param);
+  const searchString = searchArr.join(SEPARATORS.words).toLowerCase();
+
+  if (searchArr.length === 0) {
+    return true;
+  }
+
+  // вид ссылки будет такой category=laptops%fragrances&brand=Samsung&price=600%1400...
+  if (
+    element.brand.toLowerCase().includes(searchString) ||
+    element.category.toLowerCase().includes(searchString) ||
+    element.description.toLowerCase().includes(searchString) ||
+    String(element.discountPercentage).includes(searchString) ||
+    String(element.price).includes(searchString) ||
+    String(element.rating).includes(searchString) ||
+    String(element.stock).includes(searchString) ||
+    element.title.toLowerCase().includes(searchString)
+  ) {
+    return true;
+  }
+
+  return false;
 }
