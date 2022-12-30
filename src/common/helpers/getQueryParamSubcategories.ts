@@ -4,7 +4,7 @@ export function getQueryParamSubcategories(
   query: string,
   param: string,
 ): string[] {
-  let subcategoriesArr: string[] | undefined = [];
+  let subcategoriesArr: string[] = [];
   const queryArr = query.split(SEPARATORS.queryParams);
 
   queryArr.forEach((el) => {

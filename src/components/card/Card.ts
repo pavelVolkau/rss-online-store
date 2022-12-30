@@ -4,9 +4,11 @@ import { goTo } from '../../router/router';
 import IDrawComponent from '../../common/interface/IDrawComponent';
 import { ROUTES, SEPARATORS } from '../../common/helpers/constants';
 import {
+  CAPTIONS,
   CARD_CLASSES,
   CARD_TEMPLATE_DEFAULT,
   CARD_TEMPLATE_INLINE,
+  SYMBOLS,
   TITLE_LENGTH,
 } from './helpers';
 
@@ -58,7 +60,7 @@ export class Card implements IDrawComponent {
     // Чтобы название вмещалось в одну строку удаляем лишние символы, если они есть, и добавляем многоточие
     let title: string = this.title;
     if (title.length > TITLE_LENGTH) {
-      title = `${title.slice(0, TITLE_LENGTH)}...`;
+      title = title.slice(0, TITLE_LENGTH) + SYMBOLS.dots;
     }
 
     const cardTitle = cardClone.querySelector(
@@ -77,32 +79,33 @@ export class Card implements IDrawComponent {
     const cardCategory = cardClone.querySelector(
       CARD_CLASSES.category,
     ) as HTMLElement;
-    cardCategory.innerText = `Category: ${this.category}`;
+    cardCategory.innerText = CAPTIONS.category + this.category;
 
     const cardBrand = cardClone.querySelector(
       CARD_CLASSES.brand,
     ) as HTMLElement;
-    cardBrand.innerText = `Brand: ${this.brand}`;
+    cardBrand.innerText = CAPTIONS.brand + this.brand;
 
     const cardPrice = cardClone.querySelector(
       CARD_CLASSES.price,
     ) as HTMLElement;
-    cardPrice.innerText = `$${this.price}`;
+    cardPrice.innerText = SYMBOLS.dollar + String(this.price);
 
     const cardDiscount = cardClone.querySelector(
       CARD_CLASSES.discount,
     ) as HTMLElement;
-    cardDiscount.innerText = `-${this.discountPercentage}%`;
+    cardDiscount.innerText =
+      SYMBOLS.minus + String(this.discountPercentage) + SYMBOLS.percent;
 
     const cardRating = cardClone.querySelector(
       CARD_CLASSES.rating,
     ) as HTMLElement;
-    cardRating.innerText = `${this.rating}`;
+    cardRating.innerText = String(this.rating);
 
     const cardStock = cardClone.querySelector(
       CARD_CLASSES.stock,
     ) as HTMLElement;
-    cardStock.innerText = `left: ${this.stock}`;
+    cardStock.innerText = CAPTIONS.left + String(this.stock);
 
     // может можно в эти листнеры передать сразу this.data?
 

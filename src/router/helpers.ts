@@ -25,12 +25,9 @@ export function applyQueries(queries: string, data: Data[]): Data[] {
 }
 
 export function isInline(query: string): boolean {
-  let result = false;
-
   const inline = String(getQueryParamSubcategories(query, QUERY_PARAMS.inline));
-  inline === INLINE_OPTIONS.true ? (result = true) : (result = false);
 
-  return result;
+  return inline === INLINE_OPTIONS.true ? true : false;
 }
 
 function isElemInQuery(query: string, element: Data): boolean {
