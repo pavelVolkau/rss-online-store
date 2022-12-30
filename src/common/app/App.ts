@@ -1,7 +1,10 @@
-import './app-root.scss';
+import './app.scss';
 import Footer from '../../components/footer/Footer';
 import Header from '../../components/header/Header';
 import { initRouter } from '../../router/router';
+import getDOMElement from '../helpers/getDOMElement';
+import { TAGS } from '../helpers/constants';
+import CONSTANTS from './constants';
 // import { LINK } from '../helpers/constants';
 // import { Data } from '../types/data';
 
@@ -12,10 +15,14 @@ export default class App {
   private footer = new Footer().draw() as HTMLElement;
 
   start(): void {
-    initRouter();
-    const appRoot = document.querySelector('.app-root') as HTMLElement;
+    const BODY = document.body;
+    const main = getDOMElement(TAGS.main, CONSTANTS.main.class);
+    const appRoot = getDOMElement(TAGS.div, CONSTANTS.appRoot.class);
 
-    appRoot.append(this.header, this.footer);
+    main.append(appRoot);
+
+    BODY.append(this.header, main, this.footer);
+    initRouter();
   }
 }
 
