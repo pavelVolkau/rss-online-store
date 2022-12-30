@@ -4,7 +4,7 @@ import { Card } from '../card/Card';
 import IDrawComponent from '../../common/interface/IDrawComponent';
 import { TAGS } from '../../common/helpers/constants';
 import getDOMElement from '../../common/helpers/getDOMElement';
-import { BOX_CLASSES } from './helpers';
+import { BOX_CLASSES } from './constants';
 
 export class GoodsBox implements IDrawComponent {
   private initCardsArr: Data[];

@@ -10,7 +10,7 @@ import {
   CARD_TEMPLATE_INLINE,
   SYMBOLS,
   TITLE_LENGTH,
-} from './helpers';
+} from './constants';
 
 export class Card implements IDrawComponent {
   private readonly data: Data;
