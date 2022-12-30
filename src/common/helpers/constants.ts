@@ -40,3 +40,44 @@ export const INPUT_TYPE = {
   text: 'text',
   url: 'url',
 };
+
+export const APP_ROOT = document.querySelector('.app-root') as HTMLElement;
+
+export const SEPARATORS = {
+  searchQuery: '?',
+  path: '/',
+  queryParams: '&',
+  paramsAndSubcategories: '=',
+  subcategory: '%',
+  words: ' ',
+};
+
+export const INLINE_OPTIONS = {
+  true: 'true',
+  false: 'false',
+};
+
+export const ROUTES = {
+  main: '/', //route для главной страницы
+  details: '/#details', //route для страницы деталей
+  cart: '/#cart', //route для корзины
+};
+
+export const LINK = 'https://dummyjson.com/products?limit=100';
+
+export const SORT_OPTIONS = {
+  priceASC: 'price-ASC',
+  priceDESC: 'price-DESC',
+  ratingASC: 'rating-ASC',
+  ratingDESC: 'rating-DESC',
+};
+
+export const QUERY_PARAMS = {
+  category: 'category',
+  brand: 'brand',
+  price: 'price',
+  stock: 'stock',
+  sort: 'sort',
+  search: 'search',
+  inline: 'inline',
+};
