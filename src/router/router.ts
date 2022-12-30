@@ -5,8 +5,8 @@ import {
   ROUTES,
 } from '../common/helpers/constants';
 import { Data } from '../common/types/data';
-import { Card } from '../components/card/Card';
 import { DataLoader } from '../components/data-loader/DataLoader';
+import { Details } from '../components/details/Details';
 import { GoodsBox } from '../components/goods-box/GoodsBox';
 import { applyQueries, createLink, isInline } from './helpers';
 
@@ -49,9 +49,8 @@ export function render(path: string): void {
       const idArr: number[] = data.map((el) => el.id);
       const cardIdFromPath = Number(pageQuery);
       const currentCardIndex = idArr.indexOf(cardIdFromPath);
-
       if (currentCardIndex !== -1) {
-        APP_ROOT.replaceChildren(new Card(data[currentCardIndex]).draw());
+        APP_ROOT.replaceChildren(new Details(data[currentCardIndex]).draw());
 
         return;
       }

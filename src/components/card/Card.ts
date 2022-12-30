@@ -13,18 +13,16 @@ import {
 } from './constants';
 
 export class Card implements IDrawComponent {
-  private readonly data: Data;
-  private readonly brand: Data['brand'];
-  private readonly category: Data['category'];
-  // private readonly description: Data['description'];
-  private readonly discountPercentage: Data['discountPercentage'];
-  private readonly id: Data['id'];
-  // private readonly images: Data['images'];
-  private readonly price: Data['price'];
-  private readonly rating: Data['rating'];
-  private readonly stock: Data['stock'];
-  private readonly thumbnail: Data['thumbnail'];
-  private readonly title: Data['title'];
+  protected readonly data: Data;
+  protected readonly brand: Data['brand'];
+  protected readonly category: Data['category'];
+  protected readonly discountPercentage: Data['discountPercentage'];
+  protected readonly id: Data['id'];
+  protected readonly price: Data['price'];
+  protected readonly rating: Data['rating'];
+  protected readonly stock: Data['stock'];
+  protected readonly thumbnail: Data['thumbnail'];
+  protected readonly title: Data['title'];
 
   private readonly view: boolean | undefined;
 
@@ -32,10 +30,8 @@ export class Card implements IDrawComponent {
     this.data = data;
     this.brand = this.data.brand;
     this.category = this.data.category;
-    // this.description = this.data.description;
     this.discountPercentage = this.data.discountPercentage;
     this.id = this.data.id;
-    // this.images = this.data.images;
     this.price = this.data.price;
     this.rating = this.data.rating;
     this.stock = this.data.stock;
