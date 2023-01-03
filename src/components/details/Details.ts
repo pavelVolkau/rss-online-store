@@ -1,10 +1,10 @@
 import './details.scss';
-import { TAGS } from '../../common/helpers/constants';
+import { CAPTIONS, SYMBOLS, TAGS } from '../../common/helpers/constants';
 import getDOMElement from '../../common/helpers/getDOMElement';
 import IDrawComponent from '../../common/interface/IDrawComponent';
 import { Data } from '../../common/types/data';
 import { Card } from '../card/Card';
-import { DETAILS_CLASSES, DETAILS_TEMPLATE } from './constants';
+import { DETAILS_CLASSES, DETAILS_TEMPLATE, IMG_ALT } from './constants';
 
 export class Details extends Card implements IDrawComponent {
   private readonly description: Data['description'];
@@ -37,11 +37,15 @@ export class Details extends Card implements IDrawComponent {
     detailsMainImg.style.backgroundImage = `url(${this.images[0]})`;
 
     this.images.forEach((url) => {
-      const image = getDOMElement(TAGS.div, DETAILS_CLASSES.img) as HTMLElement;
-      image.style.backgroundImage = `url(${url})`;
+      const image = getDOMElement(
+        TAGS.img,
+        DETAILS_CLASSES.img,
+      ) as HTMLImageElement;
+      image.src = url;
+      image.alt = IMG_ALT;
       detailsSlides.appendChild(image);
       image.addEventListener('click', () => {
-        detailsMainImg.style.backgroundImage = image.style.backgroundImage;
+        detailsMainImg.style.backgroundImage = `url(${image.src})`;
       });
     });
 
@@ -63,12 +67,13 @@ export class Details extends Card implements IDrawComponent {
     const detailsPrice = detailsClone.querySelector(
       DETAILS_CLASSES.price,
     ) as HTMLElement;
-    detailsPrice.innerText = String(this.price);
+    detailsPrice.innerText = SYMBOLS.dollar + String(this.price);
 
     const detailsDiscount = detailsClone.querySelector(
       DETAILS_CLASSES.discount,
     ) as HTMLElement;
-    detailsDiscount.innerText = String(this.discountPercentage);
+    detailsDiscount.innerText =
+      SYMBOLS.minus + String(this.discountPercentage) + SYMBOLS.percent;
 
     const detailsRating = detailsClone.querySelector(
       DETAILS_CLASSES.rating,
@@ -78,7 +83,7 @@ export class Details extends Card implements IDrawComponent {
     const detailsStock = detailsClone.querySelector(
       DETAILS_CLASSES.stock,
     ) as HTMLElement;
-    detailsStock.innerText = String(this.stock);
+    detailsStock.innerText = CAPTIONS.left + String(this.stock);
 
     return detailsClone;
   }

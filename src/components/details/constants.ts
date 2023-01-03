@@ -15,3 +15,5 @@ export const DETAILS_CLASSES = {
   rating: '.details__rating',
   stock: '.details__stock',
 };
+
+export const IMG_ALT = 'Product photo';

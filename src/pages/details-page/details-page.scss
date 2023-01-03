@@ -1,0 +1,9 @@
+@import '../../common/styles/main.scss';
+
+.main {
+  position: relative;
+  @include flex-column();
+  min-height: 100vh;
+  height: auto;
+  justify-content: space-between;
+}

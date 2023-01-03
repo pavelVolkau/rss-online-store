@@ -2,13 +2,16 @@ import './card.scss';
 import { Data } from '../../common/types/data';
 import { goTo } from '../../router/router';
 import IDrawComponent from '../../common/interface/IDrawComponent';
-import { ROUTES, SEPARATORS } from '../../common/helpers/constants';
 import {
   CAPTIONS,
+  ROUTES,
+  SEPARATORS,
+  SYMBOLS,
+} from '../../common/helpers/constants';
+import {
   CARD_CLASSES,
   CARD_TEMPLATE_DEFAULT,
   CARD_TEMPLATE_INLINE,
-  SYMBOLS,
   TITLE_LENGTH,
 } from './constants';
 

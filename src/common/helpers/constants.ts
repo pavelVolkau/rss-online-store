@@ -81,3 +81,16 @@ export const QUERY_PARAMS = {
   search: 'search',
   inline: 'inline',
 };
+
+export const SYMBOLS = {
+  dots: '...',
+  minus: '-',
+  percent: '%',
+  dollar: '$',
+};
+
+export const CAPTIONS = {
+  category: 'Category: ',
+  brand: 'Brand: ',
+  left: 'left: ',
+};

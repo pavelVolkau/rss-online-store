@@ -6,8 +6,8 @@ import {
 } from '../common/helpers/constants';
 import { Data } from '../common/types/data';
 import { DataLoader } from '../components/data-loader/DataLoader';
-import { Details } from '../components/details/Details';
 import { GoodsBox } from '../components/goods-box/GoodsBox';
+import { DetailsPage } from '../pages/details-page/DetailsPage';
 import { applyQueries, createLink, isInline } from './helpers';
 
 const loader = new DataLoader(LINK);
@@ -50,7 +50,9 @@ export function render(path: string): void {
       const cardIdFromPath = Number(pageQuery);
       const currentCardIndex = idArr.indexOf(cardIdFromPath);
       if (currentCardIndex !== -1) {
-        APP_ROOT.replaceChildren(new Details(data[currentCardIndex]).draw());
+        APP_ROOT.replaceChildren(
+          new DetailsPage(data[currentCardIndex]).draw(),
+        );
 
         return;
       }
