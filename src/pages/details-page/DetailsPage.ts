@@ -6,6 +6,7 @@ import { Data } from '../../common/types/data';
 import { Details } from '../../components/details/Details';
 import Footer from '../../components/footer/Footer';
 import Header from '../../components/header/Header';
+import { CLASS } from './constants';
 
 export class DetailsPage implements IDrawComponent {
   private footer: HTMLElement;
@@ -19,7 +20,7 @@ export class DetailsPage implements IDrawComponent {
   }
 
   draw(): HTMLElement {
-    const main = getDOMElement(TAGS.main, 'main');
+    const main = getDOMElement(TAGS.main, CLASS);
 
     main.append(this.header, this.details, this.footer);
 
