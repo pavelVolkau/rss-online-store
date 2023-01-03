@@ -1,1 +1,1 @@
-export const CLASS = 'main';
+export const CLASS = 'main__wrapper';

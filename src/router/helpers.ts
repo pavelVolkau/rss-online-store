@@ -101,7 +101,12 @@ function doesElemContainQueryCategoryBrand(
     return true;
   }
 
-  return subcategories.includes(String(elementParam).toLowerCase())
+  return subcategories.includes(
+    String(elementParam)
+      .split(SEPARATORS.words)
+      .join(SEPARATORS.queryWords)
+      .toLowerCase(),
+  )
     ? true
     : false;
 }

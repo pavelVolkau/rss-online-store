@@ -50,6 +50,7 @@ export const SEPARATORS = {
   paramsAndSubcategories: '=',
   subcategory: '%',
   words: ' ',
+  queryWords: '^',
 };
 
 export const INLINE_OPTIONS = {
