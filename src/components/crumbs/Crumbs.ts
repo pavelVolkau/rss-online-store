@@ -1,12 +1,13 @@
 import './crumbs.scss';
-import { QUERY_PARAMS, SEPARATORS, TAGS } from '../../common/helpers/constants';
+import { TAGS } from '../../common/helpers/constants';
 import getDOMElement from '../../common/helpers/getDOMElement';
 import IDrawComponent from '../../common/interface/IDrawComponent';
 import { Data } from '../../common/types/data';
 import { goTo } from '../../router/router';
 import { Card } from '../card/Card';
-import { CATEGORY_LINK, CLASSES, MAIN_LINK, TEXT } from './constants';
+import { CLASSES, TEXT } from './constants';
 import { createLink } from '../../common/helpers/createLink';
+import { createCrumbsLink } from './helpers';
 
 export class Crumbs extends Card implements IDrawComponent {
   constructor(data: Data) {
@@ -14,20 +15,10 @@ export class Crumbs extends Card implements IDrawComponent {
   }
 
   public draw(): HTMLElement {
-    const mainLink = MAIN_LINK;
-    const categoryLink =
-      CATEGORY_LINK + encodeURIComponent(this.category).toLowerCase();
-    const brandLink =
-      categoryLink +
-      SEPARATORS.queryParams +
-      QUERY_PARAMS.brand +
-      SEPARATORS.paramsAndSubcategories +
-      encodeURIComponent(this.brand).toLowerCase();
-
     const crumbs = getDOMElement(TAGS.div, CLASSES.crumbs);
 
     const store = getDOMElement(TAGS.a, CLASSES.store, TEXT.store, undefined, {
-      href: mainLink,
+      href: createCrumbsLink(),
     });
 
     const category = getDOMElement(
@@ -36,7 +27,7 @@ export class Crumbs extends Card implements IDrawComponent {
       this.category.toUpperCase(),
       undefined,
       {
-        href: categoryLink,
+        href: createCrumbsLink(this.category),
       },
     );
 
@@ -46,7 +37,7 @@ export class Crumbs extends Card implements IDrawComponent {
       this.brand.toUpperCase(),
       undefined,
       {
-        href: brandLink,
+        href: createCrumbsLink(this.category, this.brand),
       },
     );
 
