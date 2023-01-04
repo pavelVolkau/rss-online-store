@@ -49,6 +49,9 @@
 
         .details__image {
           width: 100%;
+          max-height: 40%;
+          object-fit: cover;
+          object-position: top;
           padding: 1%;
           transition: 0.3s;
           border-radius: 10px;
