@@ -48,9 +48,7 @@ export const SEPARATORS = {
   path: '/',
   queryParams: '&',
   paramsAndSubcategories: '=',
-  subcategory: '%',
-  words: ' ',
-  queryWords: '^',
+  subcategory: '^',
 };
 
 export const INLINE_OPTIONS = {

@@ -16,20 +16,13 @@ export class Crumbs extends Card implements IDrawComponent {
   public draw(): HTMLElement {
     const mainLink = MAIN_LINK;
     const categoryLink =
-      CATEGORY_LINK +
-      this.category
-        .split(SEPARATORS.words)
-        .join(SEPARATORS.queryWords)
-        .toLowerCase();
+      CATEGORY_LINK + encodeURIComponent(this.category).toLowerCase();
     const brandLink =
       categoryLink +
       SEPARATORS.queryParams +
       QUERY_PARAMS.brand +
       SEPARATORS.paramsAndSubcategories +
-      this.brand
-        .split(SEPARATORS.words)
-        .join(SEPARATORS.queryWords)
-        .toLowerCase();
+      encodeURIComponent(this.brand).toLowerCase();
 
     const crumbs = getDOMElement(TAGS.div, CLASSES.crumbs);
 

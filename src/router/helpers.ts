@@ -2,7 +2,6 @@ import {
   INLINE_OPTIONS,
   QUERY_PARAMS,
   SORT_OPTIONS,
-  SEPARATORS,
 } from '../common/helpers/constants';
 import { getQueryParamSubcategories } from '../common/helpers/getQueryParamSubcategories';
 import { Data } from '../common/types/data';
@@ -102,10 +101,7 @@ function doesElemContainQueryCategoryBrand(
   }
 
   return subcategories.includes(
-    String(elementParam)
-      .split(SEPARATORS.words)
-      .join(SEPARATORS.queryWords)
-      .toLowerCase(),
+    encodeURIComponent(String(elementParam)).toLowerCase(),
   )
     ? true
     : false;
@@ -137,7 +133,7 @@ function doesElemContainQuerySearch(
   element: Data,
 ): boolean {
   const searchArr = getQueryParamSubcategories(query, param);
-  const searchString = searchArr.join(SEPARATORS.words).toLowerCase();
+  const searchString = decodeURIComponent(String(searchArr)).toLowerCase();
 
   if (searchArr.length === 0) {
     return true;
