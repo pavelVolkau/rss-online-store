@@ -4,11 +4,12 @@ import {
   SEPARATORS,
   ROUTES,
 } from '../common/helpers/constants';
+import { createLink } from '../common/helpers/createLink';
 import { Data } from '../common/types/data';
 import { DataLoader } from '../components/data-loader/DataLoader';
 import { GoodsBox } from '../components/goods-box/GoodsBox';
 import { DetailsPage } from '../pages/details-page/DetailsPage';
-import { applyQueries, createLink, isInline } from './helpers';
+import { applyQueries, isInline } from './helpers';
 
 const loader = new DataLoader(LINK);
 // TODO: импортировать шаблоны страниц

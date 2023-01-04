@@ -6,13 +6,6 @@ import {
 import { getQueryParamSubcategories } from '../common/helpers/getQueryParamSubcategories';
 import { Data } from '../common/types/data';
 
-export function createLink(location: HTMLLinkElement | Location) {
-  return new URL(location.href).pathname.concat(
-    new URL(location.href).hash,
-    new URL(location.href).search,
-  );
-}
-
 export function applyQueries(queries: string, data: Data[]): Data[] {
   let newData = data.filter((elem) => {
     return isElemInQuery(queries, elem);

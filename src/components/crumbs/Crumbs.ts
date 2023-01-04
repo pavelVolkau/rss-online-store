@@ -3,10 +3,10 @@ import { QUERY_PARAMS, SEPARATORS, TAGS } from '../../common/helpers/constants';
 import getDOMElement from '../../common/helpers/getDOMElement';
 import IDrawComponent from '../../common/interface/IDrawComponent';
 import { Data } from '../../common/types/data';
-import { createLink } from '../../router/helpers';
 import { goTo } from '../../router/router';
 import { Card } from '../card/Card';
 import { CATEGORY_LINK, CLASSES, MAIN_LINK, TEXT } from './constants';
+import { createLink } from '../../common/helpers/createLink';
 
 export class Crumbs extends Card implements IDrawComponent {
   constructor(data: Data) {
