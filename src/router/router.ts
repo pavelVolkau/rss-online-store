@@ -1,3 +1,4 @@
+import { Sort } from '../common/components/sort/Sort';
 import {
   APP_ROOT,
   LINK,
@@ -26,6 +27,7 @@ export function render(path: string): void {
     if (pathWithQuery.length === 1) {
       loader.getData((data: Data[]) => {
         APP_ROOT.replaceChildren(new GoodsBox(data).draw());
+        APP_ROOT.prepend(new Sort().draw());
       });
 
       return;
