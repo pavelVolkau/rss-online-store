@@ -1,3 +1,4 @@
+import './sort.scss';
 import { goTo } from '../../../router/router';
 import { QUERY_PARAMS, TAGS } from '../../helpers/constants';
 import getDOMElement from '../../helpers/getDOMElement';
