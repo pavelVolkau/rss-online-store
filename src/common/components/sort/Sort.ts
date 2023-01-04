@@ -2,12 +2,14 @@ import { goTo } from '../../../router/router';
 import { QUERY_PARAMS, TAGS } from '../../helpers/constants';
 import getDOMElement from '../../helpers/getDOMElement';
 import IDrawComponent from '../../interface/IDrawComponent';
-import { ATTRIBUTES, CLASSES, TEXT } from './constants';
-import { addQueryToMain } from './helpers';
+import { ATTRIBUTES, ATTRIBUTE_SELECTED, CLASSES, TEXT } from './constants';
+import { addQueryToMain } from '../../helpers/addQueryToMain';
+import { getSelectedValue } from './helpers';
 
 export class Sort implements IDrawComponent {
   public draw(): HTMLElement {
     const sort = getDOMElement(TAGS.select, CLASSES.sort) as HTMLSelectElement;
+    const selectedValue = getSelectedValue();
 
     const title = getDOMElement(
       TAGS.option,
@@ -15,7 +17,7 @@ export class Sort implements IDrawComponent {
       TEXT.title,
       undefined,
       ATTRIBUTES.sort,
-    );
+    ) as HTMLOptionElement;
 
     const priceASC = getDOMElement(
       TAGS.option,
@@ -23,7 +25,7 @@ export class Sort implements IDrawComponent {
       TEXT.priceASC,
       undefined,
       ATTRIBUTES.priceASC,
-    );
+    ) as HTMLOptionElement;
 
     const priceDESC = getDOMElement(
       TAGS.option,
@@ -31,7 +33,7 @@ export class Sort implements IDrawComponent {
       TEXT.priceDESC,
       undefined,
       ATTRIBUTES.priceDESC,
-    );
+    ) as HTMLOptionElement;
 
     const ratingASC = getDOMElement(
       TAGS.option,
@@ -39,7 +41,7 @@ export class Sort implements IDrawComponent {
       TEXT.ratingASC,
       undefined,
       ATTRIBUTES.ratingASC,
-    );
+    ) as HTMLOptionElement;
 
     const ratingDESC = getDOMElement(
       TAGS.option,
@@ -47,13 +49,18 @@ export class Sort implements IDrawComponent {
       TEXT.ratingDESC,
       undefined,
       ATTRIBUTES.ratingDESC,
-    );
+    ) as HTMLOptionElement;
+
+    [priceASC, priceDESC, ratingASC, ratingDESC].forEach((el) => {
+      if (selectedValue === el.value) {
+        title.removeAttribute(ATTRIBUTE_SELECTED);
+        el.setAttribute(ATTRIBUTE_SELECTED, '');
+      }
+    });
 
     sort.addEventListener('change', () => {
-      console.log(sort.value);
       const value = sort.value;
       const link = addQueryToMain(QUERY_PARAMS.sort, value);
-      console.log('clicked');
       goTo(link);
     });
 

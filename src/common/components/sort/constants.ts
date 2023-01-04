@@ -20,8 +20,8 @@ export const TEXT = {
 export const ATTRIBUTES = {
   sort: {
     disabled: '',
-    selected: '',
     value: 'sort-title',
+    selected: '',
   },
   priceASC: {
     value: SORT_OPTIONS.priceASC,
@@ -36,3 +36,5 @@ export const ATTRIBUTES = {
     value: SORT_OPTIONS.ratingDESC,
   },
 };
+
+export const ATTRIBUTE_SELECTED = 'selected';
