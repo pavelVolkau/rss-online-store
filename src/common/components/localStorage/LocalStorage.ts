@@ -1,30 +1,30 @@
-import { Data } from '../../types/data';
 import { toData, toJSON } from '../../helpers/jsonChange';
+import { localStorageData } from '../../types/localStorageData';
 import CONSTANTS from './constants';
 
 export default class LocalStorage {
-  static getLocalStorageData(): Data[] | void {
+  static getLocalStorageData(): localStorageData[] | void {
     const data = toData(localStorage.getItem(CONSTANTS.localStorageKey));
 
     if (data) return data;
   }
 
-  static setLocalStorageData(data: Data[]): void {
+  static setLocalStorageData(data: localStorageData[]): void {
     localStorage.setItem(CONSTANTS.localStorageKey, toJSON(data));
   }
 
-  static addDataToLocalStorage(data: Data): void {
+  static addDataToLocalStorage(data: localStorageData): void {
     const currentData = LocalStorage.getLocalStorageData();
 
     if (currentData) {
       currentData.push(data);
-      localStorage.setItem(CONSTANTS.localStorageKey, toJSON(currentData));
+      LocalStorage.setLocalStorageData(currentData);
     } else {
-      localStorage.setItem(CONSTANTS.localStorageKey, toJSON([data]));
+      LocalStorage.setLocalStorageData([data]);
     }
   }
 
-  static removeDataToLocalStorage(data: Data): void {
+  static removeDataToLocalStorage(data: localStorageData): void {
     const currentData = LocalStorage.getLocalStorageData();
 
     if (currentData) {

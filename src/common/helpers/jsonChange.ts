@@ -1,8 +1,8 @@
-import { Data } from '../types/data';
+import { localStorageData } from '../types/localStorageData';
 
-export function toJSON(data: Data[]): string {
+export function toJSON(data: localStorageData[]): string {
   return JSON.stringify(data);
 }
-export function toData(json: string | null): Data[] | void {
+export function toData(json: string | null): localStorageData[] | void {
   if (json) return JSON.parse(json);
 }
