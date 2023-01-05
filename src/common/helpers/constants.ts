@@ -15,6 +15,8 @@ export const TAGS = {
   header: 'header',
   main: 'main',
   footer: 'footer',
+  select: 'select',
+  option: 'option',
 };
 
 export const INPUT_TYPE = {

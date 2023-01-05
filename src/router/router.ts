@@ -1,3 +1,4 @@
+// import { Sort } from '../common/components/sort/Sort';
 import {
   APP_ROOT,
   LINK,
@@ -7,9 +8,9 @@ import {
 import { createLink } from '../common/helpers/createLink';
 import { Data } from '../common/types/data';
 import { DataLoader } from '../components/data-loader/DataLoader';
-import { GoodsBox } from '../components/goods-box/GoodsBox';
 import { DetailsPage } from '../pages/details-page/DetailsPage';
 import { applyQueries, isInline } from './helpers';
+import { Goods } from '../components/goods/Goods';
 
 const loader = new DataLoader(LINK);
 // TODO: импортировать шаблоны страниц
@@ -25,7 +26,7 @@ export function render(path: string): void {
     // TODO: result = шаблон главной страницы
     if (pathWithQuery.length === 1) {
       loader.getData((data: Data[]) => {
-        APP_ROOT.replaceChildren(new GoodsBox(data).draw());
+        APP_ROOT.replaceChildren(new Goods(data).draw());
       });
 
       return;
@@ -33,7 +34,7 @@ export function render(path: string): void {
     loader.getData((data: Data[]) => {
       const newDataArr = applyQueries(query, data);
       const view = isInline(query);
-      APP_ROOT.replaceChildren(new GoodsBox(newDataArr, view).draw());
+      APP_ROOT.replaceChildren(new Goods(newDataArr, view).draw());
     });
 
     return;

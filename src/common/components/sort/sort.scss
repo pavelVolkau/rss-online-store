@@ -1,0 +1,16 @@
+@import '../../styles/main.scss';
+
+.sort {
+  outline: none;
+  border: none;
+  cursor: pointer;
+
+  option {
+    text-align: center;
+
+    &[disabled] {
+      background: none;
+      color: $lightgray;
+    }
+  }
+}
