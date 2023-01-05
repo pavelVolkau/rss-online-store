@@ -1,3 +1,5 @@
+import { goTo } from '../../../router/router';
+import { addQueryToMain } from '../../helpers/addQueryToMain';
 import { TAGS } from '../../helpers/constants';
 import getDOMElement from '../../helpers/getDOMElement';
 import IDrawComponent from '../../interface/IDrawComponent';
@@ -46,6 +48,18 @@ export class Checkbox implements IDrawComponent {
         CONSTANTS.input.checked.attrVal,
       );
     }
+
+    input.addEventListener('change', () => {
+      const subcategory = encodeURIComponent(this.value.toLowerCase());
+      let link = '';
+      console.log(link);
+      if (this.checked) {
+        link = addQueryToMain(this.name, subcategory, true);
+      } else {
+        link = addQueryToMain(this.name, subcategory);
+      }
+      goTo(link);
+    });
 
     const label = getDOMElement(
       TAGS.label,

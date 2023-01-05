@@ -26,7 +26,7 @@ export function render(path: string): void {
     // TODO: result = шаблон главной страницы
     if (pathWithQuery.length === 1) {
       loader.getData((data: Data[]) => {
-        APP_ROOT.replaceChildren(new MainPage(data).draw());
+        APP_ROOT.replaceChildren(new MainPage(data, data).draw());
       });
 
       return;
@@ -34,7 +34,7 @@ export function render(path: string): void {
     loader.getData((data: Data[]) => {
       const newDataArr = applyQueries(query, data);
       const view = isInline(query);
-      APP_ROOT.replaceChildren(new MainPage(newDataArr, view).draw());
+      APP_ROOT.replaceChildren(new MainPage(data, newDataArr, view).draw());
     });
 
     return;

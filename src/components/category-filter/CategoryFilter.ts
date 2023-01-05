@@ -9,17 +9,18 @@ import { LIST_SELECTOR, NAME } from './constants';
 export class CategoryFilter implements IDrawComponent {
   private wrap: HTMLElement;
   private totalData: Data[];
-  // private currentData: Data[];
+  private currentData: Data[];
 
-  constructor(totalData: Data[] /* currentData: Data[] */) {
+  constructor(totalData: Data[], currentData: Data[]) {
     this.wrap = new PickFilterWrap(NAME).draw();
     this.totalData = totalData;
-    // this.currentData = currentData;
+    this.currentData = currentData;
   }
 
   public draw(): HTMLElement {
-    const categoriesArr = this.totalData.map((el) => el.category);
-    const categoriesSet = Array.from(new Set(categoriesArr));
+    const totalCategories = this.totalData.map((el) => el.category);
+    const totalCategoriesSet = Array.from(new Set(totalCategories));
+    const currentCategories = this.currentData.map((el) => el.category);
     const list = this.wrap.querySelector(LIST_SELECTOR) as HTMLElement;
     const query = window.location.search.split(SEPARATORS.searchQuery)[1];
     const itemsPickedArr = getQueryParamSubcategories(
@@ -29,16 +30,17 @@ export class CategoryFilter implements IDrawComponent {
 
     const decodedArr = itemsPickedArr.map((el) => decodeURIComponent(el));
 
-    categoriesSet.forEach((el) => {
-      const totalCount = categoriesArr.filter((val) => val === el);
+    totalCategoriesSet.forEach((el) => {
+      const totalCount = totalCategories.filter((val) => val === el);
+      const currentCount = currentCategories.filter((val) => val === el);
       let checked = false;
       if (decodedArr.includes(el)) {
         checked = true;
       }
       const item = new Checkbox(
-        NAME.toLowerCase(),
+        QUERY_PARAMS.category,
         el,
-        0, //TODO: придумать как достать текущее значение
+        currentCount.length,
         totalCount.length,
         checked,
       ).draw();

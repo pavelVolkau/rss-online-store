@@ -8,8 +8,8 @@ import { CLASS } from './constants';
 export class Filters implements IDrawComponent {
   private categoryFilter: HTMLElement;
 
-  constructor(data: Data[]) {
-    this.categoryFilter = new CategoryFilter(data).draw();
+  constructor(totalData: Data[], currentData: Data[]) {
+    this.categoryFilter = new CategoryFilter(totalData, currentData).draw();
   }
 
   public draw(): HTMLElement {

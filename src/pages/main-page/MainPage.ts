@@ -11,9 +11,9 @@ export class MainPage implements IDrawComponent {
   private goods: HTMLElement;
   private filters: HTMLElement;
 
-  constructor(data: Data[], view?: boolean) {
-    this.goods = new Goods(data, view).draw();
-    this.filters = new Filters(data).draw();
+  constructor(totalData: Data[], currentData: Data[], view?: boolean) {
+    this.goods = new Goods(currentData, view).draw();
+    this.filters = new Filters(totalData, currentData).draw();
   }
 
   public draw(): HTMLElement {
