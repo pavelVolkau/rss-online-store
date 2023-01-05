@@ -7,7 +7,10 @@ const initialState = {
 
 const storageData = LocalStorage.getLocalStorageData();
 if (storageData) {
-  initialState.price = storageData.reduce((acc, obj) => acc + obj.price, 0);
+  initialState.price = storageData.reduce(
+    (acc, obj) => acc + obj.data.price * obj.count,
+    0,
+  );
 }
 
 const priceSum = createSlice({

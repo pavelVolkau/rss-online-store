@@ -7,7 +7,7 @@ const initialState = {
 
 const storageData = LocalStorage.getLocalStorageData();
 if (storageData) {
-  initialState.count = storageData.length;
+  initialState.count = storageData.reduce((acc, obj) => acc + obj.count, 0);
 }
 
 const goodCount = createSlice({

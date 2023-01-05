@@ -14,13 +14,25 @@ export default class LocalStorage {
   }
 
   static addDataToLocalStorage(data: localStorageData): void {
+    if (data.count === 0) {
+      LocalStorage.removeDataToLocalStorage(data);
+      return;
+    }
+
     const currentData = LocalStorage.getLocalStorageData();
 
-    if (currentData) {
-      currentData.push(data);
-      LocalStorage.setLocalStorageData(currentData);
-    } else {
+    if (!currentData) {
       LocalStorage.setLocalStorageData([data]);
+    } else {
+      const indexOfAddObj = currentData.findIndex((obj) => obj.id === data.id);
+
+      if (indexOfAddObj !== -1) {
+        currentData[indexOfAddObj] = data;
+      } else {
+        currentData.push(data);
+      }
+
+      LocalStorage.setLocalStorageData(currentData);
     }
   }
 
@@ -34,6 +46,11 @@ export default class LocalStorage {
 
       if (indexOfRemoveObj !== -1) {
         currentData.splice(indexOfRemoveObj, 1);
+      }
+
+      if (currentData.length === 0) {
+        localStorage.removeItem(CONSTANTS.localStorageKey);
+      } else {
         LocalStorage.setLocalStorageData(currentData);
       }
     }
