@@ -18,16 +18,3 @@ export const CARD_CLASSES = {
   rating: '.card__rating',
   stock: '.card__stock',
 };
-
-export const SYMBOLS = {
-  dots: '...',
-  minus: '-',
-  percent: '%',
-  dollar: '$',
-};
-
-export const CAPTIONS = {
-  category: 'Category: ',
-  brand: 'Brand: ',
-  left: 'left: ',
-};

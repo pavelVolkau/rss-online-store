@@ -4,11 +4,12 @@ import {
   SEPARATORS,
   ROUTES,
 } from '../common/helpers/constants';
+import { createLink } from '../common/helpers/createLink';
 import { Data } from '../common/types/data';
-import { Card } from '../components/card/Card';
 import { DataLoader } from '../components/data-loader/DataLoader';
 import { GoodsBox } from '../components/goods-box/GoodsBox';
-import { applyQueries, createLink, isInline } from './helpers';
+import { DetailsPage } from '../pages/details-page/DetailsPage';
+import { applyQueries, isInline } from './helpers';
 
 const loader = new DataLoader(LINK);
 // TODO: импортировать шаблоны страниц
@@ -49,9 +50,10 @@ export function render(path: string): void {
       const idArr: number[] = data.map((el) => el.id);
       const cardIdFromPath = Number(pageQuery);
       const currentCardIndex = idArr.indexOf(cardIdFromPath);
-
       if (currentCardIndex !== -1) {
-        APP_ROOT.replaceChildren(new Card(data[currentCardIndex]).draw());
+        APP_ROOT.replaceChildren(
+          new DetailsPage(data[currentCardIndex]).draw(),
+        );
 
         return;
       }

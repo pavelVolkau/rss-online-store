@@ -6,7 +6,7 @@ export default {
     class: 'logo__link',
     text: 'Online Store',
     atributes: {
-      href: './index.html',
+      href: '/',
     },
   },
 };

@@ -48,8 +48,7 @@ export const SEPARATORS = {
   path: '/',
   queryParams: '&',
   paramsAndSubcategories: '=',
-  subcategory: '%',
-  words: ' ',
+  subcategory: '^',
 };
 
 export const INLINE_OPTIONS = {
@@ -80,4 +79,17 @@ export const QUERY_PARAMS = {
   sort: 'sort',
   search: 'search',
   inline: 'inline',
+};
+
+export const SYMBOLS = {
+  dots: '...',
+  minus: '-',
+  percent: '%',
+  dollar: '$',
+};
+
+export const CAPTIONS = {
+  category: 'Category: ',
+  brand: 'Brand: ',
+  left: 'left: ',
 };

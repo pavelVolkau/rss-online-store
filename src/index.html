@@ -13,9 +13,6 @@
     />
   </head>
   <body>
-    <a href="/">Main</a>
-    <a href="/#cart">Cart</a>
-
     <div class="app-root"></div>
 
     <!-- шаблон карточки товара -->
@@ -38,6 +35,41 @@
             <div class="card__stock"></div>
           </div>
           <div class="card__buttons"></div>
+        </div>
+      </div>
+    </template>
+
+    <!-- шаблон для деталей -->
+    <template id="details-template">
+      <div class="details">
+        <div class="details__title"></div>
+        <div class="wrapper">
+          <div class="details__images">
+            <div class="details__main-img"></div>
+            <div class="details__slides"></div>
+          </div>
+          <div class="details__info">
+            <div class="details__left">
+              <div class="details__span-wrapper">
+                <span class="details__span">Category: </span>
+                <div class="details__category"></div>
+              </div>
+              <div class="details__span-wrapper">
+                <span class="details__span">Brand: </span>
+                <div class="details__brand"></div>
+              </div>
+              <div class="details__description"></div>
+              <div class="details__rating"></div>
+            </div>
+            <div class="details__right">
+              <div class="details__stock"></div>
+              <div class="details__price-discount">
+                <div class="details__price"></div>
+                <div class="details__discount"></div>
+              </div>
+            </div>
+          </div>
+          <div class="details__buttons"></div>
         </div>
       </div>
     </template>
