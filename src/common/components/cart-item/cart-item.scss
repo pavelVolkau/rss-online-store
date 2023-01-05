@@ -1,0 +1,103 @@
+@import '../../styles/main.scss';
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5em;
+  padding: 0.5em;
+  margin: 0.5em;
+  font-size: $fs-normal;
+
+  &__index {
+    flex-shrink: 0;
+    width: 1.7em;
+    height: 1.7em;
+    padding: 0.3em 0;
+    background-color: $black-transparent-07;
+    border-radius: 50%;
+    color: $white;
+    text-align: center;
+  }
+
+  &__info {
+    display: grid;
+    grid-template-areas: 'img title title' 'img desc desc' 'img rating discount';
+    gap: 0.5em;
+    grid-auto-columns: 1fr;
+    cursor: pointer;
+  }
+
+  &__image {
+    grid-area: img;
+    min-width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  &__title {
+    grid-area: title;
+    position: relative;
+    font-size: $fs-normal;
+    font-weight: bold;
+    text-align: center;
+
+    &::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 2px;
+      left: 0;
+      top: 1.5em;
+      background-color: $lightgray;
+    }
+  }
+
+  &__description {
+    grid-area: desc;
+  }
+
+  &__rating {
+    grid-area: rating;
+    justify-self: start;
+
+    &::before {
+      content: '⭐';
+      font-size: 0.75rem;
+      position: relative;
+      top: -0.2rem;
+    }
+  }
+
+  &__discount {
+    grid-area: discount;
+    justify-self: end;
+    color: $red;
+  }
+
+  &__number-control {
+    flex-shrink: 0;
+    @include flex-column();
+    min-width: 10%;
+    align-items: center;
+    gap: 0.3em;
+    margin-left: 1em;
+  }
+
+  &__inc-count,
+  &__dec-count {
+    width: 2em;
+    background-color: $gray;
+    border: none;
+    border-radius: 5px;
+    font-size: $fs-large;
+    color: $white;
+    cursor: pointer;
+  }
+
+  &__inc-dec-control {
+    @include flex-column();
+    align-items: center;
+    gap: 0.3em;
+  }
+}

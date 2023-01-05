@@ -111,5 +111,28 @@
         <div class="items-count"></div>
       </div>
     </template>
+
+    <!-- шаблон для товара в корзине -->
+    <template id="cart-item-template">
+      <div class="cart-item">
+        <div class="cart-item__index"></div>
+        <div class="cart-item__info">
+          <img class="cart-item__image"></img>
+          <div class="cart-item__title"></div>
+          <div class="cart-item__description"></div>
+          <div class="cart-item__rating"></div>
+          <div class="cart-item__discount"></div>
+        </div>
+        <div class="cart-item__number-control">
+          <div class="cart-item__stock-info"></div>
+          <div class="cart-item__inc-dec-control">
+            <button class="cart-item__inc-count"></button>
+            <div class="cart-item__current-count"></div>
+            <button class="cart-item__dec-count"></button>
+          </div>
+          <div class="cart-item__amount-info"></div>
+        </div>
+      </div>
+    </template>
   </body>
 </html>
