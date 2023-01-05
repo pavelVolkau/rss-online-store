@@ -3,4 +3,4 @@ export const CLASSES = {
   foundAmount: 'found-goods__amount',
 };
 
-export const TEXT = 'Found:';
+export const TEXT = 'Found: ';
