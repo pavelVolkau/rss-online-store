@@ -1,16 +1,19 @@
 import './sort.scss';
 import { goTo } from '../../../router/router';
-import { QUERY_PARAMS, TAGS } from '../../helpers/constants';
+import { QUERY_PARAMS, SEPARATORS, TAGS } from '../../helpers/constants';
 import getDOMElement from '../../helpers/getDOMElement';
 import IDrawComponent from '../../interface/IDrawComponent';
 import { ATTRIBUTES, ATTRIBUTE_SELECTED, CLASSES, TEXT } from './constants';
 import { addQueryToMain } from '../../helpers/addQueryToMain';
-import { getSelectedValue } from './helpers';
+import { getQueryParamSubcategories } from '../../helpers/getQueryParamSubcategories';
 
 export class Sort implements IDrawComponent {
   public draw(): HTMLElement {
     const sort = getDOMElement(TAGS.select, CLASSES.sort) as HTMLSelectElement;
-    const selectedValue = getSelectedValue();
+    const query = window.location.search.split(SEPARATORS.searchQuery)[1];
+    const selectedValue = String(
+      getQueryParamSubcategories(query, QUERY_PARAMS.sort),
+    );
 
     const title = getDOMElement(
       TAGS.option,

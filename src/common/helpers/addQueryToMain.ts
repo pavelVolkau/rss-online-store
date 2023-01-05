@@ -60,8 +60,8 @@ export function addQueryToMain(
         //но для сортировки, серча и инлайна подкатегория может быть только одна и она должна заменяться на новую
         if (
           param === QUERY_PARAMS.sort ||
-          QUERY_PARAMS.search ||
-          QUERY_PARAMS.inline
+          param === QUERY_PARAMS.search ||
+          param === QUERY_PARAMS.inline
         ) {
           //поэтому мы очищаем массив для этих параметров, чтобы потом добавить новое значение, которое мы хотим внести
           val.splice(0, val.length);

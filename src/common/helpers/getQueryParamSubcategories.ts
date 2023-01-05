@@ -1,24 +1,26 @@
 import { SEPARATORS } from './constants';
 
 export function getQueryParamSubcategories(
-  query: string,
+  query: string | undefined,
   param: string,
 ): string[] {
   let subcategoriesArr: string[] = [];
-  const queryArr = query.split(SEPARATORS.queryParams);
+  if (query) {
+    const queryArr = query.split(SEPARATORS.queryParams);
 
-  queryArr.forEach((el) => {
-    const arrayOfParamAndSubcategories = el.split(
-      SEPARATORS.paramsAndSubcategories,
-    );
-    const queryParam = arrayOfParamAndSubcategories[0];
+    queryArr.forEach((el) => {
+      const arrayOfParamAndSubcategories = el.split(
+        SEPARATORS.paramsAndSubcategories,
+      );
+      const queryParam = arrayOfParamAndSubcategories[0];
 
-    if (queryParam === param) {
-      const subcategoriesStr = arrayOfParamAndSubcategories[1];
+      if (queryParam === param) {
+        const subcategoriesStr = arrayOfParamAndSubcategories[1];
 
-      subcategoriesArr = subcategoriesStr.split(SEPARATORS.subcategory);
-    }
-  });
+        subcategoriesArr = subcategoriesStr.split(SEPARATORS.subcategory);
+      }
+    });
+  }
 
   return subcategoriesArr;
 }
