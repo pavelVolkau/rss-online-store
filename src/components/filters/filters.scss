@@ -1,0 +1,7 @@
+@import '../../common/styles/main.scss';
+
+.filters {
+  @include flex-column();
+  width: 20%;
+  padding: 2%;
+}

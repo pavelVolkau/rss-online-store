@@ -17,6 +17,8 @@ export const TAGS = {
   footer: 'footer',
   select: 'select',
   option: 'option',
+  fieldset: 'fieldset',
+  legend: 'legend',
 };
 
 export const INPUT_TYPE = {
