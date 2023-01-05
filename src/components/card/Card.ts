@@ -2,6 +2,7 @@ import './card.scss';
 import { Data } from '../../common/types/data';
 import { goTo } from '../../router/router';
 import IDrawComponent from '../../common/interface/IDrawComponent';
+import store from '../../common/redux/store';
 import {
   CAPTIONS,
   ROUTES,
@@ -9,11 +10,17 @@ import {
   SYMBOLS,
 } from '../../common/helpers/constants';
 import {
+  BUTTON_TEXT,
   CARD_CLASSES,
   CARD_TEMPLATE_DEFAULT,
   CARD_TEMPLATE_INLINE,
   TITLE_LENGTH,
 } from './constants';
+import { Button } from '../../common/components/button/Button';
+import {
+  decreaseGoodsCount,
+  increaseGoodsCount,
+} from '../../common/redux/goodsCount';
 
 export class Card implements IDrawComponent {
   protected readonly data: Data;
@@ -106,14 +113,31 @@ export class Card implements IDrawComponent {
     ) as HTMLElement;
     cardStock.innerText = CAPTIONS.left + String(this.stock);
 
-    // может можно в эти листнеры передать сразу this.data?
+    //добавить на кнопку состояние в зависимость от того естьь ли товар в локал сторадже
+    const addBtn = new Button(CARD_CLASSES.addBtn, BUTTON_TEXT.addBtn).draw();
 
-    // const addBtn = new Button('', (e) => { addToCart(e) });                 //листнер добавленя в корзину
-    // addBtn.classList.add('add-to-cart');                                   //особые стили для кнопки добавления в корзину
-    // const detailsBtn = new Button('Details', (e) => { changePage(e) });     //листнер перехода на др страницу
+    addBtn.addEventListener('click', () => {
+      if (addBtn.classList.contains('added')) {
+        store.dispatch(decreaseGoodsCount(1));
+      }
+      store.dispatch(increaseGoodsCount(1));
+      addBtn.classList.toggle('added');
+      // добавить сет локал стораджа
+    });
 
-    // const cardBtns = cardClone.querySelector('.card__buttons') as HTMLElement;
-    // cardBtns.append(addBtn, detailsBtn);                                   //добавляем кнопки к шаблону
+    const detailsBtn = new Button(
+      CARD_CLASSES.detailsBtn,
+      BUTTON_TEXT.detailsBtn,
+    ).draw();
+
+    detailsBtn.addEventListener('click', () => {
+      goTo(`${ROUTES.details + SEPARATORS.path}${this.id}`);
+    });
+
+    const cardBtns = cardClone.querySelector(
+      CARD_CLASSES.buttons,
+    ) as HTMLElement;
+    cardBtns.append(addBtn, detailsBtn);
 
     return cardClone;
   }

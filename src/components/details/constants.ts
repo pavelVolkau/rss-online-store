@@ -14,6 +14,14 @@ export const DETAILS_CLASSES = {
   discount: '.details__discount',
   rating: '.details__rating',
   stock: '.details__stock',
+  buttons: '.details__buttons',
+  buyNowBtn: 'button__buy-now',
+  addBtn: 'button__add-to-cart',
 };
 
 export const IMG_ALT = 'Product photo';
+
+export const BUTTON_TEXT = {
+  addBtn: '',
+  buyNowBtn: 'Buy now',
+};

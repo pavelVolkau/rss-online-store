@@ -1,10 +1,21 @@
 import './details.scss';
 import { CAPTIONS, SYMBOLS, TAGS } from '../../common/helpers/constants';
+import store from '../../common/redux/store';
 import getDOMElement from '../../common/helpers/getDOMElement';
 import IDrawComponent from '../../common/interface/IDrawComponent';
 import { Data } from '../../common/types/data';
 import { Card } from '../card/Card';
-import { DETAILS_CLASSES, DETAILS_TEMPLATE, IMG_ALT } from './constants';
+import {
+  BUTTON_TEXT,
+  DETAILS_CLASSES,
+  DETAILS_TEMPLATE,
+  IMG_ALT,
+} from './constants';
+import { Button } from '../../common/components/button/Button';
+import {
+  decreaseGoodsCount,
+  increaseGoodsCount,
+} from '../../common/redux/goodsCount';
 
 export class Details extends Card implements IDrawComponent {
   private readonly description: Data['description'];
@@ -87,6 +98,33 @@ export class Details extends Card implements IDrawComponent {
       DETAILS_CLASSES.stock,
     ) as HTMLElement;
     detailsStock.innerText = CAPTIONS.left + String(this.stock);
+
+    const buttons = detailsClone.querySelector(
+      DETAILS_CLASSES.buttons,
+    ) as HTMLElement;
+
+    const addBtn = new Button(
+      DETAILS_CLASSES.addBtn,
+      BUTTON_TEXT.addBtn,
+    ).draw();
+
+    addBtn.addEventListener('click', () => {
+      if (addBtn.classList.contains('added')) {
+        store.dispatch(decreaseGoodsCount(1));
+      }
+      store.dispatch(increaseGoodsCount(1));
+      addBtn.classList.toggle('added');
+      // добавить сет локал стораджа
+    });
+
+    const buyNowBtn = new Button(
+      DETAILS_CLASSES.buyNowBtn,
+      BUTTON_TEXT.buyNowBtn,
+    ).draw();
+
+    //добавить вызов модального окна при нажатии на кнопку
+
+    buttons.append(addBtn, buyNowBtn);
 
     return detailsClone;
   }

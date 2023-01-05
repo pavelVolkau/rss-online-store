@@ -17,4 +17,12 @@ export const CARD_CLASSES = {
   discount: '.card__discount',
   rating: '.card__rating',
   stock: '.card__stock',
+  buttons: '.card__buttons',
+  addBtn: 'button__add-to-cart',
+  detailsBtn: 'button__details',
+};
+
+export const BUTTON_TEXT = {
+  addBtn: '',
+  detailsBtn: 'Details',
 };
