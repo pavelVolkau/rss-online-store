@@ -8,16 +8,8 @@ import {
 import { createLink } from '../common/helpers/createLink';
 import { Data } from '../common/types/data';
 import { DataLoader } from '../components/data-loader/DataLoader';
-import { GoodsBox } from '../components/goods-box/GoodsBox';
 import { DetailsPage } from '../pages/details-page/DetailsPage';
-import {
-  applyQueries,
-  isInline,
-  applyQueries,
-  createLink,
-  isInline,
-} from './helpers';
-// import { GoodsBox } from '../components/goods-box/GoodsBox';
+import { applyQueries, isInline } from './helpers';
 import { Goods } from '../components/goods/Goods';
 
 const loader = new DataLoader(LINK);
