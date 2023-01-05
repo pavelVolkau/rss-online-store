@@ -41,9 +41,12 @@ export class Details extends Card implements IDrawComponent {
         TAGS.img,
         DETAILS_CLASSES.img,
       ) as HTMLImageElement;
+
       image.src = url;
       image.alt = IMG_ALT;
+
       detailsSlides.appendChild(image);
+
       image.addEventListener('click', () => {
         detailsMainImg.style.backgroundImage = `url(${image.src})`;
       });

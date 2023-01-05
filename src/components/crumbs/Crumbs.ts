@@ -50,8 +50,10 @@ export class Crumbs extends Card implements IDrawComponent {
     [store, category, brand].forEach((el) => {
       el.addEventListener('click', (e) => {
         e.preventDefault();
+
         const target = e.target as HTMLLinkElement;
         const link = createLink(target);
+
         goTo(link);
       });
     });
