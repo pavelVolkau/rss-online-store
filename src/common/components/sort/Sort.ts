@@ -62,10 +62,12 @@ export class Sort implements IDrawComponent {
     sort.addEventListener('change', () => {
       const value = sort.value;
       const link = addQueryToMain(QUERY_PARAMS.sort, value);
+
       goTo(link);
     });
 
     sort.append(title, priceASC, priceDESC, ratingASC, ratingDESC);
+
     return sort;
   }
 }

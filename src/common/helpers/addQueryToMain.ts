@@ -1,7 +1,11 @@
 import { QUERY_PARAMS, ROUTES, SEPARATORS } from './constants';
 import { getQueryParamSubcategories } from './getQueryParamSubcategories';
 
-export function addQueryToMain(param: string, subcategory: string): string {
+export function addQueryToMain(
+  param: string,
+  subcategory: string,
+  remove = false,
+): string {
   const locationSearch = window.location.search;
 
   //если квери строки еще пока никакой нет
@@ -65,6 +69,13 @@ export function addQueryToMain(param: string, subcategory: string): string {
 
         //добавляем новое значение в массив подкатегорий
         val.push(subcategory);
+      } else {
+        //если remove указано в параметрах как true, то удаляем указанную в аргументах функции подкатегорию из массива
+        if (remove) {
+          const subcategoryInd = val.indexOf(subcategory);
+
+          val.splice(subcategoryInd, 1);
+        }
       }
     }
 
