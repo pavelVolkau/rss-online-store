@@ -1,1 +1,4 @@
-export const CLASS = 'goods-header';
+export const CLASSES = {
+  goodsHeader: 'goods-header',
+  headerWrap: 'goods-header__wrap',
+};
