@@ -5,6 +5,7 @@ import { getQueryParamSubcategories } from '../../common/helpers/getQueryParamSu
 import IDrawComponent from '../../common/interface/IDrawComponent';
 import { Data } from '../../common/types/data';
 import { LIST_SELECTOR, NAME } from './constants';
+import { createUniqueArr } from './helpers';
 
 export class BrandFilter implements IDrawComponent {
   private wrap: HTMLElement;
@@ -19,7 +20,7 @@ export class BrandFilter implements IDrawComponent {
 
   public draw(): HTMLElement {
     const totalBrands = this.totalData.map((el) => el.brand);
-    const totalBrandsSet = Array.from(new Set(totalBrands));
+    const totalBrandsSet = createUniqueArr(totalBrands);
     const currentBrands = this.currentData.map((el) => el.brand);
 
     const list = this.wrap.querySelector(LIST_SELECTOR) as HTMLElement;
@@ -33,8 +34,12 @@ export class BrandFilter implements IDrawComponent {
     const decodedArr = itemsPickedArr.map((el) => decodeURIComponent(el));
 
     totalBrandsSet.forEach((el) => {
-      const totalCount = totalBrands.filter((val) => val === el);
-      const currentCount = currentBrands.filter((val) => val === el);
+      const totalCount = totalBrands.filter(
+        (val) => val.toLowerCase() === el.toLowerCase(),
+      );
+      const currentCount = currentBrands.filter(
+        (val) => val.toLowerCase() === el.toLowerCase(),
+      );
       let checked = false;
 
       if (decodedArr.includes(el.toLowerCase())) {
