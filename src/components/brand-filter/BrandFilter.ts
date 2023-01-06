@@ -6,7 +6,7 @@ import IDrawComponent from '../../common/interface/IDrawComponent';
 import { Data } from '../../common/types/data';
 import { LIST_SELECTOR, NAME } from './constants';
 
-export class CategoryFilter implements IDrawComponent {
+export class BrandFilter implements IDrawComponent {
   private wrap: HTMLElement;
   private totalData: Data[];
   private currentData: Data[];
@@ -18,27 +18,29 @@ export class CategoryFilter implements IDrawComponent {
   }
 
   public draw(): HTMLElement {
-    const totalCategories = this.totalData.map((el) => el.category);
-    const totalCategoriesSet = Array.from(new Set(totalCategories));
-    const currentCategories = this.currentData.map((el) => el.category);
+    const totalBrands = this.totalData.map((el) => el.brand);
+    const totalBrandsSet = Array.from(new Set(totalBrands));
+    const currentBrands = this.currentData.map((el) => el.brand);
+
     const list = this.wrap.querySelector(LIST_SELECTOR) as HTMLElement;
     const query = window.location.search.split(SEPARATORS.searchQuery)[1];
+
     const itemsPickedArr = getQueryParamSubcategories(
       query,
-      QUERY_PARAMS.category,
+      QUERY_PARAMS.brand,
     );
 
     const decodedArr = itemsPickedArr.map((el) => decodeURIComponent(el));
 
-    totalCategoriesSet.forEach((el) => {
-      const totalCount = totalCategories.filter((val) => val === el);
-      const currentCount = currentCategories.filter((val) => val === el);
+    totalBrandsSet.forEach((el) => {
+      const totalCount = totalBrands.filter((val) => val === el);
+      const currentCount = currentBrands.filter((val) => val === el);
       let checked = false;
       if (decodedArr.includes(el.toLowerCase())) {
         checked = true;
       }
       const item = new Checkbox(
-        QUERY_PARAMS.category,
+        QUERY_PARAMS.brand,
         el,
         currentCount.length,
         totalCount.length,
