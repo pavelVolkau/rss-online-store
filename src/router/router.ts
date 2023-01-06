@@ -12,6 +12,7 @@ import { DetailsPage } from '../pages/details-page/DetailsPage';
 import { applyQueries, isInline } from './helpers';
 import { MainPage } from '../pages/main-page/MainPage';
 import CartPage from '../pages/cart-page/CartPage';
+import { PageNotFound } from '../pages/page-not-found/PageNotFound';
 
 const loader = new DataLoader(LINK);
 // TODO: импортировать шаблоны страниц
@@ -22,6 +23,7 @@ export function render(path: string): void {
   const pathWithQuery = path.split(SEPARATORS.searchQuery);
   const pathName = pathWithQuery[0];
   const query = pathWithQuery[1];
+  const pageNotFound = new PageNotFound().draw();
 
   if (ROUTES.main.match(pathName)) {
     //сравниваем совпадает ли переданный путь с путем к главной страницы
@@ -61,7 +63,7 @@ export function render(path: string): void {
         return;
       }
 
-      APP_ROOT.replaceChildren('<h1>Not found</h1>');
+      APP_ROOT.replaceChildren(pageNotFound);
 
       return;
     });
@@ -73,7 +75,7 @@ export function render(path: string): void {
 
     return;
   }
-  APP_ROOT.replaceChildren('<h1>Not found</h1>');
+  APP_ROOT.replaceChildren(pageNotFound);
 
   return;
 }
