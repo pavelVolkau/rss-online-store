@@ -1,5 +1,5 @@
 import { goTo } from '../../../router/router';
-import { addQueryToMain } from '../../helpers/addQueryToMain';
+import { addQuery } from '../../helpers/addQuery';
 import { TAGS } from '../../helpers/constants';
 import getDOMElement from '../../helpers/getDOMElement';
 import IDrawComponent from '../../interface/IDrawComponent';
@@ -54,9 +54,9 @@ export class Checkbox implements IDrawComponent {
       let link = '';
       console.log(link);
       if (this.checked) {
-        link = addQueryToMain(this.name, subcategory, true);
+        link = addQuery(this.name, subcategory, true);
       } else {
-        link = addQueryToMain(this.name, subcategory);
+        link = addQuery(this.name, subcategory);
       }
       goTo(link);
     });

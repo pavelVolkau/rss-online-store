@@ -1,5 +1,5 @@
 import { goTo } from '../../../router/router';
-import { addQueryToMain } from '../../helpers/addQueryToMain';
+import { addQuery } from '../../helpers/addQuery';
 import { QUERY_PARAMS, SEPARATORS, TAGS } from '../../helpers/constants';
 import getDOMElement from '../../helpers/getDOMElement';
 import { getQueryParamSubcategories } from '../../helpers/getQueryParamSubcategories';
@@ -30,7 +30,7 @@ export class Search implements IDrawComponent {
 
     searchInput.addEventListener('input', () => {
       const value = encodeURIComponent(searchInput.value);
-      const link = addQueryToMain(QUERY_PARAMS.search, value);
+      const link = addQuery(QUERY_PARAMS.search, value);
 
       goTo(link);
     });

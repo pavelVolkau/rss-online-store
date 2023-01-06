@@ -1,6 +1,6 @@
 import './view.scss';
 import { goTo } from '../../../router/router';
-import { addQueryToMain } from '../../helpers/addQueryToMain';
+import { addQuery } from '../../helpers/addQuery';
 import {
   INLINE_OPTIONS,
   QUERY_PARAMS,
@@ -39,13 +39,13 @@ export class View implements IDrawComponent {
     }
 
     this.inline.addEventListener('click', () => {
-      const link = addQueryToMain(QUERY_PARAMS.inline, INLINE_OPTIONS.true);
+      const link = addQuery(QUERY_PARAMS.inline, INLINE_OPTIONS.true);
 
       goTo(link);
     });
 
     this.table.addEventListener('click', () => {
-      const link = addQueryToMain(QUERY_PARAMS.inline, INLINE_OPTIONS.false);
+      const link = addQuery(QUERY_PARAMS.inline, INLINE_OPTIONS.false);
 
       goTo(link);
     });

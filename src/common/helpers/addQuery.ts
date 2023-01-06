@@ -1,17 +1,32 @@
 import { QUERY_PARAMS, ROUTES, SEPARATORS } from './constants';
+import { createLink } from './createLink';
 import { getQueryParamSubcategories } from './getQueryParamSubcategories';
 
-export function addQueryToMain(
+export function addQuery(
   param: string,
   subcategory: string,
   remove = false,
 ): string {
-  const locationSearch = window.location.search;
+  const locationLink = createLink(window.location);
+  const locationQuery = locationLink.split(SEPARATORS.searchQuery)[1];
+  const locationRoute = locationLink.split(SEPARATORS.searchQuery)[0];
 
   //если квери строки еще пока никакой нет
-  if (!locationSearch) {
+  if (!locationQuery) {
+    if (locationRoute === ROUTES.main) {
+      return (
+        locationRoute +
+        SEPARATORS.searchQuery +
+        param +
+        SEPARATORS.paramsAndSubcategories +
+        subcategory
+      );
+    }
+
+    //если путь ведет не на главную страницу и квери строки нет, то подставляем еще доп / (SEPARATORS.path)
     return (
-      ROUTES.main +
+      locationRoute +
+      SEPARATORS.path +
       SEPARATORS.searchQuery +
       param +
       SEPARATORS.paramsAndSubcategories +
@@ -20,16 +35,17 @@ export function addQueryToMain(
   }
 
   //если квери строка есть
-  const query = locationSearch.split(SEPARATORS.searchQuery)[1]; //убираем знак вопроса в начале
-
   //достаем все подкатегории для параметров
-  const category = getQueryParamSubcategories(query, QUERY_PARAMS.category);
-  const brand = getQueryParamSubcategories(query, QUERY_PARAMS.brand);
-  const price = getQueryParamSubcategories(query, QUERY_PARAMS.price);
-  const stock = getQueryParamSubcategories(query, QUERY_PARAMS.stock);
-  const sort = getQueryParamSubcategories(query, QUERY_PARAMS.sort);
-  const search = getQueryParamSubcategories(query, QUERY_PARAMS.search);
-  const inline = getQueryParamSubcategories(query, QUERY_PARAMS.inline);
+  const category = getQueryParamSubcategories(
+    locationQuery,
+    QUERY_PARAMS.category,
+  );
+  const brand = getQueryParamSubcategories(locationQuery, QUERY_PARAMS.brand);
+  const price = getQueryParamSubcategories(locationQuery, QUERY_PARAMS.price);
+  const stock = getQueryParamSubcategories(locationQuery, QUERY_PARAMS.stock);
+  const sort = getQueryParamSubcategories(locationQuery, QUERY_PARAMS.sort);
+  const search = getQueryParamSubcategories(locationQuery, QUERY_PARAMS.search);
+  const inline = getQueryParamSubcategories(locationQuery, QUERY_PARAMS.inline);
 
   //вспомогательный массив из названий параметров в той же последовательности что будет дальше массив с категориями
   const paramsArr = [
@@ -57,11 +73,12 @@ export function addQueryToMain(
       //если значение подкатегории, которое мы хотим внести уже есть в нашем параметре, то оставляем как есть
       if (!val.includes(subcategory)) {
         //если такого значения еще нет, то добавляем его в массив подкатегорий (массив val)
-        //но для сортировки, серча и инлайна подкатегория может быть только одна и она должна заменяться на новую
+        //но для сортировки, серча, инлайна и номера страницы подкатегория может быть только одна и она должна заменяться на новую
         if (
           param === QUERY_PARAMS.sort ||
           param === QUERY_PARAMS.search ||
-          param === QUERY_PARAMS.inline
+          param === QUERY_PARAMS.inline ||
+          param === QUERY_PARAMS.page
         ) {
           //поэтому мы очищаем массив для этих параметров, чтобы потом добавить новое значение, которое мы хотим внести
           val.splice(0, val.length);
@@ -97,7 +114,7 @@ export function addQueryToMain(
 
   //возвращаем полностью склееную квери строку из всех параметров и новых и старых
   return (
-    ROUTES.main +
+    locationRoute +
     SEPARATORS.searchQuery +
     filteredArr.join(SEPARATORS.queryParams)
   );

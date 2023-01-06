@@ -83,6 +83,7 @@ export const QUERY_PARAMS = {
   sort: 'sort',
   search: 'search',
   inline: 'inline',
+  page: 'page',
 };
 
 export const SYMBOLS = {
