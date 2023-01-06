@@ -1,0 +1,55 @@
+@import '../../styles/main.scss';
+
+.button {
+  border: none;
+  outline: none;
+  background-color: $lightgray;
+  border-radius: 2px;
+  padding: 2%;
+  cursor: pointer;
+  transition: 0.3s;
+
+  &__add-to-cart,
+  &__inline,
+  &__table {
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  &__add-to-cart {
+    width: 40px;
+    background-size: 50%;
+    background-image: url('../../assets/icons/cart-add.svg');
+    background-color: $black;
+
+    &.added {
+      background-image: url('../../assets/icons/cart-remove.svg');
+      background-color: $gray;
+    }
+  }
+
+  &__inline,
+  &__table {
+    width: 30%;
+    background-color: transparent;
+
+    &.active {
+      outline: 2px solid $lightgray;
+      outline-offset: 2px;
+    }
+  }
+
+  &__inline {
+    background-size: 130%;
+    background-image: url('../../assets/icons/inline-view.svg');
+  }
+
+  &__table {
+    background-size: 95%;
+    background-image: url('../../assets/icons/table-view.svg');
+  }
+
+  &:hover {
+    transform: scale(1.1);
+  }
+}

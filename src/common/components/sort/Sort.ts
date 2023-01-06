@@ -4,7 +4,7 @@ import { QUERY_PARAMS, SEPARATORS, TAGS } from '../../helpers/constants';
 import getDOMElement from '../../helpers/getDOMElement';
 import IDrawComponent from '../../interface/IDrawComponent';
 import { ATTRIBUTES, ATTRIBUTE_SELECTED, CLASSES, TEXT } from './constants';
-import { addQueryToMain } from '../../helpers/addQueryToMain';
+import { addQuery } from '../../helpers/addQuery';
 import { getQueryParamSubcategories } from '../../helpers/getQueryParamSubcategories';
 
 export class Sort implements IDrawComponent {
@@ -64,7 +64,7 @@ export class Sort implements IDrawComponent {
 
     sort.addEventListener('change', () => {
       const value = sort.value;
-      const link = addQueryToMain(QUERY_PARAMS.sort, value);
+      const link = addQuery(QUERY_PARAMS.sort, value);
 
       goTo(link);
     });

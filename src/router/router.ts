@@ -10,7 +10,7 @@ import { Data } from '../common/types/data';
 import { DataLoader } from '../components/data-loader/DataLoader';
 import { DetailsPage } from '../pages/details-page/DetailsPage';
 import { applyQueries, isInline } from './helpers';
-import { Goods } from '../components/goods/Goods';
+import { MainPage } from '../pages/main-page/MainPage';
 
 const loader = new DataLoader(LINK);
 // TODO: импортировать шаблоны страниц
@@ -26,7 +26,7 @@ export function render(path: string): void {
     // TODO: result = шаблон главной страницы
     if (pathWithQuery.length === 1) {
       loader.getData((data: Data[]) => {
-        APP_ROOT.replaceChildren(new Goods(data).draw());
+        APP_ROOT.replaceChildren(new MainPage(data, data).draw());
       });
 
       return;
@@ -34,7 +34,7 @@ export function render(path: string): void {
     loader.getData((data: Data[]) => {
       const newDataArr = applyQueries(query, data);
       const view = isInline(query);
-      APP_ROOT.replaceChildren(new Goods(newDataArr, view).draw());
+      APP_ROOT.replaceChildren(new MainPage(data, newDataArr, view).draw());
     });
 
     return;

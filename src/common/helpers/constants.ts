@@ -17,6 +17,8 @@ export const TAGS = {
   footer: 'footer',
   select: 'select',
   option: 'option',
+  fieldset: 'fieldset',
+  legend: 'legend',
 };
 
 export const INPUT_TYPE = {
@@ -81,6 +83,7 @@ export const QUERY_PARAMS = {
   sort: 'sort',
   search: 'search',
   inline: 'inline',
+  page: 'page',
 };
 
 export const SYMBOLS = {
