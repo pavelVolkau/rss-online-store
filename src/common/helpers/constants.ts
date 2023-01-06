@@ -84,6 +84,7 @@ export const QUERY_PARAMS = {
   search: 'search',
   inline: 'inline',
   page: 'page',
+  limit: 'limit',
 };
 
 export const SYMBOLS = {

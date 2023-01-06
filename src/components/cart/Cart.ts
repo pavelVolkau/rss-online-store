@@ -3,6 +3,7 @@ import CONSTANTS from './constants';
 import { TAGS } from '../../common/helpers/constants';
 import getDOMElement from '../../common/helpers/getDOMElement';
 import IDrawComponent from '../../common/interface/IDrawComponent';
+import CartItems from '../cart-items/CartItems';
 import LocalStorage from '../../common/components/localStorage/LocalStorage';
 
 export default class Cart implements IDrawComponent {
@@ -23,6 +24,9 @@ export default class Cart implements IDrawComponent {
     }
 
     // TODO: вызвать 2 класса и заапендить в cart
+    const cartItems = new CartItems().draw();
+
+    cart.append(cartItems);
 
     return cart;
   }

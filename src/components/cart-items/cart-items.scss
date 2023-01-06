@@ -1,0 +1,56 @@
+@import '../../common/styles/main.scss';
+
+.cart-items {
+  @include flex-column();
+  border: solid $black-transparent-07 4px;
+  border-radius: 10px;
+  overflow: hidden;
+  width: 60%; //! удалить
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    padding: 0.5em;
+    background-color: $black-transparent-07;
+    color: $white;
+  }
+
+  &__title {
+    flex: 1 0 auto;
+    font-size: $fs-large;
+  }
+
+  &__limit-label {
+    margin-right: 0.2em;
+  }
+
+  &__limit-input {
+    font-size: $fs-normal;
+    width: 3.5em;
+  }
+
+  &__page-info {
+    margin-right: 0.2em;
+  }
+
+  &__pagination {
+    display: flex;
+    align-items: inherit;
+  }
+
+  &__page-prev,
+  &__page-next {
+    width: 2em;
+    background-color: $gray;
+    border: none;
+    border-radius: 5px;
+    font-size: $fs-large;
+    color: $white;
+    cursor: pointer;
+  }
+
+  &__current-page {
+    padding: 0 0.5em;
+  }
+}
