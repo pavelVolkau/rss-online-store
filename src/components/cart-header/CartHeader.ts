@@ -1,9 +1,10 @@
-import { TAGS } from '../../common/helpers/constants';
+import { ROUTES, TAGS } from '../../common/helpers/constants';
 import CONSTANTS from './constants';
 import './cart-header.scss';
 import IDrawComponent from '../../common/interface/IDrawComponent';
 import getDOMElement from '../../common/helpers/getDOMElement';
 import store, { RootState } from '../../common/redux/store';
+import { goTo } from '../../router/router';
 
 export default class CartHeader implements IDrawComponent {
   constructor(public goodsCount: number, public priceSum: number) {}
@@ -31,7 +32,9 @@ export default class CartHeader implements IDrawComponent {
       }${state.priceSum.price.toString()}`;
     });
 
-    //TODO добавить cart.addEventListener('click', () => {}); для открытия старницы оплаты(корзины)
+    cart.addEventListener('click', () => {
+      goTo(ROUTES.cart);
+    });
 
     cartGoodsContainer.append(cartGoods);
     cartPriceContainer.append(cartPrice);

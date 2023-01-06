@@ -11,6 +11,7 @@ import { DataLoader } from '../components/data-loader/DataLoader';
 import { DetailsPage } from '../pages/details-page/DetailsPage';
 import { applyQueries, isInline } from './helpers';
 import { MainPage } from '../pages/main-page/MainPage';
+import CartPage from '../pages/cart-page/CartPage';
 
 const loader = new DataLoader(LINK);
 // TODO: импортировать шаблоны страниц
@@ -68,7 +69,7 @@ export function render(path: string): void {
 
   if (ROUTES.cart.match(pagePathName)) {
     // TODO: result = шаблон страницы с корзиной
-    APP_ROOT.replaceChildren('<h1>Cart </h1>');
+    APP_ROOT.replaceChildren(new CartPage().draw());
 
     return;
   }
