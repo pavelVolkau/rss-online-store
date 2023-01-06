@@ -92,6 +92,8 @@ export function addQuery(
           param === QUERY_PARAMS.inline ||
           param === QUERY_PARAMS.page ||
           param === QUERY_PARAMS.limit
+          param === QUERY_PARAMS.price ||
+          param === QUERY_PARAMS.stock
         ) {
           //поэтому мы очищаем массив для этих параметров, чтобы потом добавить новое значение, которое мы хотим внести
           val.splice(0, val.length);

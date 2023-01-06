@@ -116,7 +116,7 @@ function doesElemContainQueryPriceStock(
     return true;
   }
 
-  return elemValue > min && elemValue < max ? true : false;
+  return elemValue >= min && elemValue <= max ? true : false;
 }
 
 //для поиска search

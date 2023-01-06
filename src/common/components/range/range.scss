@@ -1,0 +1,54 @@
+@import '../../styles/main.scss';
+
+.range {
+  @include flex-column();
+
+  .range__labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: $fs-small;
+  }
+
+  .range__inputs {
+    width: 100%;
+    position: relative;
+    margin-top: 15px;
+    height: 3px;
+    background-color: $gray;
+
+    .range__input {
+      width: 100%;
+      position: absolute;
+      top: -7px;
+      appearance: none;
+      cursor: pointer;
+
+      &:focus {
+        outline: none;
+      }
+
+      &::-webkit-slider-runnable-track {
+        height: 0;
+      }
+
+      &::-webkit-slider-thumb {
+        appearance: none;
+        width: 15px;
+        height: 15px;
+        border: 1px solid $gray;
+        border-radius: 50%;
+        background-color: $white;
+      }
+    }
+  }
+}
+
+#pricemin,
+#stockmin {
+  left: 0;
+}
+
+#pricemax,
+#stockmax {
+  right: 0;
+}
