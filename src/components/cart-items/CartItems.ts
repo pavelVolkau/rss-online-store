@@ -2,18 +2,19 @@ import { QUERY_PARAMS } from '../../common/helpers/constants';
 import { getQueryParamSubcategories } from '../../common/helpers/getQueryParamSubcategories';
 import getQueryURI from '../../common/helpers/getQueryURI';
 import IDrawComponent from '../../common/interface/IDrawComponent';
-//import { goTo } from '../../router/router';
 import CONSTANTS from './constants';
 import './cart-items.scss';
 import LocalStorage from '../../common/components/localStorage/LocalStorage';
 import { localStorageData } from '../../common/types/localStorageData';
 import { drawItemsPage } from './helpers';
+import { goTo } from '../../router/router';
+import getNewLinkWithQuery from '../../common/helpers/getNewLinkWithQuery';
 
 export default class CartItems implements IDrawComponent {
   public draw(): HTMLElement {
     const storageData =
       LocalStorage.getLocalStorageData() as localStorageData[];
-    const queryURI = getQueryURI();
+    const queryURI = getQueryURI(document.location.href);
     let limitNumber: number;
     let pageNumber: number;
 
@@ -91,6 +92,7 @@ export default class CartItems implements IDrawComponent {
 
     // изменения количества товаров на странице за раз
     limitInput.addEventListener('change', () => {
+      const href = document.location.href;
       let currentLimitInput = parseInt(limitInput.value);
 
       if (currentLimitInput < CONSTANTS.minLimitNumber) {
@@ -103,54 +105,59 @@ export default class CartItems implements IDrawComponent {
         limitInput.value = CONSTANTS.maxLimitNumber.toString();
       }
 
-      limitNumber = currentLimitInput;
-      //TODO: тут должна быть функция goTo() и добавление параметра в квери строку
+      const maxPageNumber = Math.ceil(storageData.length / currentLimitInput);
+      let newLink = getNewLinkWithQuery(
+        href,
+        QUERY_PARAMS.limit,
+        currentLimitInput.toString(),
+      );
+
+      //если текущая страница отсутствует при повышении лимита
+      if (maxPageNumber < pageNumber) {
+        newLink = getNewLinkWithQuery(
+          newLink,
+          QUERY_PARAMS.page,
+          maxPageNumber.toString(),
+        );
+      }
+
+      goTo(newLink);
     });
 
     // пагинация
     pagePrev.addEventListener('click', () => {
+      const href = document.location.href;
       const minPageNumber = CONSTANTS.minPageNumber;
       const currentPageNumber = pageNumber - 1;
 
       if (currentPageNumber >= minPageNumber) {
-        pageNumber = currentPageNumber;
-        //TODO: тут должна быть функция goTo() и добавление параметра в квери строку
-        itemContainer.replaceChildren(
-          drawItemsPage(storageData, limitNumber, pageNumber),
+        const newLink = getNewLinkWithQuery(
+          href,
+          QUERY_PARAMS.page,
+          currentPageNumber.toString(),
         );
+
+        goTo(newLink);
       }
     });
 
     pageNext.addEventListener('click', () => {
+      const href = document.location.href;
       const maxPageNumber = Math.ceil(
         storageData.length / parseInt(limitInput.value),
       );
       const currentPageNumber = pageNumber + 1;
 
       if (currentPageNumber <= maxPageNumber) {
-        pageNumber = currentPageNumber;
-        //TODO: тут должна быть функция goTo() и добавление параметра в квери строку
-        itemContainer.replaceChildren(
-          drawItemsPage(storageData, limitNumber, pageNumber),
+        const newLink = getNewLinkWithQuery(
+          href,
+          QUERY_PARAMS.page,
+          currentPageNumber.toString(),
         );
+
+        goTo(newLink);
       }
     });
-
-    //TODO: доделать переход через goto
-    /* limitInput.addEventListener('input', () => {
-      const value = limitInput.value;
-
-      goTo()
-    }); */
-
-    // body
-
-    /*
-    pageNext.addEventListener('click', () => {});
-
-    storageData.forEach((obj, index) => {
-      itemContainer.append(new CartItem(obj, index + 1).draw());
-    }); */
 
     return cartItems;
   }

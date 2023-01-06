@@ -12,10 +12,12 @@ import { SYMBOLS } from '../../helpers/constants';
 
 export default class CartItem extends Card implements IDrawComponent {
   private readonly description: Data['description'];
+  private readonly index: number;
 
-  constructor(data: localStorageData, private index: number) {
+  constructor(data: localStorageData) {
     super(data.data);
     this.description = data.data.description;
+    this.index = data.index as number;
   }
 
   public draw() {
