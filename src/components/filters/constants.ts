@@ -9,5 +9,9 @@ export const BUTTONS = {
     class: 'button__copy',
     text: 'Copy link',
     copied: 'Link copied',
+    attr: {
+      attrName: 'disabled',
+      attrVal: '',
+    },
   },
 };

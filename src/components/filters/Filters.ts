@@ -38,8 +38,13 @@ export class Filters implements IDrawComponent {
     this.copyBtn.addEventListener('click', () => {
       navigator.clipboard.writeText(window.location.href);
       this.copyBtn.innerText = BUTTONS.copy.copied;
+      this.copyBtn.setAttribute(
+        BUTTONS.copy.attr.attrName,
+        BUTTONS.copy.attr.attrVal,
+      );
       setTimeout(() => {
         this.copyBtn.innerText = BUTTONS.copy.text;
+        this.copyBtn.removeAttribute(BUTTONS.copy.attr.attrName);
       }, 1000);
     });
 
