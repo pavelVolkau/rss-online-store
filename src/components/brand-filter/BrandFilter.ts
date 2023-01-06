@@ -36,9 +36,11 @@ export class BrandFilter implements IDrawComponent {
       const totalCount = totalBrands.filter((val) => val === el);
       const currentCount = currentBrands.filter((val) => val === el);
       let checked = false;
+
       if (decodedArr.includes(el.toLowerCase())) {
         checked = true;
       }
+
       const item = new Checkbox(
         QUERY_PARAMS.brand,
         el,

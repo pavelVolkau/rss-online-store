@@ -1,5 +1,7 @@
 export const CONSTANTS = {
   filterItem: 'filter__item',
+  filterItemChecked: 'checked',
+  filterItemUnavailable: 'unavailable',
   filterBox: 'filter__box',
   input: {
     class: 'filter__checkbox',
