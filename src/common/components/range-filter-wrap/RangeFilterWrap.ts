@@ -1,3 +1,4 @@
+import './range-filter-wrap.scss';
 import { TAGS } from '../../helpers/constants';
 import getDOMElement from '../../helpers/getDOMElement';
 import IDrawComponent from '../../interface/IDrawComponent';

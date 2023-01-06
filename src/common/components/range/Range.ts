@@ -2,8 +2,8 @@ import './range.scss';
 import {
   TAGS,
   SYMBOLS,
-  QUERY_PARAMS,
   SEPARATORS,
+  QUERY_PARAMS,
 } from '../../helpers/constants';
 import getDOMElement from '../../helpers/getDOMElement';
 import IDrawComponent from '../../interface/IDrawComponent';
@@ -16,11 +16,21 @@ export class Range implements IDrawComponent {
   private min: number;
   private max: number;
   private name: string;
+  private currentMin: number;
+  private currentMax: number;
 
-  constructor(min: number, max: number, name: string) {
+  constructor(
+    min: number,
+    max: number,
+    name: string,
+    currentMin: number,
+    currentMax: number,
+  ) {
     this.min = min;
     this.max = max;
     this.name = name;
+    this.currentMin = currentMin;
+    this.currentMax = currentMax;
   }
 
   public draw(): HTMLElement {
@@ -29,7 +39,13 @@ export class Range implements IDrawComponent {
     const inputContainer = getDOMElement(TAGS.div, CONSTANTS.inputs);
 
     const query = window.location.search.split(SEPARATORS.searchQuery)[1];
-    const queryRange = getQueryParamSubcategories(query, QUERY_PARAMS.price);
+    const queryRange = getQueryParamSubcategories(query, this.name);
+    const categoryQuery = getQueryParamSubcategories(
+      query,
+      QUERY_PARAMS.category,
+    );
+    const brandQuery = getQueryParamSubcategories(query, QUERY_PARAMS.brand);
+    const searchQuery = getQueryParamSubcategories(query, QUERY_PARAMS.search);
 
     const labelMin = getDOMElement(
       TAGS.label,
@@ -60,18 +76,23 @@ export class Range implements IDrawComponent {
     inputMin.min = String(this.min);
     inputMax.max = String(this.max);
 
-    if (queryRange.length === 2) {
+    if (
+      queryRange.length === 2 &&
+      categoryQuery.length === 0 &&
+      brandQuery.length === 0 &&
+      searchQuery.length === 0
+    ) {
       inputMin.max = queryRange[1];
       inputMin.value = queryRange[0];
 
       inputMax.min = queryRange[0];
       inputMax.value = queryRange[1];
     } else {
-      inputMin.max = String(this.max);
-      inputMin.value = String(this.min);
+      inputMin.max = String(this.currentMax);
+      inputMin.value = String(this.currentMin);
 
-      inputMax.min = String(this.min);
-      inputMax.value = String(this.max);
+      inputMax.min = String(this.currentMin);
+      inputMax.value = String(this.currentMax);
     }
 
     const totalInpWidth = this.max - this.min;
@@ -84,16 +105,16 @@ export class Range implements IDrawComponent {
     inputMax.style.width = `${maxInpWidth}${SYMBOLS.percent}`;
 
     labelMin.htmlFor = inputMin.id;
-    labelMin.innerText = SYMBOLS.dollar + inputMin.value;
+    labelMin.innerText = inputMin.value;
 
     labelMax.htmlFor = inputMax.id;
-    labelMax.innerText = SYMBOLS.dollar + inputMax.value;
+    labelMax.innerText = inputMax.value;
 
     [inputMin, inputMax].forEach((el) => {
       el.addEventListener('change', () => {
         const subcategory =
           inputMin.value + SEPARATORS.subcategory + inputMax.value;
-        const link = addQuery(QUERY_PARAMS.price, subcategory);
+        const link = addQuery(this.name, subcategory);
         goTo(link);
       });
     });
