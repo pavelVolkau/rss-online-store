@@ -1,6 +1,6 @@
 // import { Sort } from '../common/components/sort/Sort';
 import {
-  APP_ROOT,
+  APP_ROOT_CLASS,
   LINK,
   SEPARATORS,
   ROUTES,
@@ -17,6 +17,7 @@ const loader = new DataLoader(LINK);
 
 //принимает путь и заменяет контент в html в диве app-root
 export function render(path: string): void {
+  const APP_ROOT = document.querySelector(APP_ROOT_CLASS) as HTMLElement;
   const pathWithQuery = path.split(SEPARATORS.searchQuery);
   const pathName = pathWithQuery[0];
   const query = pathWithQuery[1];

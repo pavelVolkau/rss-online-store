@@ -1,5 +1,4 @@
 import { Card } from '../../../components/card/Card';
-import { SYMBOLS } from '../../../components/card/constants';
 import IDrawComponent from '../../interface/IDrawComponent';
 import { Data } from '../../types/data';
 import { localStorageData } from '../../types/localStorageData';
@@ -9,6 +8,7 @@ import './cart-item.scss';
 import { decreaseGoodsCount, increaseGoodsCount } from '../../redux/goodsCount';
 import store from '../../redux/store';
 import { addPrice, subtractPrice } from '../../redux/priceSum';
+import { SYMBOLS } from '../../helpers/constants';
 
 export default class CartItem extends Card implements IDrawComponent {
   private readonly description: Data['description'];

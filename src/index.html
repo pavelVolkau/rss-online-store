@@ -13,8 +13,6 @@
     />
   </head>
   <body>
-    <div class="app-root"></div>
-
     <!-- шаблон карточки товара -->
     <template id="card-template">
       <div class="card">
@@ -135,46 +133,46 @@
       </div>
     </template>
 
-        <!-- шаблон для товаров в корзине -->
-        <template id="cart-items-template">
-          <div class="cart-page__cart-items cart-items">
-            <div class="cart-items__header">
-              <h3 class="h3 cart-items__title"></h3>
-              <div class="cart-items__limit">
-                <label class="cart-items__limit-label" for="item-limit"></label>
-                <input
-                  class="cart-items__limit-input"
-                  id="item-limit"
-                  type="number"
-                  min="1"
-                  max="3"
-                />
-              </div>
-              <div class="cart-items__pagination">
-                <div class="cart-items__page-info"></div>
-                <button class="cart-items__page-prev"></button>
-                <div class="cart-items__current-page"></div>
-                <button class="cart-items__page-next"></button>
-              </div>
-            </div>
-            <div class="cart-items__container"></div>
+    <!-- шаблон для товаров в корзине -->
+    <template id="cart-items-template">
+      <div class="cart-page__cart-items cart-items">
+        <div class="cart-items__header">
+          <h3 class="h3 cart-items__title"></h3>
+          <div class="cart-items__limit">
+            <label class="cart-items__limit-label" for="item-limit"></label>
+            <input
+              class="cart-items__limit-input"
+              id="item-limit"
+              type="number"
+              min="1"
+              max="3"
+            />
           </div>
-        </template>
+          <div class="cart-items__pagination">
+            <div class="cart-items__page-info"></div>
+            <button class="cart-items__page-prev"></button>
+            <div class="cart-items__current-page"></div>
+            <button class="cart-items__page-next"></button>
+          </div>
+        </div>
+        <div class="cart-items__container"></div>
+      </div>
+    </template>
 
-        <!-- шаблон для цены и промокода в корзине -->
-        <template id="cart-price-template">
-          <div class="cart-page__items-price items-price">
-            <div class="items-price__header">
-              <h3 class="h3 items-price__title"></h3>
-            </div>
-            <div class="items-price__container">
-              <div class="items-price__products-count"></div>
-              <div class="items-price__total-price"></div>
-              <input class="items-price__promo-input" id="promo-code" type="text" />
-              <label class="promo-label" for="promo-code"></label>
-              <button class="items-price__buy-now"></button>
-            </div>
-          </div>
-        </template>
+    <!-- шаблон для цены и промокода в корзине -->
+    <template id="cart-price-template">
+      <div class="cart-page__items-price items-price">
+        <div class="items-price__header">
+          <h3 class="h3 items-price__title"></h3>
+        </div>
+        <div class="items-price__container">
+          <div class="items-price__products-count"></div>
+          <div class="items-price__total-price"></div>
+          <input class="items-price__promo-input" id="promo-code" type="text" />
+          <label class="promo-label" for="promo-code"></label>
+          <button class="items-price__buy-now"></button>
+        </div>
+      </div>
+    </template>
   </body>
 </html>
