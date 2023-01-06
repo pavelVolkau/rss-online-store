@@ -2,6 +2,7 @@
 
 .filters {
   @include flex-column();
+  height: 80vh;
   width: 20%;
   padding: 2%;
 }

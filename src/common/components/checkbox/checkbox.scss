@@ -1,0 +1,46 @@
+@import '../../styles/main.scss';
+
+.filter__item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 2%;
+  font-size: $fs-small;
+  margin: 0;
+
+  &.checked {
+    background-color: $black-transparent-07;
+    color: $white;
+  }
+
+  .filter__box {
+    display: flex;
+    align-items: center;
+    width: 85%;
+
+    .filter__checkbox,
+    .filter__label {
+      cursor: pointer;
+    }
+
+    .filter__checkbox {
+      width: 10px;
+      height: 10px;
+      appearance: none;
+      border: 1px solid rgb(128, 128, 128);
+      border-radius: 50%;
+      margin: 2%;
+
+      &:checked {
+        background-color: $white;
+        border: 2px solid $black-transparent-07;
+        outline: 1px solid $white;
+      }
+    }
+
+    .filter__label {
+      overflow: hidden;
+    }
+  }
+}

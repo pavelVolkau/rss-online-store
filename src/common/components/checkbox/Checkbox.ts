@@ -1,3 +1,4 @@
+import './checkbox.scss';
 import { goTo } from '../../../router/router';
 import { addQuery } from '../../helpers/addQuery';
 import { TAGS } from '../../helpers/constants';
@@ -47,6 +48,7 @@ export class Checkbox implements IDrawComponent {
         CONSTANTS.input.checked.attrName,
         CONSTANTS.input.checked.attrVal,
       );
+      filterItem.classList.add('checked');
     }
 
     input.addEventListener('change', () => {
