@@ -3,6 +3,9 @@ export default {
   minPageNumber: 1,
   minLimitNumber: 1,
   maxLimitNumber: 3,
+  header: {
+    class: '.cart-items__header',
+  },
   title: {
     class: '.cart-items__title',
     text: 'Products In Cart',
@@ -30,8 +33,5 @@ export default {
   pageNext: {
     class: 'cart-items__page-next',
     text: '>',
-  },
-  itemContainer: {
-    class: '.cart-items__container',
   },
 };

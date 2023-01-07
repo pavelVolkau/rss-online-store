@@ -6,10 +6,11 @@ import CONSTANTS from './constants';
 import './cart-items.scss';
 import LocalStorage from '../../common/components/localStorage/LocalStorage';
 import { localStorageData } from '../../common/types/localStorageData';
-import { drawItemsPage, resolveActualPage } from './helpers';
+import { resolveActualPage } from './helpers';
 import { goTo } from '../../router/router';
 import { addQuery } from '../../common/helpers/addQuery';
 import { Button } from '../../common/components/button/Button';
+import ListGoodsCart from '../../common/components/list-goods-cart/ListGoodsCart';
 
 export default class CartItems implements IDrawComponent {
   public draw(): HTMLElement {
@@ -25,6 +26,9 @@ export default class CartItems implements IDrawComponent {
     const cartItems = cartItemsTemplate.content.cloneNode(true) as HTMLElement;
 
     // header
+    const headerTemplate = cartItems.querySelector(
+      CONSTANTS.header.class,
+    ) as HTMLElement;
     const title = cartItems.querySelector(CONSTANTS.title.class) as HTMLElement;
     const limitLabel = cartItems.querySelector(
       CONSTANTS.limitLabel.class,
@@ -37,9 +41,6 @@ export default class CartItems implements IDrawComponent {
     ) as HTMLElement;
     const currentPage = cartItems.querySelector(
       CONSTANTS.currentPage.class,
-    ) as HTMLElement;
-    const itemContainer = cartItems.querySelector(
-      CONSTANTS.itemContainer.class,
     ) as HTMLElement;
     const pagePrev = new Button(
       CONSTANTS.pagePrev.class,
@@ -85,17 +86,16 @@ export default class CartItems implements IDrawComponent {
 
     currentPage.innerText = pageNumber.toString();
 
+    const itemsContainer = new ListGoodsCart(
+      storageData,
+      parseInt(limitInput.value),
+      parseInt(currentPage.innerText),
+    ).draw();
     // первичная отрисовка товаров
-    itemContainer.append(
-      drawItemsPage(
-        storageData,
-        parseInt(limitInput.value),
-        parseInt(currentPage.innerText),
-      ),
-    );
+    headerTemplate.after(itemsContainer);
 
     // если 0 штук данного товара, то удалить его из корзины
-    itemContainer.addEventListener('click', (event) => {
+    itemsContainer.addEventListener('click', (event) => {
       const target = event.target as HTMLElement;
       const cartItem = target.closest('.cart-item') as HTMLElement;
       const elementWithCountItems = cartItem.querySelector(
@@ -104,7 +104,7 @@ export default class CartItems implements IDrawComponent {
       const itemCount = parseInt(elementWithCountItems.innerText);
 
       if (itemCount === 0) {
-        itemContainer.removeChild(cartItem);
+        itemsContainer.removeChild(cartItem);
 
         const currentLink = document.location.href;
         const newLink = resolveActualPage(pageNumber, limitNumber);

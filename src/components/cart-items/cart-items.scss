@@ -1,11 +1,11 @@
 @import '../../common/styles/main.scss';
 
 .cart-items {
+  flex: 1 1 60%;
   @include flex-column();
   border: solid $black-transparent-07 4px;
   border-radius: 10px;
   overflow: hidden;
-  width: 60%; //! удалить
 
   &__header {
     display: flex;
