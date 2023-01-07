@@ -5,10 +5,8 @@ import { localStorageData } from '../../types/localStorageData';
 import LocalStorage from '../localStorage/LocalStorage';
 import CONSTANTS from './constants';
 import './cart-item.scss';
-import { decreaseGoodsCount, increaseGoodsCount } from '../../redux/goodsCount';
-import store from '../../redux/store';
-import { addPrice, subtractPrice } from '../../redux/priceSum';
 import { SYMBOLS } from '../../helpers/constants';
+import changePriceCount from './helpers';
 
 export default class CartItem extends Card implements IDrawComponent {
   private readonly description: Data['description'];
@@ -81,38 +79,27 @@ export default class CartItem extends Card implements IDrawComponent {
 
     incCount.addEventListener('click', () => {
       const countGoods = parseInt(currentCount.innerText) + 1;
-      const newData: localStorageData = {
-        id: this.id,
-        data: this.data,
-        count: countGoods,
-      };
 
-      store.dispatch(increaseGoodsCount(1));
-      store.dispatch(addPrice(this.price));
-      amountInfo.innerText = `${SYMBOLS.dollar}${(
-        countGoods * this.price
-      ).toString()}`;
-      currentCount.innerText = countGoods.toString();
-      LocalStorage.addDataToLocalStorage(newData);
+      changePriceCount(
+        countGoods,
+        this,
+        amountInfo,
+        currentCount,
+        CONSTANTS.increment,
+      );
     });
 
     decCount.addEventListener('click', () => {
       const countGoods = parseInt(currentCount.innerText) - 1;
 
       if (countGoods >= 0) {
-        const newData: localStorageData = {
-          id: this.id,
-          data: this.data,
-          count: countGoods,
-        };
-
-        store.dispatch(decreaseGoodsCount(1));
-        store.dispatch(subtractPrice(this.price));
-        amountInfo.innerText = `${SYMBOLS.dollar}${(
-          countGoods * this.price
-        ).toString()}`;
-        currentCount.innerText = countGoods.toString();
-        LocalStorage.addDataToLocalStorage(newData);
+        changePriceCount(
+          countGoods,
+          this,
+          amountInfo,
+          currentCount,
+          CONSTANTS.decrement,
+        );
       }
     });
 

@@ -1,5 +1,7 @@
 export default {
   DOMtemplate: '#cart-item-template',
+  increment: 'increment',
+  decrement: 'decrement',
   itemIndex: {
     class: '.cart-item__index',
   },
