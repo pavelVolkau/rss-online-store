@@ -7,6 +7,7 @@ import CONSTANTS from './constants';
 import './cart-item.scss';
 import { SYMBOLS } from '../../helpers/constants';
 import changePriceCount from './helpers';
+import { Button } from '../button/Button';
 
 export default class CartItem extends Card implements IDrawComponent {
   private readonly description: Data['description'];
@@ -49,18 +50,23 @@ export default class CartItem extends Card implements IDrawComponent {
     const stockInfo = cartItem.querySelector(
       CONSTANTS.stockInfo.class,
     ) as HTMLElement;
-    const incCount = cartItem.querySelector(
-      CONSTANTS.incCount.class,
-    ) as HTMLButtonElement;
-    const decCount = cartItem.querySelector(
-      CONSTANTS.decCount.class,
-    ) as HTMLButtonElement;
     const currentCount = cartItem.querySelector(
       CONSTANTS.currentCount.class,
     ) as HTMLElement;
     const amountInfo = cartItem.querySelector(
       CONSTANTS.amountInfo.class,
     ) as HTMLElement;
+    const incCount = new Button(
+      CONSTANTS.incCount.class,
+      CONSTANTS.incCount.text,
+    ).draw();
+    const decCount = new Button(
+      CONSTANTS.decCount.class,
+      CONSTANTS.decCount.text,
+    ).draw();
+
+    currentCount.before(incCount);
+    currentCount.after(decCount);
 
     itemIndex.innerText = this.index.toString();
     itemImage.src = this.thumbnail;
@@ -70,8 +76,6 @@ export default class CartItem extends Card implements IDrawComponent {
     itemRating.innerText = this.rating.toString();
     itemDiscount.innerText = `${SYMBOLS.minus}${this.discountPercentage}${SYMBOLS.percent}`;
     stockInfo.innerText = `${CONSTANTS.stockInfo.prefix} ${this.stock}`;
-    incCount.innerText = CONSTANTS.incCount.text;
-    decCount.innerText = CONSTANTS.decCount.text;
     currentCount.innerText = countGoods.toString();
     amountInfo.innerText = `${SYMBOLS.dollar}${(
       countGoods * this.price

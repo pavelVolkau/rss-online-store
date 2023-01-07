@@ -29,14 +29,14 @@ export default {
     prefix: 'left:',
   },
   incCount: {
-    class: '.cart-item__inc-count',
+    class: 'cart-item__inc-count',
     text: '+',
   },
   currentCount: {
     class: '.cart-item__current-count',
   },
   decCount: {
-    class: '.cart-item__dec-count',
+    class: 'cart-item__dec-count',
     text: '-',
   },
   amountInfo: {

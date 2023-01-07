@@ -20,7 +20,7 @@ export default {
     text: 'PAGE:',
   },
   pagePrev: {
-    class: '.cart-items__page-prev',
+    class: 'cart-items__page-prev',
     text: '<',
   },
   currentPage: {
@@ -28,7 +28,7 @@ export default {
     initCount: 1,
   },
   pageNext: {
-    class: '.cart-items__page-next',
+    class: 'cart-items__page-next',
     text: '>',
   },
   itemContainer: {

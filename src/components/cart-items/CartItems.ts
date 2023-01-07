@@ -9,6 +9,7 @@ import { localStorageData } from '../../common/types/localStorageData';
 import { drawItemsPage, resolveActualPage } from './helpers';
 import { goTo } from '../../router/router';
 import { addQuery } from '../../common/helpers/addQuery';
+import { Button } from '../../common/components/button/Button';
 
 export default class CartItems implements IDrawComponent {
   public draw(): HTMLElement {
@@ -34,24 +35,27 @@ export default class CartItems implements IDrawComponent {
     const pageInfo = cartItems.querySelector(
       CONSTANTS.pageInfo.class,
     ) as HTMLElement;
-    const pagePrev = cartItems.querySelector(
-      CONSTANTS.pagePrev.class,
-    ) as HTMLButtonElement;
     const currentPage = cartItems.querySelector(
       CONSTANTS.currentPage.class,
     ) as HTMLElement;
-    const pageNext = cartItems.querySelector(
-      CONSTANTS.pageNext.class,
-    ) as HTMLButtonElement;
     const itemContainer = cartItems.querySelector(
       CONSTANTS.itemContainer.class,
     ) as HTMLElement;
+    const pagePrev = new Button(
+      CONSTANTS.pagePrev.class,
+      CONSTANTS.pagePrev.text,
+    ).draw();
+    const pageNext = new Button(
+      CONSTANTS.pageNext.class,
+      CONSTANTS.pageNext.text,
+    ).draw();
+
+    currentPage.before(pagePrev);
+    currentPage.after(pageNext);
 
     title.innerText = CONSTANTS.title.text;
     limitLabel.innerText = CONSTANTS.limitLabel.text;
     pageInfo.innerText = CONSTANTS.pageInfo.text;
-    pagePrev.innerText = CONSTANTS.pagePrev.text;
-    pageNext.innerText = CONSTANTS.pageNext.text;
 
     // узнаем первичное количество товаров на странице
     const limitValueParams = getQueryParamSubcategories(
