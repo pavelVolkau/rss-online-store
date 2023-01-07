@@ -7,7 +7,7 @@ export function resolveActualPage(
   currentPage: number,
   currentLimit: number,
   currentLink?: string,
-): string | void {
+): string {
   const storageData = LocalStorage.getLocalStorageData() as localStorageData[];
   const maxPageNumber = Math.ceil(storageData.length / currentLimit);
 
@@ -21,4 +21,6 @@ export function resolveActualPage(
 
     return newLink;
   }
+
+  return '';
 }
