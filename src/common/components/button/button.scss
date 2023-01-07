@@ -30,22 +30,21 @@
 
   &__inline,
   &__table {
+    background-size: contain;
     width: 30%;
     background-color: transparent;
 
     &.active {
       outline: 2px solid $lightgray;
-      outline-offset: 2px;
+      // outline-offset: 2px;
     }
   }
 
   &__inline {
-    background-size: 130%;
     background-image: url('../../assets/icons/inline-view.svg');
   }
 
   &__table {
-    background-size: 95%;
     background-image: url('../../assets/icons/table-view.svg');
   }
 

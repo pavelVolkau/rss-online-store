@@ -38,16 +38,18 @@ export class View implements IDrawComponent {
       this.table.classList.add(CONSTANTS.table.active);
     }
 
-    this.inline.addEventListener('click', () => {
-      const link = addQuery(QUERY_PARAMS.inline, INLINE_OPTIONS.true);
+    [this.inline, this.table].forEach((el) => {
+      const inlineOpt =
+        el === this.inline ? INLINE_OPTIONS.true : INLINE_OPTIONS.false;
 
-      goTo(link, true);
-    });
+      el.addEventListener('click', () => {
+        const link = addQuery(QUERY_PARAMS.inline, inlineOpt);
 
-    this.table.addEventListener('click', () => {
-      const link = addQuery(QUERY_PARAMS.inline, INLINE_OPTIONS.false);
+        goTo(link, true);
 
-      goTo(link, true);
+        this.inline.classList.toggle(CONSTANTS.inline.active);
+        this.table.classList.toggle(CONSTANTS.table.active);
+      });
     });
 
     view.append(this.inline, this.table);
