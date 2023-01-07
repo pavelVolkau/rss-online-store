@@ -1,14 +1,22 @@
 import './filters.scss';
-import { QUERY_PARAMS, ROUTES, TAGS } from '../../common/helpers/constants';
+import {
+  QUERY_PARAMS,
+  ROUTES,
+  TAGS,
+  QUERY_PARAMS,
+  TAGS,
+} from '../../common/helpers/constants';
 import getDOMElement from '../../common/helpers/getDOMElement';
 import IDrawComponent from '../../common/interface/IDrawComponent';
-import { Data } from '../../common/types/data';
+import { Data, Data } from '../../common/types/data';
 import { CategoryFilter } from '../category-filter/CategoryFilter';
-import { BUTTONS, CLASS } from './constants';
+import { BUTTONS, CLASS, CLASS } from './constants';
 import { BrandFilter } from '../brand-filter/BrandFilter';
 import { Button } from '../../common/components/button/Button';
 import { goTo } from '../../router/router';
 import { RangeFilter } from '../range-filter/RangeFilter';
+
+import { PickFilter } from '../pick-filter/PickFilter';
 
 export class Filters implements IDrawComponent {
   private categoryFilter: HTMLElement;
@@ -33,6 +41,16 @@ export class Filters implements IDrawComponent {
     ).draw();
     this.resetBtn = new Button(BUTTONS.reset.class, BUTTONS.reset.text).draw();
     this.copyBtn = new Button(BUTTONS.copy.class, BUTTONS.copy.text).draw();
+    this.categoryFilter = new PickFilter(
+      totalData,
+      currentData,
+      QUERY_PARAMS.category,
+    ).draw();
+    this.brandFilter = new PickFilter(
+      totalData,
+      currentData,
+      QUERY_PARAMS.brand,
+    ).draw();
   }
 
   public draw(): HTMLElement {
