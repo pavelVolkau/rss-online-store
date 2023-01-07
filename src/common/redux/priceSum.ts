@@ -6,7 +6,7 @@ const initialState = {
 };
 
 const storageData = LocalStorage.getLocalStorageData();
-if (storageData) {
+if (storageData.length > 0) {
   initialState.price = storageData.reduce(
     (acc, obj) => acc + obj.data.price * obj.count,
     0,

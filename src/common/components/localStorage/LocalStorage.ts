@@ -3,10 +3,12 @@ import { localStorageData } from '../../types/localStorageData';
 import CONSTANTS from './constants';
 
 export default class LocalStorage {
-  static getLocalStorageData(): localStorageData[] | void {
+  static getLocalStorageData(): localStorageData[] {
     const data = toData(localStorage.getItem(CONSTANTS.localStorageKey));
 
     if (data) return data;
+
+    return [];
   }
 
   static setLocalStorageData(data: localStorageData[]): void {

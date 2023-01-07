@@ -11,7 +11,7 @@ export default class CartPage implements IDrawComponent {
     const localStorageData = LocalStorage.getLocalStorageData();
     const cart = getDOMElement(TAGS.div, CONSTANTS.cart.class);
 
-    if (!localStorageData) {
+    if (localStorageData.length === 0) {
       const title = getDOMElement(
         TAGS.h2,
         CONSTANTS.title.class,

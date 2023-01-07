@@ -6,7 +6,7 @@ const initialState = {
 };
 
 const storageData = LocalStorage.getLocalStorageData();
-if (storageData) {
+if (storageData.length > 0) {
   initialState.count = storageData.reduce((acc, obj) => acc + obj.count, 0);
 }
 
