@@ -1,15 +1,14 @@
 import './filters.scss';
-import { ROUTES, TAGS } from '../../common/helpers/constants';
+import { QUERY_PARAMS, ROUTES, TAGS } from '../../common/helpers/constants';
 import getDOMElement from '../../common/helpers/getDOMElement';
 import IDrawComponent from '../../common/interface/IDrawComponent';
 import { Data } from '../../common/types/data';
 import { CategoryFilter } from '../category-filter/CategoryFilter';
 import { BUTTONS, CLASS } from './constants';
 import { BrandFilter } from '../brand-filter/BrandFilter';
-import { PriceFilter } from '../price-filter/PriceFilter';
-import { StockFilter } from '../stock-filter/StockFilter';
 import { Button } from '../../common/components/button/Button';
 import { goTo } from '../../router/router';
+import { RangeFilter } from '../range-filter/RangeFilter';
 
 export class Filters implements IDrawComponent {
   private categoryFilter: HTMLElement;
@@ -22,8 +21,16 @@ export class Filters implements IDrawComponent {
   constructor(totalData: Data[], currentData: Data[]) {
     this.categoryFilter = new CategoryFilter(totalData, currentData).draw();
     this.brandFilter = new BrandFilter(totalData, currentData).draw();
-    this.priceFilter = new PriceFilter(totalData, currentData).draw();
-    this.stockFilter = new StockFilter(totalData, currentData).draw();
+    this.priceFilter = new RangeFilter(
+      totalData,
+      currentData,
+      QUERY_PARAMS.price,
+    ).draw();
+    this.stockFilter = new RangeFilter(
+      totalData,
+      currentData,
+      QUERY_PARAMS.stock,
+    ).draw();
     this.resetBtn = new Button(BUTTONS.reset.class, BUTTONS.reset.text).draw();
     this.copyBtn = new Button(BUTTONS.copy.class, BUTTONS.copy.text).draw();
   }

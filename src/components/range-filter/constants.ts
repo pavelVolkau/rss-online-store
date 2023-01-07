@@ -1,5 +1,3 @@
-export const NAME = 'Price';
-
 export const NOT_FOUND = {
   class: 'not-found',
   text: 'Not found',
