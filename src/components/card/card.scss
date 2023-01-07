@@ -16,7 +16,7 @@
   .card__img {
     background-size: cover;
     background-position: center;
-    height: 90%;
+    height: 58%;
     cursor: pointer;
 
     .card__description {
@@ -43,6 +43,7 @@
 
   .card__bottom {
     @include flex-column();
+    height: 32%;
     font-size: $fs-small;
     padding: 3% 3% 3% 0;
 
@@ -76,29 +77,39 @@
     display: flex;
     justify-content: flex-start;
     width: 100%;
+    height: 40%;
     gap: 5%;
-    margin-top: 10px;
+    margin-top: 3px;
     padding: 0 2%;
   }
 }
 
 .card.inline {
+  min-height: 150px;
+  overflow-x: initial;
+
   .wrapper {
     display: flex;
     height: 100%;
   }
   .card__img {
     height: 100%;
-    width: 50%;
+    width: 20%;
+
+    &:hover {
+      // border: 1px solid $black-transparent-07;
+      box-shadow: 3px 3px 7px $black-transparent-07;
+    }
   }
 
   .card__info {
     @include flex-column();
     justify-content: space-between;
-    width: 50%;
-    padding: 2%;
+    width: 80%;
+    padding: 1%;
 
     .card__bottom {
+      height: auto;
       font-size: $fs-normal;
       padding: 0;
 
@@ -107,7 +118,9 @@
       }
 
       .card__buttons {
-        justify-content: space-between;
+        height: auto;
+        justify-content: flex-end;
+        padding: 0;
       }
     }
   }
