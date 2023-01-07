@@ -5,7 +5,7 @@ import IDrawComponent from '../../common/interface/IDrawComponent';
 import { Data } from '../../common/types/data';
 import { GoodsBox } from '../goods-box/GoodsBox';
 import { GoodsHeader } from '../goods-header/GoodsHeader';
-import { CLASS } from './constants';
+import { CLASSES } from './constants';
 
 export class Goods implements IDrawComponent {
   private goodsHeader: HTMLElement;
@@ -17,9 +17,12 @@ export class Goods implements IDrawComponent {
   }
 
   draw(): HTMLElement {
-    const goods = getDOMElement(TAGS.div, CLASS);
+    const goods = getDOMElement(TAGS.div, CLASSES.goods);
+    const goodsContainer = getDOMElement(TAGS.div, CLASSES.container);
 
-    goods.append(this.goodsHeader, this.goodsBox);
+    goodsContainer.append(this.goodsBox);
+
+    goods.append(this.goodsHeader, goodsContainer);
 
     return goods;
   }

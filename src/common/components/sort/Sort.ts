@@ -66,7 +66,7 @@ export class Sort implements IDrawComponent {
       const value = sort.value;
       const link = addQuery(QUERY_PARAMS.sort, value);
 
-      goTo(link);
+      goTo(link, true);
     });
 
     sort.append(title, priceASC, priceDESC, ratingASC, ratingDESC);

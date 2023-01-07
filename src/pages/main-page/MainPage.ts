@@ -4,7 +4,7 @@ import getDOMElement from '../../common/helpers/getDOMElement';
 import IDrawComponent from '../../common/interface/IDrawComponent';
 import { Data } from '../../common/types/data';
 import { Goods } from '../../components/goods/Goods';
-import { CLASS } from './constants';
+import { CLASSES } from './constants';
 import { Filters } from '../../components/filters/Filters';
 
 export class MainPage implements IDrawComponent {
@@ -17,9 +17,11 @@ export class MainPage implements IDrawComponent {
   }
 
   public draw(): HTMLElement {
-    const wrapper = getDOMElement(TAGS.div, CLASS);
+    const wrapper = getDOMElement(TAGS.div, CLASSES.mainWrap);
+    const filtersWrap = getDOMElement(TAGS.div, CLASSES.filtersWrap);
 
-    wrapper.append(this.filters, this.goods);
+    filtersWrap.append(this.filters);
+    wrapper.append(filtersWrap, this.goods);
 
     return wrapper;
   }

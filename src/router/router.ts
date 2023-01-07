@@ -12,11 +12,14 @@ import { applyQueries, isInline } from './helpers';
 import { MainPage } from '../pages/main-page/MainPage';
 import CartPage from '../pages/cart-page/CartPage';
 import { PageNotFound } from '../pages/page-not-found/PageNotFound';
+import { GoodsBox } from '../components/goods-box/GoodsBox';
+import { Filters } from '../components/filters/Filters';
+import { SELECTORS_FOR_PARTIAL } from './constants';
 
 const loader = new DataLoader(LINK);
 
 //принимает путь и заменяет контент в html в диве app-root
-export function render(path: string): void {
+export function render(path: string, partial = false): void {
   const APP_ROOT = document.querySelector(APP_ROOT_CLASS) as HTMLElement;
   const pathWithQuery = path.split(SEPARATORS.searchQuery);
   const pathName = pathWithQuery[0];
@@ -35,6 +38,23 @@ export function render(path: string): void {
     loader.getData((data: Data[]) => {
       const newDataArr = applyQueries(query, data);
       const view = isInline(query);
+      if (partial) {
+        const filters = document.querySelector(
+          SELECTORS_FOR_PARTIAL.filters,
+        ) as HTMLElement;
+        const goodsCount = document.querySelector(
+          SELECTORS_FOR_PARTIAL.goodsCount,
+        ) as HTMLElement;
+        const container = document.querySelector(
+          SELECTORS_FOR_PARTIAL.goodsContainer,
+        ) as HTMLElement;
+
+        filters.replaceChildren(new Filters(data, newDataArr).draw());
+        goodsCount.innerText = String(newDataArr.length);
+        container.replaceChildren(new GoodsBox(newDataArr, view).draw());
+
+        return;
+      }
       APP_ROOT.replaceChildren(new MainPage(data, newDataArr, view).draw());
     });
 
@@ -75,9 +95,9 @@ export function render(path: string): void {
 }
 
 //функция для перехода на переданную страницу, все переходы по ссылкам должны происходить через эту функцию, иначе не будет писаться история в браузер
-export function goTo(path: string): void {
+export function goTo(path: string, partial = false): void {
   window.history.pushState({ path }, path, path); //добавляет путь в историю браузера, чтобы можно было потом переключать страницы стрелками в браузере
-  render(path);
+  render(path, partial);
 }
 
 //функция инициализации роутинга

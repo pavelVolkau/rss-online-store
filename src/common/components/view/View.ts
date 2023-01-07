@@ -41,13 +41,13 @@ export class View implements IDrawComponent {
     this.inline.addEventListener('click', () => {
       const link = addQuery(QUERY_PARAMS.inline, INLINE_OPTIONS.true);
 
-      goTo(link);
+      goTo(link, true);
     });
 
     this.table.addEventListener('click', () => {
       const link = addQuery(QUERY_PARAMS.inline, INLINE_OPTIONS.false);
 
-      goTo(link);
+      goTo(link, true);
     });
 
     view.append(this.inline, this.table);
