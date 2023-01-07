@@ -6,9 +6,9 @@ import CONSTANTS from './constants';
 import './cart-items.scss';
 import LocalStorage from '../../common/components/localStorage/LocalStorage';
 import { localStorageData } from '../../common/types/localStorageData';
-import { drawItemsPage } from './helpers';
+import { drawItemsPage, resolveActualPage } from './helpers';
 import { goTo } from '../../router/router';
-import getNewLinkWithQuery from '../../common/helpers/getNewLinkWithQuery';
+import { addQuery } from '../../common/helpers/addQuery';
 
 export default class CartItems implements IDrawComponent {
   public draw(): HTMLElement {
@@ -90,9 +90,32 @@ export default class CartItems implements IDrawComponent {
       ),
     );
 
+    // если 0 штук данного товара, то удалить его из корзины
+    itemContainer.addEventListener('click', (event) => {
+      const target = event.target as HTMLElement;
+      const cartItem = target.closest('.cart-item') as HTMLElement;
+      const elementWithCountItems = cartItem.querySelector(
+        '.cart-item__current-count',
+      ) as HTMLElement;
+      const itemCount = parseInt(elementWithCountItems.innerText);
+
+      if (itemCount === 0) {
+        itemContainer.removeChild(cartItem);
+
+        const currentLink = document.location.href;
+        const newLink = resolveActualPage(pageNumber, limitNumber);
+
+        //! FIX пофиксить что когда товар удаляется, и ссылка остается прежней(старница существует согласно лимитов) выскакивает 404
+        if (newLink) {
+          goTo(newLink);
+        } else {
+          goTo(currentLink);
+        }
+      }
+    });
+
     // изменения количества товаров на странице за раз
     limitInput.addEventListener('change', () => {
-      const href = document.location.href;
       let currentLimitInput = parseInt(limitInput.value);
 
       if (currentLimitInput < CONSTANTS.minLimitNumber) {
@@ -105,34 +128,31 @@ export default class CartItems implements IDrawComponent {
         limitInput.value = CONSTANTS.maxLimitNumber.toString();
       }
 
-      const maxPageNumber = Math.ceil(storageData.length / currentLimitInput);
-      let newLink = getNewLinkWithQuery(
-        href,
+      const newLink = addQuery(
         QUERY_PARAMS.limit,
         currentLimitInput.toString(),
       );
-
       //если текущая страница отсутствует при повышении лимита
-      if (maxPageNumber < pageNumber) {
-        newLink = getNewLinkWithQuery(
-          newLink,
-          QUERY_PARAMS.page,
-          maxPageNumber.toString(),
-        );
-      }
+      const newActualLink = resolveActualPage(
+        pageNumber,
+        currentLimitInput,
+        newLink,
+      );
 
-      goTo(newLink);
+      if (newActualLink) {
+        goTo(newActualLink);
+      } else {
+        goTo(newLink);
+      }
     });
 
     // пагинация
     pagePrev.addEventListener('click', () => {
-      const href = document.location.href;
       const minPageNumber = CONSTANTS.minPageNumber;
       const currentPageNumber = pageNumber - 1;
 
       if (currentPageNumber >= minPageNumber) {
-        const newLink = getNewLinkWithQuery(
-          href,
+        const newLink = addQuery(
           QUERY_PARAMS.page,
           currentPageNumber.toString(),
         );
@@ -142,15 +162,13 @@ export default class CartItems implements IDrawComponent {
     });
 
     pageNext.addEventListener('click', () => {
-      const href = document.location.href;
       const maxPageNumber = Math.ceil(
         storageData.length / parseInt(limitInput.value),
       );
       const currentPageNumber = pageNumber + 1;
 
       if (currentPageNumber <= maxPageNumber) {
-        const newLink = getNewLinkWithQuery(
-          href,
+        const newLink = addQuery(
           QUERY_PARAMS.page,
           currentPageNumber.toString(),
         );
