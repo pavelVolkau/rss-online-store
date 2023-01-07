@@ -4,9 +4,12 @@ import CONSTANTS from './constants';
 
 export default class LocalStorage {
   static getLocalStorageData(): localStorageData[] {
-    const data = toData(localStorage.getItem(CONSTANTS.localStorageKey));
+    const checkLocalStorage = localStorage.getItem(CONSTANTS.localStorageKey);
 
-    if (data) return data;
+    if (checkLocalStorage) {
+      const data = toData(checkLocalStorage);
+      return data;
+    }
 
     return [];
   }
