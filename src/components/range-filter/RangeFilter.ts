@@ -1,10 +1,9 @@
 import { RangeFilterWrap } from '../../common/components/range-filter-wrap/RangeFilterWrap';
 import { Range } from '../../common/components/range/Range';
-import { QUERY_PARAMS, SYMBOLS, TAGS } from '../../common/helpers/constants';
-import getDOMElement from '../../common/helpers/getDOMElement';
+import { QUERY_PARAMS, SYMBOLS } from '../../common/helpers/constants';
 import IDrawComponent from '../../common/interface/IDrawComponent';
 import { Data } from '../../common/types/data';
-import { NOT_FOUND, SELECTORS } from './constants';
+import { SELECTORS } from './constants';
 import { DataPriceStock } from './types';
 
 export class RangeFilter implements IDrawComponent {
@@ -23,13 +22,6 @@ export class RangeFilter implements IDrawComponent {
   }
 
   public draw(): HTMLElement {
-    const notFound = getDOMElement(TAGS.div, NOT_FOUND.class, NOT_FOUND.text);
-
-    if (this.currentData.length === 0) {
-      this.wrap.append(notFound);
-      return this.wrap;
-    }
-
     const totalArr = this.totalData.map(
       (el) => el[this.name as keyof Data],
     ) as DataPriceStock;
@@ -51,7 +43,7 @@ export class RangeFilter implements IDrawComponent {
       currentMax,
     ).draw();
 
-    if (this.name === QUERY_PARAMS.price) {
+    if (this.name === QUERY_PARAMS.price && this.currentData.length > 0) {
       const labelMin = range.querySelector(SELECTORS.labelMin) as HTMLElement;
       const labelMax = range.querySelector(SELECTORS.labelMax) as HTMLElement;
 

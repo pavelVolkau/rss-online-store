@@ -15,3 +15,8 @@ export const CONSTANTS = {
     },
   },
 };
+
+export const NOT_FOUND = {
+  class: 'not-found',
+  text: 'Not found',
+};
