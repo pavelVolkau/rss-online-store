@@ -12,8 +12,8 @@ export class RangeFilterWrap implements IDrawComponent {
   }
 
   public draw(): HTMLElement {
-    const wrap = getDOMElement(TAGS.fieldset, CLASSES.wrap);
-    const title = getDOMElement(TAGS.legend, CLASSES.title, this.titleText);
+    const wrap = getDOMElement(TAGS.div, CLASSES.wrap);
+    const title = getDOMElement(TAGS.p, CLASSES.title, this.titleText);
 
     wrap.append(title);
 
