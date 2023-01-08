@@ -13,8 +13,6 @@
     />
   </head>
   <body>
-    <div class="app-root"></div>
-
     <!-- шаблон карточки товара -->
     <template id="card-template">
       <div class="card">
@@ -109,6 +107,65 @@
           <label class="item-label"></label>
         </div>
         <div class="items-count"></div>
+      </div>
+    </template>
+
+    <!-- шаблон для товара в корзине -->
+    <template id="cart-item-template">
+      <div class="cart-item">
+        <div class="cart-item__index"></div>
+        <div class="cart-item__info">
+          <img class="cart-item__image" />
+          <div class="cart-item__title"></div>
+          <div class="cart-item__description"></div>
+          <div class="cart-item__rating"></div>
+          <div class="cart-item__discount"></div>
+        </div>
+        <div class="cart-item__number-control">
+          <div class="cart-item__stock-info"></div>
+          <div class="cart-item__inc-dec-control">
+            <div class="cart-item__current-count"></div>
+          </div>
+          <div class="cart-item__amount-info"></div>
+        </div>
+      </div>
+    </template>
+
+    <!-- шаблон для товаров в корзине -->
+    <template id="cart-items-template">
+      <div class="cart-page__cart-items cart-items">
+        <div class="cart-items__header">
+          <h3 class="h3 cart-items__title"></h3>
+          <div class="cart-items__limit">
+            <label class="cart-items__limit-label" for="item-limit"></label>
+            <input
+              class="cart-items__limit-input"
+              id="item-limit"
+              type="number"
+              min="1"
+              max="3"
+            />
+          </div>
+          <div class="cart-items__pagination">
+            <div class="cart-items__page-info"></div>
+            <div class="cart-items__current-page"></div>
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <!-- шаблон для цены и промокода в корзине -->
+    <template id="cart-price-template">
+      <div class="cart-page__items-price items-price">
+        <div class="items-price__header">
+          <h3 class="items-price__title h3"></h3>
+        </div>
+        <div class="items-price__container">
+          <div class="items-price__products-count"></div>
+          <div class="items-price__total-price"></div>
+          <input class="items-price__promo-input" id="promo-code" type="text" />
+          <label class="items-price__promo-label" for="promo-code"></label>
+        </div>
       </div>
     </template>
   </body>

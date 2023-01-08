@@ -6,8 +6,14 @@ export function addQuery(
   param: string,
   subcategory: string,
   remove = false,
+  href?: string,
 ): string {
-  const locationLink = createLink(window.location);
+  let locationLink = createLink(window.location);
+
+  if (href) {
+    locationLink = href;
+  }
+
   const locationQuery = locationLink.split(SEPARATORS.searchQuery)[1];
   const locationRoute = locationLink.split(SEPARATORS.searchQuery)[0];
 
@@ -46,6 +52,8 @@ export function addQuery(
   const sort = getQueryParamSubcategories(locationQuery, QUERY_PARAMS.sort);
   const search = getQueryParamSubcategories(locationQuery, QUERY_PARAMS.search);
   const inline = getQueryParamSubcategories(locationQuery, QUERY_PARAMS.inline);
+  const page = getQueryParamSubcategories(locationQuery, QUERY_PARAMS.page);
+  const limit = getQueryParamSubcategories(locationQuery, QUERY_PARAMS.limit);
 
   //вспомогательный массив из названий параметров в той же последовательности что будет дальше массив с категориями
   const paramsArr = [
@@ -56,6 +64,8 @@ export function addQuery(
     QUERY_PARAMS.sort,
     QUERY_PARAMS.search,
     QUERY_PARAMS.inline,
+    QUERY_PARAMS.page,
+    QUERY_PARAMS.limit,
   ];
 
   //массив, который подставляется название параметра=подкатегории, если подкатегории есть для этого параметра, если нет то undefined
@@ -67,6 +77,8 @@ export function addQuery(
     sort,
     search,
     inline,
+    page,
+    limit,
   ].map((val, ind) => {
     //если название текущего параметра совпадает с тем который мы хотим внести в квери строку
     if (paramsArr[ind] === param) {
@@ -78,7 +90,8 @@ export function addQuery(
           param === QUERY_PARAMS.sort ||
           param === QUERY_PARAMS.search ||
           param === QUERY_PARAMS.inline ||
-          param === QUERY_PARAMS.page
+          param === QUERY_PARAMS.page ||
+          param === QUERY_PARAMS.limit
         ) {
           //поэтому мы очищаем массив для этих параметров, чтобы потом добавить новое значение, которое мы хотим внести
           val.splice(0, val.length);

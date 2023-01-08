@@ -1,30 +1,47 @@
-import { Data } from '../../types/data';
 import { toData, toJSON } from '../../helpers/jsonChange';
+import { localStorageData } from '../../types/localStorageData';
 import CONSTANTS from './constants';
 
 export default class LocalStorage {
-  static getLocalStorageData(): Data[] | void {
-    const data = toData(localStorage.getItem(CONSTANTS.localStorageKey));
+  static getLocalStorageData(): localStorageData[] {
+    const checkLocalStorage = localStorage.getItem(CONSTANTS.localStorageKey);
 
-    if (data) return data;
+    if (checkLocalStorage) {
+      const data = toData(checkLocalStorage);
+      return data;
+    }
+
+    return [];
   }
 
-  static setLocalStorageData(data: Data[]): void {
+  static setLocalStorageData(data: localStorageData[]): void {
     localStorage.setItem(CONSTANTS.localStorageKey, toJSON(data));
   }
 
-  static addDataToLocalStorage(data: Data): void {
+  static addDataToLocalStorage(data: localStorageData): void {
+    if (data.count === 0) {
+      LocalStorage.removeDataToLocalStorage(data);
+      return;
+    }
+
     const currentData = LocalStorage.getLocalStorageData();
 
-    if (currentData) {
-      currentData.push(data);
-      localStorage.setItem(CONSTANTS.localStorageKey, toJSON(currentData));
+    if (!currentData) {
+      LocalStorage.setLocalStorageData([data]);
     } else {
-      localStorage.setItem(CONSTANTS.localStorageKey, toJSON([data]));
+      const indexOfAddObj = currentData.findIndex((obj) => obj.id === data.id);
+
+      if (indexOfAddObj !== -1) {
+        currentData[indexOfAddObj] = data;
+      } else {
+        currentData.push(data);
+      }
+
+      LocalStorage.setLocalStorageData(currentData);
     }
   }
 
-  static removeDataToLocalStorage(data: Data): void {
+  static removeDataToLocalStorage(data: localStorageData): void {
     const currentData = LocalStorage.getLocalStorageData();
 
     if (currentData) {
@@ -34,6 +51,11 @@ export default class LocalStorage {
 
       if (indexOfRemoveObj !== -1) {
         currentData.splice(indexOfRemoveObj, 1);
+      }
+
+      if (currentData.length === 0) {
+        localStorage.removeItem(CONSTANTS.localStorageKey);
+      } else {
         LocalStorage.setLocalStorageData(currentData);
       }
     }

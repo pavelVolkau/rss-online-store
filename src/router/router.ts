@@ -1,6 +1,6 @@
 // import { Sort } from '../common/components/sort/Sort';
 import {
-  APP_ROOT,
+  APP_ROOT_CLASS,
   LINK,
   SEPARATORS,
   ROUTES,
@@ -11,12 +11,14 @@ import { DataLoader } from '../components/data-loader/DataLoader';
 import { DetailsPage } from '../pages/details-page/DetailsPage';
 import { applyQueries, isInline } from './helpers';
 import { MainPage } from '../pages/main-page/MainPage';
+import CartPage from '../pages/cart-page/CartPage';
 
 const loader = new DataLoader(LINK);
 // TODO: импортировать шаблоны страниц
 
 //принимает путь и заменяет контент в html в диве app-root
 export function render(path: string): void {
+  const APP_ROOT = document.querySelector(APP_ROOT_CLASS) as HTMLElement;
   const pathWithQuery = path.split(SEPARATORS.searchQuery);
   const pathName = pathWithQuery[0];
   const query = pathWithQuery[1];
@@ -67,7 +69,7 @@ export function render(path: string): void {
 
   if (ROUTES.cart.match(pagePathName)) {
     // TODO: result = шаблон страницы с корзиной
-    APP_ROOT.replaceChildren('<h1>Cart </h1>');
+    APP_ROOT.replaceChildren(new CartPage().draw());
 
     return;
   }

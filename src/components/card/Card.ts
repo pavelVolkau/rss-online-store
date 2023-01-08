@@ -23,12 +23,12 @@ import {
 } from '../../common/redux/goodsCount';
 
 export class Card implements IDrawComponent {
-  protected readonly data: Data;
+  public readonly data: Data;
   protected readonly brand: Data['brand'];
   protected readonly category: Data['category'];
   protected readonly discountPercentage: Data['discountPercentage'];
-  protected readonly id: Data['id'];
-  protected readonly price: Data['price'];
+  public readonly id: Data['id'];
+  public readonly price: Data['price'];
   protected readonly rating: Data['rating'];
   protected readonly stock: Data['stock'];
   protected readonly thumbnail: Data['thumbnail'];

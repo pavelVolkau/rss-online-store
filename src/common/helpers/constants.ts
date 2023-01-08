@@ -45,7 +45,7 @@ export const INPUT_TYPE = {
   url: 'url',
 };
 
-export const APP_ROOT = document.querySelector('.app-root') as HTMLElement;
+export const APP_ROOT_CLASS = '.app-root';
 
 export const SEPARATORS = {
   searchQuery: '?',
@@ -84,6 +84,7 @@ export const QUERY_PARAMS = {
   search: 'search',
   inline: 'inline',
   page: 'page',
+  limit: 'limit',
 };
 
 export const SYMBOLS = {

@@ -1,11 +1,17 @@
 @import './abstracts/base';
 
-html,
-body {
-  margin: 0;
+html {
   scroll-behavior: smooth;
   box-sizing: border-box;
   font-family: $font-usual;
+}
+
+body {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  height: auto;
 }
 
 *,
