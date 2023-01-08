@@ -37,11 +37,11 @@ export class RangeFilter implements IDrawComponent {
       (el) => el[this.name as keyof Data],
     ) as DataPriceStock;
 
-    const totalMin = totalArr.sort((a, b) => a - b)[0];
-    const totalMax = totalArr.sort((a, b) => b - a)[0];
+    const totalMin = Math.min(...totalArr);
+    const totalMax = Math.max(...totalArr);
 
-    const currentMin = currentArr.sort((a, b) => a - b)[0];
-    const currentMax = currentArr.sort((a, b) => b - a)[0];
+    const currentMin = Math.min(...currentArr);
+    const currentMax = Math.max(...currentArr);
 
     const range = new Range(
       totalMin,
