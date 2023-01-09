@@ -48,7 +48,12 @@ export class Checkbox implements IDrawComponent {
         CONSTANTS.input.checked.attrName,
         CONSTANTS.input.checked.attrVal,
       );
-      filterItem.classList.add('checked');
+
+      filterItem.classList.add(CONSTANTS.filterItemChecked);
+    }
+
+    if (this.currentCount === 0) {
+      filterItem.classList.add(CONSTANTS.filterItemUnavailable);
     }
 
     input.addEventListener('change', () => {

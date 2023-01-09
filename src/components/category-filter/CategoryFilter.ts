@@ -21,8 +21,10 @@ export class CategoryFilter implements IDrawComponent {
     const totalCategories = this.totalData.map((el) => el.category);
     const totalCategoriesSet = Array.from(new Set(totalCategories));
     const currentCategories = this.currentData.map((el) => el.category);
+
     const list = this.wrap.querySelector(LIST_SELECTOR) as HTMLElement;
     const query = window.location.search.split(SEPARATORS.searchQuery)[1];
+
     const itemsPickedArr = getQueryParamSubcategories(
       query,
       QUERY_PARAMS.category,
@@ -34,9 +36,11 @@ export class CategoryFilter implements IDrawComponent {
       const totalCount = totalCategories.filter((val) => val === el);
       const currentCount = currentCategories.filter((val) => val === el);
       let checked = false;
+
       if (decodedArr.includes(el.toLowerCase())) {
         checked = true;
       }
+
       const item = new Checkbox(
         QUERY_PARAMS.category,
         el,

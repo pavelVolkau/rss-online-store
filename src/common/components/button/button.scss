@@ -49,6 +49,16 @@
     background-image: url('../../assets/icons/table-view.svg');
   }
 
+  &__reset {
+    margin: 5% 0;
+  }
+
+  &__copy:disabled {
+    background-color: $black;
+    color: $white;
+    cursor: not-allowed;
+  }
+
   &:hover {
     transform: scale(1.1);
   }

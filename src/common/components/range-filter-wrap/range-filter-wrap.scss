@@ -1,0 +1,8 @@
+@import '../../styles/main.scss';
+
+.range-filter {
+  @include flex-column();
+  border: none;
+  border-bottom: 1px solid $lightgray;
+  margin: 3%;
+}
