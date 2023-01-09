@@ -177,7 +177,7 @@
         .popup__valid_wrapper {
           width: 30%;
           &::after {
-            content: 'This field must contain 4 digits';
+            content: 'This field must contain 4 digits, month must be less than 12';
           }
         }
 
