@@ -1,0 +1,6 @@
+@import '../../common/styles/main.scss';
+
+.goods {
+  @include flex-column();
+  width: 80%;
+}

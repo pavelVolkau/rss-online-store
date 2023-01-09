@@ -1,0 +1,20 @@
+@import '../../common/styles/main.scss';
+
+.crumbs {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: space-around;
+  padding: 0 5%;
+  margin: 10px auto 30px;
+
+  .crumbs__store,
+  .crumbs__category,
+  .crumbs__brand {
+    transition: 0.3s;
+
+    &:hover {
+      color: $gray;
+    }
+  }
+}

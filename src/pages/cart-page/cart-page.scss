@@ -1,0 +1,17 @@
+@import '../../common/styles/main.scss';
+
+.cart-page {
+  display: flex;
+  padding: 1em 3em;
+  justify-content: space-between;
+  gap: 1em;
+  flex-wrap: wrap;
+
+  &__title {
+    max-width: 30ch;
+    margin: 3em auto 0;
+    font-size: $fs-xl;
+    color: $black;
+    text-align: center;
+  }
+}

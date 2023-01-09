@@ -1,0 +1,129 @@
+@import '../../common/styles/main.scss';
+
+.details {
+  @include flex-column();
+  width: 60%;
+  height: 65vh;
+  margin: 0 auto;
+
+  .details__title,
+  .wrapper {
+    width: 100%;
+  }
+
+  .details__title {
+    text-align: center;
+    background-color: $black-transparent-07;
+    color: $white;
+  }
+
+  .wrapper {
+    @include flex-column();
+    justify-content: space-between;
+    height: 100%;
+    width: 100%;
+
+    .details__images {
+      @include flex-column();
+      height: 70%;
+
+      .details__main-img {
+        width: 100%;
+        height: 75%;
+        margin: 10px 0;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+
+      .details__slides {
+        display: flex;
+        flex-grow: 0;
+        flex-shrink: 0;
+        gap: 2%;
+        height: 25%;
+        width: 100%;
+        padding: 1%;
+        overflow-x: auto;
+
+        &::-webkit-scrollbar {
+          height: 7px;
+        }
+
+        .details__image {
+          height: 100%;
+          max-width: 40%;
+          object-fit: cover;
+          object-position: left;
+          transition: 0.3s;
+          border-radius: 10px;
+          cursor: pointer;
+
+          &:hover {
+            transform: scale(1.1);
+          }
+        }
+      }
+    }
+
+    .details__info {
+      display: flex;
+      justify-content: space-between;
+      height: 20%;
+      gap: 10px;
+      padding: 1%;
+
+      .details__left,
+      .details__right {
+        @include flex-column();
+        justify-content: space-between;
+      }
+
+      .details__left {
+        width: 80%;
+
+        .details__span-wrapper {
+          display: flex;
+
+          .details__span {
+            font-weight: 600;
+            margin-right: 5px;
+          }
+        }
+
+        .details__rating::before {
+          content: '⭐';
+          font-size: $fs-small;
+          position: relative;
+          top: -0.2rem;
+        }
+      }
+
+      .details__right {
+        .details__stock {
+          color: $gray;
+        }
+
+        .details__price-discount {
+          @include flex-column();
+          align-items: flex-end;
+
+          .details__price {
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: $fs-large;
+          }
+
+          .details__discount {
+            color: $red;
+          }
+        }
+      }
+    }
+
+    .details__buttons {
+      display: flex;
+      gap: 2%;
+    }
+  }
+}

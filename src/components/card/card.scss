@@ -1,0 +1,127 @@
+@import '../../common/styles/main.scss';
+
+.card {
+  @include flex-column();
+  position: relative;
+  min-height: 200px;
+  overflow-x: hidden;
+
+  .card__title {
+    width: 100%;
+    background-color: $black-transparent-07;
+    color: $white;
+    text-align: center;
+  }
+
+  .card__img {
+    background-size: cover;
+    background-position: center;
+    height: 58%;
+    cursor: pointer;
+
+    .card__description {
+      list-style: none;
+      @include flex-column();
+      justify-content: center;
+      width: 100%;
+      height: 50%;
+      padding: 1%;
+      margin-top: 0;
+      background-color: $black-transparent-07;
+      color: $white;
+      font-size: $fs-small;
+      transform: translate(-100%, 0);
+      transition: 0.5s;
+    }
+
+    &:hover {
+      .card__description {
+        transform: translate(0, 0);
+      }
+    }
+  }
+
+  .card__bottom {
+    @include flex-column();
+    height: 32%;
+    font-size: $fs-small;
+    padding: 3% 3% 3% 0;
+
+    .card__price-discount,
+    .card__rating-stock {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .card__price {
+      font-weight: 600;
+    }
+
+    .card__discount {
+      color: $red;
+    }
+
+    .card__rating::before {
+      content: '⭐';
+      font-size: $fs-xs;
+      position: relative;
+      top: -0.1rem;
+    }
+
+    .card__stock {
+      color: $gray;
+    }
+  }
+
+  .card__buttons {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    height: 40%;
+    gap: 5%;
+    margin-top: 3px;
+    padding: 0 2%;
+  }
+}
+
+.card.inline {
+  min-height: 150px;
+  overflow-x: initial;
+
+  .wrapper {
+    display: flex;
+    height: 100%;
+  }
+  .card__img {
+    height: 100%;
+    width: 20%;
+
+    &:hover {
+      // border: 1px solid $black-transparent-07;
+      box-shadow: 3px 3px 7px $black-transparent-07;
+    }
+  }
+
+  .card__info {
+    @include flex-column();
+    justify-content: space-between;
+    width: 80%;
+    padding: 1%;
+
+    .card__bottom {
+      height: auto;
+      font-size: $fs-normal;
+      padding: 0;
+
+      .card__rating::before {
+        top: -0.2rem;
+      }
+
+      .card__buttons {
+        height: auto;
+        justify-content: flex-end;
+        padding: 0;
+      }
+    }
+  }
+}

@@ -1,0 +1,13 @@
+@mixin flex-column() {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin after-elements() {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  color: $red;
+  font-size: $fs-small;
+  font-weight: 600;
+}

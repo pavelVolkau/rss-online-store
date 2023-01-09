@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="./src/common/assets/icons/bag.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Libre+Barcode+39+Text&family=Libre+Franklin:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- шаблон карточки товара -->
+    <template id="card-template">
+      <div class="card">
+        <div class="card__title"></div>
+        <div class="card__img">
+          <ul class="card__description">
+            <li class="card__category"></li>
+            <li class="card__brand"></li>
+          </ul>
+        </div>
+        <div class="card__bottom">
+          <div class="card__price-discount">
+            <div class="card__price"></div>
+            <div class="card__discount"></div>
+          </div>
+          <div class="card__rating-stock">
+            <div class="card__rating"></div>
+            <div class="card__stock"></div>
+          </div>
+          <div class="card__buttons"></div>
+        </div>
+      </div>
+    </template>
+
+    <!-- шаблон для деталей -->
+    <template id="details-template">
+      <div class="details">
+        <div class="details__title"></div>
+        <div class="wrapper">
+          <div class="details__images">
+            <div class="details__main-img"></div>
+            <div class="details__slides"></div>
+          </div>
+          <div class="details__info">
+            <div class="details__left">
+              <div class="details__span-wrapper">
+                <span class="details__span">Category: </span>
+                <div class="details__category"></div>
+              </div>
+              <div class="details__span-wrapper">
+                <span class="details__span">Brand: </span>
+                <div class="details__brand"></div>
+              </div>
+              <div class="details__description"></div>
+              <div class="details__rating"></div>
+            </div>
+            <div class="details__right">
+              <div class="details__stock"></div>
+              <div class="details__price-discount">
+                <div class="details__price"></div>
+                <div class="details__discount"></div>
+              </div>
+            </div>
+          </div>
+          <div class="details__buttons"></div>
+        </div>
+      </div>
+    </template>
+
+    <!-- шаблон для инлайнового представления -->
+    <template id="card-template-inline">
+      <div class="card inline">
+        <div class="card__title"></div>
+        <div class="wrapper">
+          <div class="card__img"></div>
+          <div class="card__info">
+            <div class="card__description">
+              <div class="card__category"></div>
+              <div class="card__brand"></div>
+            </div>
+            <div class="card__bottom">
+              <div class="card__price-discount">
+                <div class="card__price"></div>
+                <div class="card__discount"></div>
+              </div>
+              <div class="card__rating-stock">
+                <div class="card__rating"></div>
+                <div class="card__stock"></div>
+              </div>
+              <div class="card__buttons"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <!-- шаблон для item в фильтрах checkbox -->
+    <template id="filter-item">
+      <div class="filter-item">
+        <div class="checkbox-box">
+          <input class="item-checkbox" type="checkbox" />
+          <label class="item-label"></label>
+        </div>
+        <div class="items-count"></div>
+      </div>
+    </template>
+
+    <!-- шаблон для товара в корзине -->
+    <template id="cart-item-template">
+      <div class="cart-item">
+        <div class="cart-item__index"></div>
+        <div class="cart-item__info">
+          <img class="cart-item__image" />
+          <div class="cart-item__title"></div>
+          <div class="cart-item__description"></div>
+          <div class="cart-item__rating"></div>
+          <div class="cart-item__discount"></div>
+        </div>
+        <div class="cart-item__number-control">
+          <div class="cart-item__stock-info"></div>
+          <div class="cart-item__inc-dec-control">
+            <div class="cart-item__current-count"></div>
+          </div>
+          <div class="cart-item__amount-info"></div>
+        </div>
+      </div>
+    </template>
+
+    <!-- шаблон для товаров в корзине -->
+    <template id="cart-items-template">
+      <div class="cart-page__cart-items cart-items">
+        <div class="cart-items__header">
+          <h3 class="h3 cart-items__title"></h3>
+          <div class="cart-items__limit">
+            <label class="cart-items__limit-label" for="item-limit"></label>
+            <input
+              class="cart-items__limit-input"
+              id="item-limit"
+              type="number"
+              min="1"
+              max="3"
+            />
+          </div>
+          <div class="cart-items__pagination">
+            <div class="cart-items__page-info"></div>
+            <div class="cart-items__current-page"></div>
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <!-- шаблон для цены и промокода в корзине -->
+    <template id="cart-price-template">
+      <div class="cart-page__items-price items-price">
+        <div class="items-price__header">
+          <h3 class="items-price__title h3"></h3>
+        </div>
+        <div class="items-price__container">
+          <div class="items-price__products-count"></div>
+          <div class="items-price__total-price"></div>
+          <input class="items-price__promo-input" id="promo-code" type="text" />
+          <label class="items-price__promo-label" for="promo-code"></label>
+        </div>
+      </div>
+    </template>
+
+    <!-- шаблон модального окна -->
+    <template id="popup-template">
+      <div class="popup__overlay">
+        <form class="popup">
+          <div class="popup__person">
+            <div class="popup__name-wrapper">
+              <input
+                type="text"
+                class="popup__name"
+                placeholder="Name Surname"
+              />
+            </div>
+            <div class="popup__phone-wrapper">
+              <input
+                type="tel"
+                class="popup__phone"
+                placeholder="Phone number"
+              />
+            </div>
+            <div class="popup__address-wrapper">
+              <input
+                type="text"
+                class="popup__address"
+                placeholder="Delivery Address"
+              />
+            </div>
+            <div class="popup__email-wrapper">
+              <input type="email" class="popup__email" placeholder="E-mail" />
+            </div>
+          </div>
+          <div class="popup__card">
+            <div class="popup__card-info">
+              <div class="popup__card-img"></div>
+              <div class="popup__card-num-wrapper">
+                <input
+                  type="text"
+                  class="popup__card-num"
+                  placeholder="Card number"
+                />
+              </div>
+            </div>
+            <div class="popup__card-other">
+              <div class="popup__valid_wrapper">
+                <input
+                  type="text"
+                  class="popup__valid"
+                  placeholder="Valid Thru"
+                />
+              </div>
+              <div class="popup__cvv-wrapper">
+                <input type="text" class="popup__cvv" placeholder="CVV" />
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </template>
+  </body>
+</html>

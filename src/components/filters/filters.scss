@@ -1,0 +1,8 @@
+@import '../../common/styles/main.scss';
+
+.filters {
+  @include flex-column();
+  height: 60vh;
+  width: 100%;
+  padding: 2%;
+}

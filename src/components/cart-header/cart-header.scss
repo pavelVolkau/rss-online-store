@@ -1,0 +1,30 @@
+@import '../../common/styles/main.scss';
+
+.cart {
+  @include flex-column();
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+
+  &__total-goods-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    width: 3rem;
+    height: 2.5rem;
+    padding-bottom: 0.2em;
+    background-image: url('../../common/assets/icons/shopping-bag.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+  }
+  &__total-goods {
+    color: $black;
+    margin: 0;
+    font-size: $fs-normal;
+    font-weight: 500;
+  }
+  &__total-price-container {
+    font-size: $fs-large;
+  }
+}
