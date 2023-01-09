@@ -1,4 +1,3 @@
-// import { Sort } from '../common/components/sort/Sort';
 import {
   APP_ROOT_CLASS,
   LINK,
@@ -15,7 +14,6 @@ import CartPage from '../pages/cart-page/CartPage';
 import { PageNotFound } from '../pages/page-not-found/PageNotFound';
 
 const loader = new DataLoader(LINK);
-// TODO: импортировать шаблоны страниц
 
 //принимает путь и заменяет контент в html в диве app-root
 export function render(path: string): void {
@@ -27,7 +25,6 @@ export function render(path: string): void {
 
   if (ROUTES.main.match(pathName)) {
     //сравниваем совпадает ли переданный путь с путем к главной страницы
-    // TODO: result = шаблон главной страницы
     if (pathWithQuery.length === 1) {
       loader.getData((data: Data[]) => {
         APP_ROOT.replaceChildren(new MainPage(data, data).draw());
@@ -49,8 +46,6 @@ export function render(path: string): void {
   const pageQuery = pagePathNameWithQuery[2];
 
   if (ROUTES.details.match(pagePathName)) {
-    // TODO: result = шаблон страницы деталей
-
     loader.getData((data: Data[]) => {
       const idArr: number[] = data.map((el) => el.id);
       const cardIdFromPath = Number(pageQuery);
@@ -70,7 +65,6 @@ export function render(path: string): void {
   }
 
   if (ROUTES.cart.match(pagePathName)) {
-    // TODO: result = шаблон страницы с корзиной
     APP_ROOT.replaceChildren(new CartPage().draw());
 
     return;
