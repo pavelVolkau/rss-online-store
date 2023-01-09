@@ -1,9 +1,6 @@
-import { localStorageData } from '../types/localStorageData';
-
-export function toJSON(data: localStorageData[]): string {
+export function toJSON<T>(data: T): string {
   return JSON.stringify(data);
 }
-export function toData(json: string): localStorageData[] {
-  if (json) return JSON.parse(json);
-  return [];
+export function toData<T>(json: string): T {
+  return JSON.parse(json);
 }

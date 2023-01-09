@@ -1,7 +1,7 @@
 @import '../../common/styles/main.scss';
 
-.cart-items {
-  flex: 1 1 60%;
+.items-price {
+  flex: 0 1 25%;
   @include flex-column();
   height: fit-content;
   border: solid $black-transparent-07 4px;
@@ -10,7 +10,6 @@
 
   &__header {
     display: flex;
-    align-items: center;
     gap: 1em;
     padding: 0.5em;
     background-color: $black-transparent-07;
@@ -18,40 +17,41 @@
   }
 
   &__title {
-    flex: 1 0 auto;
+    margin: 0 auto;
     font-size: $fs-large;
   }
 
-  &__limit-label {
-    margin-right: 0.2em;
+  &__container {
+    @include flex-column();
+    align-items: center;
+    gap: 1em;
+    padding: 0.5em;
   }
 
-  &__limit-input {
-    font-size: $fs-normal;
-    width: 3.5em;
+  &__products-count,
+  &__total-price,
+  &__total-price-discount {
+    font-size: $fs-large;
   }
 
-  &__page-info {
-    margin-right: 0.2em;
+  &__total-price.discount-apply {
+    text-decoration: line-through;
   }
 
-  &__pagination {
-    display: flex;
-    align-items: inherit;
+  &__total-price-discount {
+    color: $red;
   }
 
-  &__page-prev,
-  &__page-next {
-    width: 2em;
+  &__promo-input {
+    width: 95%;
+    font-size: $fs-large;
+    text-align: center;
+  }
+
+  &__buy-now {
     background-color: $gray;
-    border: none;
     border-radius: 5px;
     font-size: $fs-large;
     color: $white;
-    cursor: pointer;
-  }
-
-  &__current-page {
-    padding: 0 0.5em;
   }
 }
