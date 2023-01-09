@@ -120,7 +120,7 @@ export class Details extends Card implements IDrawComponent {
     }
 
     addBtn.addEventListener('click', () => {
-      addBtnListener(this.data, addBtn, storage);
+      addBtnListener(this.data, addBtn);
     });
 
     const buyNowBtn = new Button(
