@@ -42,6 +42,7 @@ export function render(
 
       return;
     }
+
     loader.getData((data: Data[]) => {
       const newDataArr = applyQueries(query, data);
       const view = isInline(query);
@@ -101,6 +102,7 @@ export function render(
   const pageQuery = pagePathNameWithQuery[2];
 
   if (ROUTES.details.match(pagePathName)) {
+    console.log('details');
     loader.getData((data: Data[]) => {
       const idArr: number[] = data.map((el) => el.id);
       const cardIdFromPath = Number(pageQuery);
@@ -114,9 +116,9 @@ export function render(
       }
 
       APP_ROOT.replaceChildren(pageNotFound);
-
-      return;
     });
+
+    return;
   }
 
   if (ROUTES.cart.match(pagePathName)) {
@@ -124,6 +126,7 @@ export function render(
 
     return;
   }
+  console.log('end');
   APP_ROOT.replaceChildren(pageNotFound);
 
   return;
