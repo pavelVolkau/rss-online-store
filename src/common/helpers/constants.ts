@@ -21,6 +21,7 @@ export const TAGS = {
   option: 'option',
   fieldset: 'fieldset',
   legend: 'legend',
+  form: 'form',
 };
 
 export const INPUT_TYPE = {

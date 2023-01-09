@@ -9,8 +9,9 @@ import { BTN_CLASS_ADDED } from './constants';
 export function addBtnListener(
   data: Data,
   addBtn: HTMLElement,
-  storage: localStorageData[],
+  // storage: localStorageData[],
 ) {
+  const storage: localStorageData[] = LocalStorage.getLocalStorageData();
   const newStorageObject: localStorageData = {
     id: data.id,
     count: 1,

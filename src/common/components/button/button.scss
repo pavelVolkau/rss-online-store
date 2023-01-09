@@ -58,6 +58,11 @@
     cursor: not-allowed;
   }
 
+  &__submit {
+    width: 30%;
+    margin: auto;
+  }
+
   &:hover {
     transform: scale(1.1);
   }

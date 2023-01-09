@@ -122,7 +122,7 @@ export class Card implements IDrawComponent {
     }
 
     addBtn.addEventListener('click', () => {
-      addBtnListener(this.data, addBtn, storage);
+      addBtnListener(this.data, addBtn);
     });
 
     const detailsBtn = new Button(

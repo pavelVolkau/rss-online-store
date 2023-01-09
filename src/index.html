@@ -168,5 +168,63 @@
         </div>
       </div>
     </template>
+
+    <!-- шаблон модального окна -->
+    <template id="popup-template">
+      <div class="popup__overlay">
+        <form class="popup">
+          <div class="popup__person">
+            <div class="popup__name-wrapper">
+              <input
+                type="text"
+                class="popup__name"
+                placeholder="Name Surname"
+              />
+            </div>
+            <div class="popup__phone-wrapper">
+              <input
+                type="tel"
+                class="popup__phone"
+                placeholder="Phone number"
+              />
+            </div>
+            <div class="popup__address-wrapper">
+              <input
+                type="text"
+                class="popup__address"
+                placeholder="Delivery Address"
+              />
+            </div>
+            <div class="popup__email-wrapper">
+              <input type="email" class="popup__email" placeholder="E-mail" />
+            </div>
+          </div>
+          <div class="popup__card">
+            <div class="popup__card-info">
+              <div class="popup__card-img"></div>
+              <div class="popup__card-num-wrapper">
+                <input
+                  type="text"
+                  class="popup__card-num"
+                  placeholder="Card number"
+                />
+              </div>
+            </div>
+            <div class="popup__card-other">
+              <div class="popup__valid_wrapper">
+                <input
+                  type="text"
+                  class="popup__valid"
+                  placeholder="Valid Thru"
+                />
+              </div>
+              <div class="popup__cvv-wrapper">
+                <input type="text" class="popup__cvv" placeholder="CVV" />
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </template>
   </body>
 </html>

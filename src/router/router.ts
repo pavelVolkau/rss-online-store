@@ -18,6 +18,7 @@ import { Filters } from '../components/filters/Filters';
 import { SELECTORS_FOR_PARTIAL } from './constants';
 import { PickFilter } from '../components/pick-filter/PickFilter';
 import { RangeFilter } from '../components/range-filter/RangeFilter';
+import { Popup } from '../components/popup/Popup';
 
 const loader = new DataLoader(LINK);
 
@@ -26,6 +27,7 @@ export function render(
   path: string,
   partial = false,
   secondSliderName?: string,
+  modal?: boolean,
 ): void {
   const APP_ROOT = document.querySelector(APP_ROOT_CLASS) as HTMLElement;
   const pathWithQuery = path.split(SEPARATORS.searchQuery);
@@ -128,6 +130,10 @@ export function render(
   if (ROUTES.cart.match(pagePathName)) {
     APP_ROOT.replaceChildren(new CartPage().draw());
 
+    if (modal) {
+      APP_ROOT.append(new Popup().draw());
+    }
+
     return;
   }
 
@@ -141,9 +147,10 @@ export function goTo(
   path: string,
   partial = false,
   secondSliderName?: string,
+  modal?: boolean,
 ): void {
   window.history.pushState({ path }, path, path); //добавляет путь в историю браузера, чтобы можно было потом переключать страницы стрелками в браузере
-  render(path, partial, secondSliderName);
+  render(path, partial, secondSliderName, modal);
 }
 
 //функция инициализации роутинга

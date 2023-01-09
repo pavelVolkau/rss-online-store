@@ -5,9 +5,7 @@ import {
   SYMBOLS,
   TAGS,
 } from '../../common/helpers/constants';
-import getDOMElement from '../../common/helpers/getDOMElement';
 import IDrawComponent from '../../common/interface/IDrawComponent';
-import { Data } from '../../common/types/data';
 import { Card } from '../card/Card';
 import {
   BUTTON_TEXT,
@@ -20,6 +18,8 @@ import LocalStorage from '../../common/components/localStorage/LocalStorage';
 import { localStorageData } from '../../common/types/localStorageData';
 import { buyNowListener } from './helpers';
 import { addBtnListener } from '../../common/helpers/addBtnListener';
+import { Data } from '../../common/types/data';
+import getDOMElement from '../../common/helpers/getDOMElement';
 
 export class Details extends Card implements IDrawComponent {
   private readonly description: Data['description'];
@@ -120,7 +120,7 @@ export class Details extends Card implements IDrawComponent {
     }
 
     addBtn.addEventListener('click', () => {
-      addBtnListener(this.data, addBtn, storage);
+      addBtnListener(this.data, addBtn);
     });
 
     const buyNowBtn = new Button(
@@ -130,8 +130,9 @@ export class Details extends Card implements IDrawComponent {
 
     buyNowBtn.addEventListener('click', () => {
       buyNowListener(this.data, addBtn);
-      //TODO: добавить вызов модального окна при нажатии на кнопку
     });
+
+    //добавить вызов модального окна при нажатии на кнопку
 
     buttons.append(addBtn, buyNowBtn);
 
