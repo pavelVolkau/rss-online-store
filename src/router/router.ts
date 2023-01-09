@@ -3,6 +3,7 @@ import {
   LINK,
   SEPARATORS,
   ROUTES,
+  QUERY_PARAMS,
 } from '../common/helpers/constants';
 import { createLink } from '../common/helpers/createLink';
 import { Data } from '../common/types/data';
@@ -15,11 +16,17 @@ import { PageNotFound } from '../pages/page-not-found/PageNotFound';
 import { GoodsBox } from '../components/goods-box/GoodsBox';
 import { Filters } from '../components/filters/Filters';
 import { SELECTORS_FOR_PARTIAL } from './constants';
+import { PickFilter } from '../components/pick-filter/PickFilter';
+import { RangeFilter } from '../components/range-filter/RangeFilter';
 
 const loader = new DataLoader(LINK);
 
 //принимает путь и заменяет контент в html в диве app-root
-export function render(path: string, partial = false): void {
+export function render(
+  path: string,
+  partial = false,
+  secondSliderName?: string,
+): void {
   const APP_ROOT = document.querySelector(APP_ROOT_CLASS) as HTMLElement;
   const pathWithQuery = path.split(SEPARATORS.searchQuery);
   const pathName = pathWithQuery[0];
@@ -49,9 +56,37 @@ export function render(path: string, partial = false): void {
           SELECTORS_FOR_PARTIAL.goodsContainer,
         ) as HTMLElement;
 
-        filters.replaceChildren(new Filters(data, newDataArr).draw());
         goodsCount.innerText = String(newDataArr.length);
         container.replaceChildren(new GoodsBox(newDataArr, view).draw());
+
+        //для рендера рэндж фильтров
+        if (secondSliderName) {
+          const categoryFilter = filters.querySelector(
+            '.category',
+          ) as HTMLElement;
+          const brandFilter = filters.querySelector('.brand') as HTMLElement;
+          const secondSlider = filters.querySelector(
+            `.${secondSliderName}`,
+          ) as HTMLElement;
+
+          const filtersQ = filters.querySelector('.filters') as HTMLElement;
+          filtersQ.replaceChild(
+            new PickFilter(data, newDataArr, QUERY_PARAMS.category).draw(),
+            categoryFilter,
+          );
+
+          filtersQ.replaceChild(
+            new PickFilter(data, newDataArr, QUERY_PARAMS.brand).draw(),
+            brandFilter,
+          );
+
+          filtersQ.replaceChild(
+            new RangeFilter(data, newDataArr, secondSliderName).draw(),
+            secondSlider,
+          );
+        } else {
+          filters.replaceChildren(new Filters(data, newDataArr).draw());
+        }
 
         return;
       }
@@ -95,9 +130,13 @@ export function render(path: string, partial = false): void {
 }
 
 //функция для перехода на переданную страницу, все переходы по ссылкам должны происходить через эту функцию, иначе не будет писаться история в браузер
-export function goTo(path: string, partial = false): void {
+export function goTo(
+  path: string,
+  partial = false,
+  secondSliderName?: string,
+): void {
   window.history.pushState({ path }, path, path); //добавляет путь в историю браузера, чтобы можно было потом переключать страницы стрелками в браузере
-  render(path, partial);
+  render(path, partial, secondSliderName);
 }
 
 //функция инициализации роутинга

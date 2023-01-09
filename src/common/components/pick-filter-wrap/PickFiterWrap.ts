@@ -12,7 +12,10 @@ export class PickFilterWrap implements IDrawComponent {
   }
 
   public draw(): HTMLElement {
-    const wrap = getDOMElement(TAGS.div, CLASSES.wrap);
+    const wrap = getDOMElement(
+      TAGS.div,
+      `${CLASSES.wrap} ${this.titleText.toLowerCase()}`,
+    );
     const title = getDOMElement(TAGS.p, CLASSES.title, this.titleText);
     const list = getDOMElement(TAGS.ul, CLASSES.items);
 

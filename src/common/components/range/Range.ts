@@ -11,6 +11,7 @@ import { CONSTANTS, NOT_FOUND } from './constants';
 import { goTo } from '../../../router/router';
 import { addQuery } from '../../helpers/addQuery';
 import { getQueryParamSubcategories } from '../../helpers/getQueryParamSubcategories';
+import { setInputWidth, setMinMax } from './helpers';
 
 export class Range implements IDrawComponent {
   private min: number;
@@ -83,12 +84,12 @@ export class Range implements IDrawComponent {
 
     //у минимального инпута мин значение всегда будет общее минимальное значение для всех товаров (цена 10, сток 2)
     inputMin.min = String(this.min);
+    inputMin.max = String(this.max);
     //у максимального инпута макс значение всегда будет общее максимальное значение для всех товаров (цена 1749, сток 150)
     inputMax.max = String(this.max);
+    inputMax.min = String(this.min);
 
     //если в квери задана только цена для фильтра цены или только сток для фильтра сток, то для них выводим значения из квери
-    //масимальное значение для минимального инпута = текущее значение максимального инпута и наоборот
-    //т.е. value у InputMin не может быть больше чем value у InputMax
     if (this.currentMin !== Infinity && this.currentMax !== -Infinity) {
       if (
         queryRange.length === 2 &&
@@ -97,32 +98,22 @@ export class Range implements IDrawComponent {
         searchQuery.length === 0 &&
         secondRange.length === 0
       ) {
-        inputMin.max = queryRange[1];
         inputMin.value = queryRange[0];
-
-        inputMax.min = queryRange[0];
         inputMax.value = queryRange[1];
       } else {
         //если в квери заданы другие параметры, то фильтры должны на них отзываться
         //поэтому максимальное и минимальное значение задается из приходящего массива с данными
         //также оно достается из приходящего массива если ничего не задано
-        inputMin.max = String(this.currentMax);
         inputMin.value = String(this.currentMin);
-
-        inputMax.min = String(this.currentMin);
         inputMax.value = String(this.currentMax);
       }
 
+      //меняем дефолтный min для inputMax и max для inputMin
+      setMinMax(inputMin, inputMax);
+
       //здесь я задаю ширину в процентах от 100, чтобы нельзя было перетянуть один инпут через другой (в DEMO они перескакивают)
       //а у нас получается ширина не позволит его туда утянуть
-      const totalInpWidth = this.max - this.min;
-      const minInpWidth =
-        ((Number(inputMin.max) - this.min) * 100) / totalInpWidth;
-      const maxInpWidth =
-        ((this.max - Number(inputMax.min)) * 100) / totalInpWidth;
-
-      inputMin.style.width = `${minInpWidth}${SYMBOLS.percent}`;
-      inputMax.style.width = `${maxInpWidth}${SYMBOLS.percent}`;
+      setInputWidth(this.min, this.max, inputMin, inputMax);
 
       labelMin.htmlFor = inputMin.id;
       labelMin.innerText = inputMin.value;
@@ -153,11 +144,26 @@ export class Range implements IDrawComponent {
     //можно поменять на инпут, чтобы переписовка осуществлялась по мере того как тянут тумблер этот
     [inputMin, inputMax].forEach((el) => {
       el.addEventListener('change', () => {
+        labelMin.innerText = inputMin.value;
+        labelMax.innerText = inputMax.value;
+
+        if (this.name === QUERY_PARAMS.price) {
+          labelMin.prepend(SYMBOLS.dollar);
+          labelMax.prepend(SYMBOLS.dollar);
+        }
+
+        setMinMax(inputMin, inputMax);
+        setInputWidth(this.min, this.max, inputMin, inputMax);
+
         const subcategory =
           inputMin.value + SEPARATORS.subcategory + inputMax.value;
         const link = addQuery(this.name, subcategory);
+        const secondRangeName =
+          this.name === QUERY_PARAMS.price
+            ? QUERY_PARAMS.stock
+            : QUERY_PARAMS.price;
 
-        goTo(link);
+        goTo(link, true, secondRangeName);
       });
     });
 
