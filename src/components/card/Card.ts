@@ -2,8 +2,8 @@ import './card.scss';
 import { Data } from '../../common/types/data';
 import { goTo } from '../../router/router';
 import IDrawComponent from '../../common/interface/IDrawComponent';
-import store from '../../common/redux/store';
 import {
+  BTN_CLASS_ADDED,
   CAPTIONS,
   ROUTES,
   SEPARATORS,
@@ -17,13 +17,9 @@ import {
   TITLE_LENGTH,
 } from './constants';
 import { Button } from '../../common/components/button/Button';
-import {
-  decreaseGoodsCount,
-  increaseGoodsCount,
-} from '../../common/redux/goodsCount';
 import LocalStorage from '../../common/components/localStorage/LocalStorage';
 import { localStorageData } from '../../common/types/localStorageData';
-import { addPrice, subtractPrice } from '../../common/redux/priceSum';
+import { addBtnListener } from '../../common/helpers/addBtnListener';
 
 export class Card implements IDrawComponent {
   public readonly data: Data;
@@ -122,27 +118,11 @@ export class Card implements IDrawComponent {
     const idArrFromStorage = storage.map((el) => el.id);
 
     if (idArrFromStorage.includes(this.id)) {
-      addBtn.classList.add(CARD_CLASSES.addBtnAdded);
+      addBtn.classList.add(BTN_CLASS_ADDED);
     }
 
     addBtn.addEventListener('click', () => {
-      const storageObject: localStorageData = {
-        id: this.id,
-        count: 1,
-        data: this.data,
-      };
-
-      if (addBtn.classList.contains(CARD_CLASSES.addBtnAdded)) {
-        store.dispatch(decreaseGoodsCount(1));
-        store.dispatch(subtractPrice(this.price));
-        addBtn.classList.remove(CARD_CLASSES.addBtnAdded);
-        LocalStorage.removeDataToLocalStorage(storageObject);
-      } else {
-        store.dispatch(increaseGoodsCount(1));
-        store.dispatch(addPrice(this.price));
-        addBtn.classList.add(CARD_CLASSES.addBtnAdded);
-        LocalStorage.addDataToLocalStorage(storageObject);
-      }
+      addBtnListener(this.data, addBtn, storage);
     });
 
     const detailsBtn = new Button(

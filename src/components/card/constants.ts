@@ -20,7 +20,6 @@ export const CARD_CLASSES = {
   buttons: '.card__buttons',
   addBtn: 'button__add-to-cart',
   detailsBtn: 'button__details',
-  addBtnAdded: 'added',
 };
 
 export const BUTTON_TEXT = {

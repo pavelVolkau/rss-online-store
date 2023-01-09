@@ -99,3 +99,5 @@ export const CAPTIONS = {
   brand: 'Brand: ',
   left: 'left: ',
 };
+
+export const BTN_CLASS_ADDED = 'added';

@@ -1,6 +1,10 @@
 import './details.scss';
-import { CAPTIONS, SYMBOLS, TAGS } from '../../common/helpers/constants';
-import store from '../../common/redux/store';
+import {
+  BTN_CLASS_ADDED,
+  CAPTIONS,
+  SYMBOLS,
+  TAGS,
+} from '../../common/helpers/constants';
 import getDOMElement from '../../common/helpers/getDOMElement';
 import IDrawComponent from '../../common/interface/IDrawComponent';
 import { Data } from '../../common/types/data';
@@ -12,13 +16,10 @@ import {
   IMG_ALT,
 } from './constants';
 import { Button } from '../../common/components/button/Button';
-import {
-  decreaseGoodsCount,
-  increaseGoodsCount,
-} from '../../common/redux/goodsCount';
 import LocalStorage from '../../common/components/localStorage/LocalStorage';
 import { localStorageData } from '../../common/types/localStorageData';
-import { addPrice, subtractPrice } from '../../common/redux/priceSum';
+import { buyNowListener } from './helpers';
+import { addBtnListener } from '../../common/helpers/addBtnListener';
 
 export class Details extends Card implements IDrawComponent {
   private readonly description: Data['description'];
@@ -115,27 +116,11 @@ export class Details extends Card implements IDrawComponent {
     const idArrFromStorage = storage.map((el) => el.id);
 
     if (idArrFromStorage.includes(this.id)) {
-      addBtn.classList.add(DETAILS_CLASSES.addBtnAdded);
+      addBtn.classList.add(BTN_CLASS_ADDED);
     }
 
     addBtn.addEventListener('click', () => {
-      const storageObject: localStorageData = {
-        id: this.id,
-        count: 1,
-        data: this.data,
-      };
-
-      if (addBtn.classList.contains(DETAILS_CLASSES.addBtnAdded)) {
-        store.dispatch(decreaseGoodsCount(1));
-        store.dispatch(subtractPrice(this.price));
-        addBtn.classList.remove(DETAILS_CLASSES.addBtnAdded);
-        LocalStorage.removeDataToLocalStorage(storageObject);
-      } else {
-        store.dispatch(increaseGoodsCount(1));
-        store.dispatch(addPrice(this.price));
-        addBtn.classList.add(DETAILS_CLASSES.addBtnAdded);
-        LocalStorage.addDataToLocalStorage(storageObject);
-      }
+      addBtnListener(this.data, addBtn, storage);
     });
 
     const buyNowBtn = new Button(
@@ -143,7 +128,10 @@ export class Details extends Card implements IDrawComponent {
       BUTTON_TEXT.buyNowBtn,
     ).draw();
 
-    //TODO: добавить вызов модального окна при нажатии на кнопку
+    buyNowBtn.addEventListener('click', () => {
+      buyNowListener(this.data, addBtn);
+      //TODO: добавить вызов модального окна при нажатии на кнопку
+    });
 
     buttons.append(addBtn, buyNowBtn);
 
