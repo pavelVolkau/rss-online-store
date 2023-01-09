@@ -5,9 +5,10 @@ import { localStorageData } from '../../types/localStorageData';
 import LocalStorage from '../localStorage/LocalStorage';
 import CONSTANTS from './constants';
 import './cart-item.scss';
-import { SYMBOLS } from '../../helpers/constants';
+import { ROUTES, SEPARATORS, SYMBOLS } from '../../helpers/constants';
 import changePriceCount from './helpers';
 import { Button } from '../button/Button';
+import { goTo } from '../../../router/router';
 
 export default class CartItem extends Card implements IDrawComponent {
   private readonly description: Data['description'];
@@ -80,6 +81,11 @@ export default class CartItem extends Card implements IDrawComponent {
     amountInfo.innerText = `${SYMBOLS.dollar}${(
       countGoods * this.price
     ).toString()}`;
+
+    itemImage.addEventListener('click', (e) => {
+      e.preventDefault();
+      goTo(ROUTES.details + SEPARATORS.path + this.id);
+    });
 
     incCount.addEventListener('click', () => {
       const countGoods = parseInt(currentCount.innerText) + 1;
