@@ -34,4 +34,10 @@ export default {
     class: 'cart-items__page-next',
     text: '>',
   },
+  cartItem: {
+    class: '.cart-item',
+  },
+  currentCount: {
+    class: '.cart-item__current-count',
+  },
 };
