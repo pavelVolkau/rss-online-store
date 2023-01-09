@@ -47,8 +47,8 @@ export function render(
       const newDataArr = applyQueries(query, data);
       const view = isInline(query);
       if (partial) {
-        const filters = document.querySelector(
-          SELECTORS_FOR_PARTIAL.filters,
+        const filtersWrap = document.querySelector(
+          SELECTORS_FOR_PARTIAL.filtersWrap,
         ) as HTMLElement;
         const goodsCount = document.querySelector(
           SELECTORS_FOR_PARTIAL.goodsCount,
@@ -62,35 +62,40 @@ export function render(
 
         //для рендера рэндж фильтров
         if (secondSliderName) {
-          const categoryFilter = filters.querySelector(
-            '.category',
+          const filters = filtersWrap.querySelector(
+            SELECTORS_FOR_PARTIAL.filters,
           ) as HTMLElement;
-          const brandFilter = filters.querySelector('.brand') as HTMLElement;
+          const categoryFilter = filters.querySelector(
+            SELECTORS_FOR_PARTIAL.category,
+          ) as HTMLElement;
+          const brandFilter = filters.querySelector(
+            SELECTORS_FOR_PARTIAL.brand,
+          ) as HTMLElement;
           const secondSlider = filters.querySelector(
             `.${secondSliderName}`,
           ) as HTMLElement;
 
-          const filtersQ = filters.querySelector('.filters') as HTMLElement;
-          filtersQ.replaceChild(
+          filters.replaceChild(
             new PickFilter(data, newDataArr, QUERY_PARAMS.category).draw(),
             categoryFilter,
           );
 
-          filtersQ.replaceChild(
+          filters.replaceChild(
             new PickFilter(data, newDataArr, QUERY_PARAMS.brand).draw(),
             brandFilter,
           );
 
-          filtersQ.replaceChild(
+          filters.replaceChild(
             new RangeFilter(data, newDataArr, secondSliderName).draw(),
             secondSlider,
           );
         } else {
-          filters.replaceChildren(new Filters(data, newDataArr).draw());
+          filtersWrap.replaceChildren(new Filters(data, newDataArr).draw());
         }
 
         return;
       }
+
       APP_ROOT.replaceChildren(new MainPage(data, newDataArr, view).draw());
     });
 
@@ -102,7 +107,6 @@ export function render(
   const pageQuery = pagePathNameWithQuery[2];
 
   if (ROUTES.details.match(pagePathName)) {
-    console.log('details');
     loader.getData((data: Data[]) => {
       const idArr: number[] = data.map((el) => el.id);
       const cardIdFromPath = Number(pageQuery);
@@ -126,7 +130,7 @@ export function render(
 
     return;
   }
-  console.log('end');
+
   APP_ROOT.replaceChildren(pageNotFound);
 
   return;
