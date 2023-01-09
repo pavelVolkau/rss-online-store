@@ -1,0 +1,193 @@
+@import '../../common/styles/main.scss';
+
+.popup__overlay {
+  position: absolute;
+  z-index: 100;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  padding: 10%;
+  background-color: $black-transparent-07;
+  margin: auto;
+
+  .popup {
+    @include flex-column();
+    width: 100%;
+    height: 100%;
+    padding: 5%;
+    border-radius: 10px;
+    background-color: $white;
+    text-align: center;
+
+    &.placed {
+      font-size: $fs-xl;
+      height: auto;
+      margin: auto;
+    }
+
+    &__person {
+      height: 40%;
+      @include flex-column();
+      justify-content: space-around;
+
+      .popup__name-wrapper,
+      .popup__phone-wrapper,
+      .popup__email-wrapper,
+      .popup__address-wrapper {
+        position: relative;
+        width: 100%;
+
+        &::after {
+          @include after-elements();
+          display: none;
+        }
+
+        &.invalid::after {
+          display: block;
+        }
+      }
+
+      .popup__name,
+      .popup__phone,
+      .popup__address,
+      .popup__email {
+        width: 100%;
+
+        &.invalid {
+          color: $red;
+        }
+      }
+
+      .popup__name-wrapper {
+        &::after {
+          content: 'This field must contain at least 2 words with length of at least 3 characters';
+        }
+      }
+
+      .popup__phone-wrapper {
+        &::after {
+          content: 'The field must start with "+" and contain at least 9 digits';
+        }
+      }
+
+      .popup__address-wrapper {
+        &::after {
+          content: 'This field must contain at least 3 words with length of at least 5 characters';
+        }
+      }
+
+      .popup__email-wrapper {
+        &::after {
+          content: 'This field must contain an email';
+        }
+      }
+    }
+
+    &__card {
+      @include flex-column();
+      justify-content: space-around;
+      height: 42%;
+      width: 50%;
+      max-width: 400px;
+      padding: 2%;
+      margin: auto;
+      border-radius: 10px;
+      background: linear-gradient(to bottom right, $gray, $lightgray, $gray);
+
+      .popup__card-info {
+        display: flex;
+        justify-content: space-between;
+
+        .popup__card-img {
+          width: 12%;
+          background-repeat: no-repeat;
+          background-size: contain;
+          background-position: center;
+
+          &.card-img_visa {
+            background-image: url('../../common/assets/icons/visa.svg');
+          }
+
+          &.card-img_master {
+            background-image: url('../../common/assets/icons/master.svg');
+          }
+
+          &.card-img_american {
+            background-image: url('../../common/assets/icons/american.svg');
+          }
+
+          &.card-img_default {
+            background-image: url('../../common/assets/icons/default.svg');
+          }
+        }
+
+        .popup__card-num-wrapper {
+          position: relative;
+          width: 85%;
+
+          &::after {
+            @include after-elements();
+            display: none;
+            content: 'This field must contain 16 digits';
+          }
+
+          &.invalid::after {
+            display: block;
+          }
+
+          .popup__card-num {
+            width: 100%;
+
+            &.invalid {
+              color: $red;
+            }
+          }
+        }
+      }
+
+      .popup__card-other {
+        display: flex;
+        justify-content: space-between;
+
+        .popup__valid_wrapper,
+        .popup__cvv-wrapper {
+          position: relative;
+
+          &::after {
+            @include after-elements();
+            display: none;
+            width: 200%;
+          }
+
+          &.invalid::after {
+            display: block;
+          }
+        }
+
+        .popup__valid,
+        .popup__cvv {
+          width: 100%;
+
+          &.invalid {
+            color: $red;
+          }
+        }
+
+        .popup__valid_wrapper {
+          width: 30%;
+          &::after {
+            content: 'This field must contain 4 digits';
+          }
+        }
+
+        .popup__cvv-wrapper {
+          width: 17%;
+          &::after {
+            content: 'This field must contain 3 digits';
+          }
+        }
+      }
+    }
+  }
+}
