@@ -21,5 +21,5 @@ export function buyNowListener(data: Data, addBtn: HTMLElement) {
     LocalStorage.addDataToLocalStorage(storageObject);
   }
 
-  goTo(ROUTES.cart);
+  goTo(ROUTES.cart, false, undefined, true);
 }

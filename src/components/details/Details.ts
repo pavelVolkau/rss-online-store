@@ -1,7 +1,6 @@
 import './details.scss';
 import {
   BTN_CLASS_ADDED,
-  APP_ROOT_CLASS,
   CAPTIONS,
   SYMBOLS,
   TAGS,
@@ -19,7 +18,6 @@ import LocalStorage from '../../common/components/localStorage/LocalStorage';
 import { localStorageData } from '../../common/types/localStorageData';
 import { buyNowListener } from './helpers';
 import { addBtnListener } from '../../common/helpers/addBtnListener';
-import { Popup } from '../popup/Popup';
 import { Data } from '../../common/types/data';
 import getDOMElement from '../../common/helpers/getDOMElement';
 
@@ -132,9 +130,6 @@ export class Details extends Card implements IDrawComponent {
 
     buyNowBtn.addEventListener('click', () => {
       buyNowListener(this.data, addBtn);
-      const root = document.querySelector(APP_ROOT_CLASS) as HTMLElement;
-      const popup = new Popup().draw();
-      root.append(popup);
     });
 
     //добавить вызов модального окна при нажатии на кнопку

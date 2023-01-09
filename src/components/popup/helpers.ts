@@ -1,4 +1,7 @@
 import { ROUTES } from '../../common/helpers/constants';
+import { localStorageData } from '../../common/types/localStorageData';
+import store from '../../common/redux/store';
+import LocalStorage from '../../common/components/localStorage/LocalStorage';
 import { goTo } from '../../router/router';
 import {
   CARD_CLASS_START,
@@ -8,6 +11,8 @@ import {
   ORDER_PLACED,
   REGEXP,
 } from './constants';
+import { decreaseGoodsCount } from '../../common/redux/goodsCount';
+import { subtractPrice } from '../../common/redux/priceSum';
 
 export function formHandler(
   popupForm: HTMLFormElement,
@@ -37,6 +42,7 @@ export function formHandler(
   ) {
     popupForm.classList.add(ORDER_PLACED.class);
     popupForm.replaceChildren(ORDER_PLACED.text);
+    removeEverythingFromCart();
     setTimeout(() => {
       goTo(ROUTES.main);
     }, 3000);
@@ -59,25 +65,21 @@ export function checkField(
   date = false,
 ): boolean {
   const wrapper = input.parentElement as HTMLElement;
+  const isMonthValid = date
+    ? Number(input.value.slice(0, 2)) > 12
+      ? false
+      : true
+    : true;
 
-  if (!regExp.test(input.value)) {
+  if (!regExp.test(input.value) || !isMonthValid) {
     if (!input.classList.contains(INVALID_INPUT)) {
       wrapper.classList.add(INVALID_INPUT);
       input.classList.add(INVALID_INPUT);
     }
+
     return false;
   }
 
-  if (date) {
-    const month = input.value.slice(0, 2);
-
-    if (Number(month) >= 12 && !input.classList.contains(INVALID_INPUT)) {
-      wrapper.classList.add(INVALID_INPUT);
-      input.classList.add(INVALID_INPUT);
-
-      return false;
-    }
-  }
   input.classList.remove(INVALID_INPUT);
   wrapper.classList.remove(INVALID_INPUT);
   return true;
@@ -114,4 +116,14 @@ export function removeLetters(value: string): string {
   const newValue = string.replace(REGEXP.lettersRegExp, '');
 
   return newValue;
+}
+
+function removeEverythingFromCart() {
+  const storage: localStorageData[] = LocalStorage.getLocalStorageData();
+
+  storage.forEach((el) => {
+    store.dispatch(decreaseGoodsCount(el.count));
+    store.dispatch(subtractPrice(el.data.price * el.count));
+    LocalStorage.removeDataToLocalStorage(el);
+  });
 }
