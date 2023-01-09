@@ -16,6 +16,9 @@ import {
   decreaseGoodsCount,
   increaseGoodsCount,
 } from '../../common/redux/goodsCount';
+import LocalStorage from '../../common/components/localStorage/LocalStorage';
+import { localStorageData } from '../../common/types/localStorageData';
+import { addPrice, subtractPrice } from '../../common/redux/priceSum';
 
 export class Details extends Card implements IDrawComponent {
   private readonly description: Data['description'];
@@ -108,13 +111,31 @@ export class Details extends Card implements IDrawComponent {
       BUTTON_TEXT.addBtn,
     ).draw();
 
+    const storage: localStorageData[] = LocalStorage.getLocalStorageData();
+    const idArrFromStorage = storage.map((el) => el.id);
+
+    if (idArrFromStorage.includes(this.id)) {
+      addBtn.classList.add(DETAILS_CLASSES.addBtnAdded);
+    }
+
     addBtn.addEventListener('click', () => {
-      if (addBtn.classList.contains('added')) {
+      const storageObject: localStorageData = {
+        id: this.id,
+        count: 1,
+        data: this.data,
+      };
+
+      if (addBtn.classList.contains(DETAILS_CLASSES.addBtnAdded)) {
         store.dispatch(decreaseGoodsCount(1));
+        store.dispatch(subtractPrice(this.price));
+        addBtn.classList.remove(DETAILS_CLASSES.addBtnAdded);
+        LocalStorage.removeDataToLocalStorage(storageObject);
+      } else {
+        store.dispatch(increaseGoodsCount(1));
+        store.dispatch(addPrice(this.price));
+        addBtn.classList.add(DETAILS_CLASSES.addBtnAdded);
+        LocalStorage.addDataToLocalStorage(storageObject);
       }
-      store.dispatch(increaseGoodsCount(1));
-      addBtn.classList.toggle('added');
-      // добавить сет локал стораджа
     });
 
     const buyNowBtn = new Button(
@@ -122,7 +143,7 @@ export class Details extends Card implements IDrawComponent {
       BUTTON_TEXT.buyNowBtn,
     ).draw();
 
-    //добавить вызов модального окна при нажатии на кнопку
+    //TODO: добавить вызов модального окна при нажатии на кнопку
 
     buttons.append(addBtn, buyNowBtn);
 

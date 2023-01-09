@@ -21,6 +21,9 @@ import {
   decreaseGoodsCount,
   increaseGoodsCount,
 } from '../../common/redux/goodsCount';
+import LocalStorage from '../../common/components/localStorage/LocalStorage';
+import { localStorageData } from '../../common/types/localStorageData';
+import { addPrice, subtractPrice } from '../../common/redux/priceSum';
 
 export class Card implements IDrawComponent {
   public readonly data: Data;
@@ -115,14 +118,31 @@ export class Card implements IDrawComponent {
 
     //добавить на кнопку состояние в зависимость от того естьь ли товар в локал сторадже
     const addBtn = new Button(CARD_CLASSES.addBtn, BUTTON_TEXT.addBtn).draw();
+    const storage: localStorageData[] = LocalStorage.getLocalStorageData();
+    const idArrFromStorage = storage.map((el) => el.id);
+
+    if (idArrFromStorage.includes(this.id)) {
+      addBtn.classList.add(CARD_CLASSES.addBtnAdded);
+    }
 
     addBtn.addEventListener('click', () => {
-      if (addBtn.classList.contains('added')) {
+      const storageObject: localStorageData = {
+        id: this.id,
+        count: 1,
+        data: this.data,
+      };
+
+      if (addBtn.classList.contains(CARD_CLASSES.addBtnAdded)) {
         store.dispatch(decreaseGoodsCount(1));
+        store.dispatch(subtractPrice(this.price));
+        addBtn.classList.remove(CARD_CLASSES.addBtnAdded);
+        LocalStorage.removeDataToLocalStorage(storageObject);
+      } else {
+        store.dispatch(increaseGoodsCount(1));
+        store.dispatch(addPrice(this.price));
+        addBtn.classList.add(CARD_CLASSES.addBtnAdded);
+        LocalStorage.addDataToLocalStorage(storageObject);
       }
-      store.dispatch(increaseGoodsCount(1));
-      addBtn.classList.toggle('added');
-      // добавить сет локал стораджа
     });
 
     const detailsBtn = new Button(

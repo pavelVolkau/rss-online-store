@@ -17,6 +17,7 @@ export const DETAILS_CLASSES = {
   buttons: '.details__buttons',
   buyNowBtn: 'button__buy-now',
   addBtn: 'button__add-to-cart',
+  addBtnAdded: 'added',
 };
 
 export const IMG_ALT = 'Product photo';
