@@ -3,6 +3,7 @@ import CONSTANTS from './constants';
 import './cart-price.scss';
 import store, { initStore, RootState } from '../../common/redux/store';
 import {
+  APP_ROOT_CLASS,
   HANDLER_EVENTS,
   LOCAL_STORAGE_KEYS,
   PROMO_CODES,
@@ -13,6 +14,7 @@ import { Button } from '../../common/components/button/Button';
 import PromoCodeList from '../../common/components/promo-code-list/PromoCodeList';
 import { priceCalculation } from './helpers';
 import getDOMElement from '../../common/helpers/getDOMElement';
+import { Popup } from '../popup/Popup';
 
 export default class CartPrice implements IDrawComponent {
   public draw() {
@@ -45,6 +47,11 @@ export default class CartPrice implements IDrawComponent {
       CONSTANTS.buyNowBtn.class,
       CONSTANTS.buyNowBtn.text,
     ).draw();
+
+    buyNowBtn.addEventListener('click', () => {
+      const appRoot = document.querySelector(APP_ROOT_CLASS) as HTMLElement;
+      appRoot.append(new Popup().draw());
+    });
 
     let basePrice: number;
 
