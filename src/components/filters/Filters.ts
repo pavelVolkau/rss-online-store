@@ -19,8 +19,16 @@ export class Filters implements IDrawComponent {
   private copyBtn: HTMLElement;
 
   constructor(totalData: Data[], currentData: Data[]) {
-    // this.categoryFilter = new CategoryFilter(totalData, currentData).draw();
-    // this.brandFilter = new BrandFilter(totalData, currentData).draw();
+    this.categoryFilter = new PickFilter(
+      totalData,
+      currentData,
+      QUERY_PARAMS.category,
+    ).draw();
+    this.brandFilter = new PickFilter(
+      totalData,
+      currentData,
+      QUERY_PARAMS.brand,
+    ).draw();
     this.priceFilter = new RangeFilter(
       totalData,
       currentData,
