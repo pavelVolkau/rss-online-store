@@ -2,8 +2,8 @@ import './card.scss';
 import { Data } from '../../common/types/data';
 import { goTo } from '../../router/router';
 import IDrawComponent from '../../common/interface/IDrawComponent';
-import store from '../../common/redux/store';
 import {
+  BTN_CLASS_ADDED,
   CAPTIONS,
   ROUTES,
   SEPARATORS,
@@ -17,10 +17,9 @@ import {
   TITLE_LENGTH,
 } from './constants';
 import { Button } from '../../common/components/button/Button';
-import {
-  decreaseGoodsCount,
-  increaseGoodsCount,
-} from '../../common/redux/goodsCount';
+import LocalStorage from '../../common/components/localStorage/LocalStorage';
+import { localStorageData } from '../../common/types/localStorageData';
+import { addBtnListener } from '../../common/helpers/addBtnListener';
 
 export class Card implements IDrawComponent {
   public readonly data: Data;
@@ -115,14 +114,15 @@ export class Card implements IDrawComponent {
 
     //добавить на кнопку состояние в зависимость от того естьь ли товар в локал сторадже
     const addBtn = new Button(CARD_CLASSES.addBtn, BUTTON_TEXT.addBtn).draw();
+    const storage: localStorageData[] = LocalStorage.getLocalStorageData();
+    const idArrFromStorage = storage.map((el) => el.id);
+
+    if (idArrFromStorage.includes(this.id)) {
+      addBtn.classList.add(BTN_CLASS_ADDED);
+    }
 
     addBtn.addEventListener('click', () => {
-      if (addBtn.classList.contains('added')) {
-        store.dispatch(decreaseGoodsCount(1));
-      }
-      store.dispatch(increaseGoodsCount(1));
-      addBtn.classList.toggle('added');
-      // добавить сет локал стораджа
+      addBtnListener(this.data, addBtn, storage);
     });
 
     const detailsBtn = new Button(

@@ -32,7 +32,7 @@ export class Search implements IDrawComponent {
       const value = encodeURIComponent(searchInput.value);
       const link = addQuery(QUERY_PARAMS.search, value);
 
-      goTo(link);
+      goTo(link, true);
     });
 
     return searchInput;

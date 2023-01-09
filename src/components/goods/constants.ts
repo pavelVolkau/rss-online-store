@@ -1,1 +1,4 @@
-export const CLASS = 'goods';
+export const CLASSES = {
+  goods: 'goods',
+  container: 'goods__container',
+};

@@ -3,6 +3,7 @@ import {
   LINK,
   SEPARATORS,
   ROUTES,
+  QUERY_PARAMS,
 } from '../common/helpers/constants';
 import { createLink } from '../common/helpers/createLink';
 import { Data } from '../common/types/data';
@@ -12,11 +13,20 @@ import { applyQueries, isInline } from './helpers';
 import { MainPage } from '../pages/main-page/MainPage';
 import CartPage from '../pages/cart-page/CartPage';
 import { PageNotFound } from '../pages/page-not-found/PageNotFound';
+import { GoodsBox } from '../components/goods-box/GoodsBox';
+import { Filters } from '../components/filters/Filters';
+import { SELECTORS_FOR_PARTIAL } from './constants';
+import { PickFilter } from '../components/pick-filter/PickFilter';
+import { RangeFilter } from '../components/range-filter/RangeFilter';
 
 const loader = new DataLoader(LINK);
 
 //принимает путь и заменяет контент в html в диве app-root
-export function render(path: string): void {
+export function render(
+  path: string,
+  partial = false,
+  secondSliderName?: string,
+): void {
   const APP_ROOT = document.querySelector(APP_ROOT_CLASS) as HTMLElement;
   const pathWithQuery = path.split(SEPARATORS.searchQuery);
   const pathName = pathWithQuery[0];
@@ -32,9 +42,60 @@ export function render(path: string): void {
 
       return;
     }
+
     loader.getData((data: Data[]) => {
       const newDataArr = applyQueries(query, data);
       const view = isInline(query);
+      if (partial) {
+        const filtersWrap = document.querySelector(
+          SELECTORS_FOR_PARTIAL.filtersWrap,
+        ) as HTMLElement;
+        const goodsCount = document.querySelector(
+          SELECTORS_FOR_PARTIAL.goodsCount,
+        ) as HTMLElement;
+        const container = document.querySelector(
+          SELECTORS_FOR_PARTIAL.goodsContainer,
+        ) as HTMLElement;
+
+        goodsCount.innerText = String(newDataArr.length);
+        container.replaceChildren(new GoodsBox(newDataArr, view).draw());
+
+        //для рендера рэндж фильтров
+        if (secondSliderName) {
+          const filters = filtersWrap.querySelector(
+            SELECTORS_FOR_PARTIAL.filters,
+          ) as HTMLElement;
+          const categoryFilter = filters.querySelector(
+            SELECTORS_FOR_PARTIAL.category,
+          ) as HTMLElement;
+          const brandFilter = filters.querySelector(
+            SELECTORS_FOR_PARTIAL.brand,
+          ) as HTMLElement;
+          const secondSlider = filters.querySelector(
+            `.${secondSliderName}`,
+          ) as HTMLElement;
+
+          filters.replaceChild(
+            new PickFilter(data, newDataArr, QUERY_PARAMS.category).draw(),
+            categoryFilter,
+          );
+
+          filters.replaceChild(
+            new PickFilter(data, newDataArr, QUERY_PARAMS.brand).draw(),
+            brandFilter,
+          );
+
+          filters.replaceChild(
+            new RangeFilter(data, newDataArr, secondSliderName).draw(),
+            secondSlider,
+          );
+        } else {
+          filtersWrap.replaceChildren(new Filters(data, newDataArr).draw());
+        }
+
+        return;
+      }
+
       APP_ROOT.replaceChildren(new MainPage(data, newDataArr, view).draw());
     });
 
@@ -59,9 +120,9 @@ export function render(path: string): void {
       }
 
       APP_ROOT.replaceChildren(pageNotFound);
-
-      return;
     });
+
+    return;
   }
 
   if (ROUTES.cart.match(pagePathName)) {
@@ -69,15 +130,20 @@ export function render(path: string): void {
 
     return;
   }
+
   APP_ROOT.replaceChildren(pageNotFound);
 
   return;
 }
 
 //функция для перехода на переданную страницу, все переходы по ссылкам должны происходить через эту функцию, иначе не будет писаться история в браузер
-export function goTo(path: string): void {
+export function goTo(
+  path: string,
+  partial = false,
+  secondSliderName?: string,
+): void {
   window.history.pushState({ path }, path, path); //добавляет путь в историю браузера, чтобы можно было потом переключать страницы стрелками в браузере
-  render(path);
+  render(path, partial, secondSliderName);
 }
 
 //функция инициализации роутинга

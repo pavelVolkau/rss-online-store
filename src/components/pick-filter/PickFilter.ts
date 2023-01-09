@@ -1,45 +1,53 @@
 import { Checkbox } from '../../common/components/checkbox/Checkbox';
 import { PickFilterWrap } from '../../common/components/pick-filter-wrap/PickFiterWrap';
-import { QUERY_PARAMS, SEPARATORS } from '../../common/helpers/constants';
+import { SEPARATORS } from '../../common/helpers/constants';
 import { getQueryParamSubcategories } from '../../common/helpers/getQueryParamSubcategories';
 import IDrawComponent from '../../common/interface/IDrawComponent';
 import { Data } from '../../common/types/data';
-import { LIST_SELECTOR, NAME } from './constants';
+import { LIST_SELECTOR } from './constants';
 import { createUniqueArr } from './helpers';
+import { CategoryBrand } from './types';
 
-export class BrandFilter implements IDrawComponent {
+export class PickFilter implements IDrawComponent {
   private wrap: HTMLElement;
   private totalData: Data[];
   private currentData: Data[];
+  private name: CategoryBrand;
+  private title: string;
 
-  constructor(totalData: Data[], currentData: Data[]) {
-    this.wrap = new PickFilterWrap(NAME).draw();
+  constructor(totalData: Data[], currentData: Data[], name: CategoryBrand) {
+    this.title = name[0].toUpperCase() + name.slice(1);
+    this.wrap = new PickFilterWrap(this.title).draw();
     this.totalData = totalData;
     this.currentData = currentData;
+    this.name = name;
   }
 
   public draw(): HTMLElement {
-    const totalBrands = this.totalData.map((el) => el.brand);
-    const totalBrandsSet = createUniqueArr(totalBrands);
-    const currentBrands = this.currentData.map((el) => el.brand);
-
     const list = this.wrap.querySelector(LIST_SELECTOR) as HTMLElement;
+
     const query = window.location.search.split(SEPARATORS.searchQuery)[1];
-
-    const itemsPickedArr = getQueryParamSubcategories(
-      query,
-      QUERY_PARAMS.brand,
-    );
-
+    const itemsPickedArr = getQueryParamSubcategories(query, this.name);
     const decodedArr = itemsPickedArr.map((el) => decodeURIComponent(el));
 
-    totalBrandsSet.forEach((el) => {
-      const totalCount = totalBrands.filter(
+    const totalItems = this.totalData.map(
+      (el) => el[this.name as keyof Data],
+    ) as CategoryBrand[];
+
+    const currentItems = this.currentData.map(
+      (el) => el[this.name as keyof Data],
+    ) as CategoryBrand[];
+
+    const totalSet = createUniqueArr(totalItems);
+
+    totalSet.forEach((el) => {
+      const totalCount = totalItems.filter(
         (val) => val.toLowerCase() === el.toLowerCase(),
       );
-      const currentCount = currentBrands.filter(
+      const currentCount = currentItems.filter(
         (val) => val.toLowerCase() === el.toLowerCase(),
       );
+
       let checked = false;
 
       if (decodedArr.includes(el.toLowerCase())) {
@@ -47,7 +55,7 @@ export class BrandFilter implements IDrawComponent {
       }
 
       const item = new Checkbox(
-        QUERY_PARAMS.brand,
+        this.name,
         el,
         currentCount.length,
         totalCount.length,

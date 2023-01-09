@@ -1,6 +1,10 @@
 import './details.scss';
-import { CAPTIONS, SYMBOLS, TAGS } from '../../common/helpers/constants';
-import store from '../../common/redux/store';
+import {
+  BTN_CLASS_ADDED,
+  CAPTIONS,
+  SYMBOLS,
+  TAGS,
+} from '../../common/helpers/constants';
 import getDOMElement from '../../common/helpers/getDOMElement';
 import IDrawComponent from '../../common/interface/IDrawComponent';
 import { Data } from '../../common/types/data';
@@ -12,10 +16,10 @@ import {
   IMG_ALT,
 } from './constants';
 import { Button } from '../../common/components/button/Button';
-import {
-  decreaseGoodsCount,
-  increaseGoodsCount,
-} from '../../common/redux/goodsCount';
+import LocalStorage from '../../common/components/localStorage/LocalStorage';
+import { localStorageData } from '../../common/types/localStorageData';
+import { buyNowListener } from './helpers';
+import { addBtnListener } from '../../common/helpers/addBtnListener';
 
 export class Details extends Card implements IDrawComponent {
   private readonly description: Data['description'];
@@ -108,13 +112,15 @@ export class Details extends Card implements IDrawComponent {
       BUTTON_TEXT.addBtn,
     ).draw();
 
+    const storage: localStorageData[] = LocalStorage.getLocalStorageData();
+    const idArrFromStorage = storage.map((el) => el.id);
+
+    if (idArrFromStorage.includes(this.id)) {
+      addBtn.classList.add(BTN_CLASS_ADDED);
+    }
+
     addBtn.addEventListener('click', () => {
-      if (addBtn.classList.contains('added')) {
-        store.dispatch(decreaseGoodsCount(1));
-      }
-      store.dispatch(increaseGoodsCount(1));
-      addBtn.classList.toggle('added');
-      // добавить сет локал стораджа
+      addBtnListener(this.data, addBtn, storage);
     });
 
     const buyNowBtn = new Button(
@@ -122,7 +128,10 @@ export class Details extends Card implements IDrawComponent {
       BUTTON_TEXT.buyNowBtn,
     ).draw();
 
-    //добавить вызов модального окна при нажатии на кнопку
+    buyNowBtn.addEventListener('click', () => {
+      buyNowListener(this.data, addBtn);
+      //TODO: добавить вызов модального окна при нажатии на кнопку
+    });
 
     buttons.append(addBtn, buyNowBtn);
 
