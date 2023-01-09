@@ -125,5 +125,6 @@ function removeEverythingFromCart() {
     store.dispatch(decreaseGoodsCount(el.count));
     store.dispatch(subtractPrice(el.data.price * el.count));
     LocalStorage.removeDataToLocalStorage(el);
+    localStorage.clear();
   });
 }
