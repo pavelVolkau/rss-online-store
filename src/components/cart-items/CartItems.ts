@@ -11,6 +11,7 @@ import { goTo } from '../../router/router';
 import { addQuery } from '../../common/helpers/addQuery';
 import { Button } from '../../common/components/button/Button';
 import ListGoodsCart from '../../common/components/list-goods-cart/ListGoodsCart';
+import { createLink } from '../../common/helpers/createLink';
 
 export default class CartItems implements IDrawComponent {
   public draw(): HTMLElement {
@@ -97,19 +98,18 @@ export default class CartItems implements IDrawComponent {
     // если 0 штук данного товара, то удалить его из корзины
     itemsContainer.addEventListener('click', (event) => {
       const target = event.target as HTMLElement;
-      const cartItem = target.closest('.cart-item') as HTMLElement;
+      const cartItem = target.closest(CONSTANTS.cartItem.class) as HTMLElement;
       const elementWithCountItems = cartItem.querySelector(
-        '.cart-item__current-count',
+        CONSTANTS.currentCount.class,
       ) as HTMLElement;
       const itemCount = parseInt(elementWithCountItems.innerText);
 
       if (itemCount === 0) {
         itemsContainer.removeChild(cartItem);
 
-        const currentLink = document.location.href;
+        const currentLink = createLink(window.location);
         const newLink = resolveActualPage(pageNumber, limitNumber);
 
-        //! FIX пофиксить что когда товар удаляется, и ссылка остается прежней(старница существует согласно лимитов) выскакивает 404
         if (newLink) {
           goTo(newLink);
         } else {
