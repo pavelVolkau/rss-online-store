@@ -1,3 +1,5 @@
+import { PromoCodesStorage } from '../types/promoCode';
+
 export const TAGS = {
   div: 'div',
   h1: 'h1',
@@ -101,3 +103,28 @@ export const CAPTIONS = {
 };
 
 export const BTN_CLASS_ADDED = 'added';
+
+export const PROMO_CODES: PromoCodesStorage = {
+  RS: {
+    text: 'Rolling Scopes School',
+    discount: 10,
+  },
+  EPM: {
+    text: 'EPAM Systems',
+    discount: 15,
+  },
+};
+
+export const LOCAL_STORAGE_KEYS = {
+  selectedGoods: 'selectedGoods',
+  promoCodes: 'promoCodes',
+};
+
+export const REG_EXPRESSION = {
+  matchPrice: /(\d|\.)*$/,
+};
+
+export const HANDLER_EVENTS = {
+  click: new Event('click'),
+  input: new Event('input'),
+};

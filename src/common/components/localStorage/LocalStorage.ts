@@ -1,13 +1,15 @@
+import { LOCAL_STORAGE_KEYS } from '../../helpers/constants';
 import { toData, toJSON } from '../../helpers/jsonChange';
 import { localStorageData } from '../../types/localStorageData';
-import CONSTANTS from './constants';
 
 export default class LocalStorage {
   static getLocalStorageData(): localStorageData[] {
-    const checkLocalStorage = localStorage.getItem(CONSTANTS.localStorageKey);
+    const checkLocalStorage = localStorage.getItem(
+      LOCAL_STORAGE_KEYS.selectedGoods,
+    );
 
     if (checkLocalStorage) {
-      const data = toData(checkLocalStorage);
+      const data = toData<localStorageData[]>(checkLocalStorage);
       return data;
     }
 
@@ -15,7 +17,10 @@ export default class LocalStorage {
   }
 
   static setLocalStorageData(data: localStorageData[]): void {
-    localStorage.setItem(CONSTANTS.localStorageKey, toJSON(data));
+    localStorage.setItem(
+      LOCAL_STORAGE_KEYS.selectedGoods,
+      toJSON<localStorageData[]>(data),
+    );
   }
 
   static addDataToLocalStorage(data: localStorageData): void {
@@ -26,7 +31,7 @@ export default class LocalStorage {
 
     const currentData = LocalStorage.getLocalStorageData();
 
-    if (!currentData) {
+    if (currentData.length === 0) {
       LocalStorage.setLocalStorageData([data]);
     } else {
       const indexOfAddObj = currentData.findIndex((obj) => obj.id === data.id);
@@ -44,7 +49,7 @@ export default class LocalStorage {
   static removeDataToLocalStorage(data: localStorageData): void {
     const currentData = LocalStorage.getLocalStorageData();
 
-    if (currentData) {
+    if (currentData.length !== 0) {
       const indexOfRemoveObj = currentData.findIndex(
         (obj) => obj.id === data.id,
       );
@@ -54,7 +59,7 @@ export default class LocalStorage {
       }
 
       if (currentData.length === 0) {
-        localStorage.removeItem(CONSTANTS.localStorageKey);
+        localStorage.removeItem(LOCAL_STORAGE_KEYS.selectedGoods);
       } else {
         LocalStorage.setLocalStorageData(currentData);
       }

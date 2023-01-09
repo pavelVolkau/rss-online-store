@@ -1,0 +1,14 @@
+@import '../../styles/main.scss';
+
+.items-price__resolve-promo {
+  display: flex;
+  justify-content: center;
+  gap: 1em;
+  align-items: center;
+  width: 70%;
+
+  &-add-btn {
+    background-color: $gray;
+    color: $white;
+  }
+}

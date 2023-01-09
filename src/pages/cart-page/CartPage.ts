@@ -5,6 +5,7 @@ import getDOMElement from '../../common/helpers/getDOMElement';
 import IDrawComponent from '../../common/interface/IDrawComponent';
 import CartItems from '../../components/cart-items/CartItems';
 import LocalStorage from '../../common/components/localStorage/LocalStorage';
+import CartPrice from '../../components/cart-price/CartPrice';
 
 export default class CartPage implements IDrawComponent {
   public draw(): HTMLElement {
@@ -23,10 +24,10 @@ export default class CartPage implements IDrawComponent {
       return cart;
     }
 
-    // TODO: вызвать 2 класса и заапендить в cart
     const cartItems = new CartItems().draw();
+    const cartPrice = new CartPrice().draw();
 
-    cart.append(cartItems);
+    cart.append(cartItems, cartPrice);
 
     return cart;
   }
